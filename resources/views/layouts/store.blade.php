@@ -53,15 +53,22 @@
     @endif
 
     <!-- Navbar -->
-    <header class="bg-white sticky top-0 z-50 shadow-sm">
+    <header class="bg-white sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Hamburger (Mobile) -->
                 <div class="flex items-center md:hidden">
-                    <button class="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen"
+                        class="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900">
+                        <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg x-show="mobileMenuOpen" style="display: none;" class="h-6 w-6" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -115,6 +122,19 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div x-show="mobileMenuOpen" style="display: none;"
+            class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+            <div class="px-4 py-3 space-y-1">
+                <a href="{{ url('/') }}"
+                    class="block px-3 py-3 text-sm font-medium text-gray-900 border-b border-gray-50 uppercase tracking-widest">Home</a>
+                <a href="{{ route('shop') }}"
+                    class="block px-3 py-3 text-sm font-medium text-gray-900 border-b border-gray-50 uppercase tracking-widest">Shop</a>
+                <a href="{{ url('/about') }}"
+                    class="block px-3 py-3 text-sm font-medium text-gray-900 uppercase tracking-widest">About</a>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -130,7 +150,8 @@
                     {{ $settings['site_name'] ?? 'Musfiq' }}
                 </a>
                 <p class="text-sm text-gray-500 leading-relaxed">
-                    {{ $settings['about_us'] ?? 'Elevating elegance and style.' }}</p>
+                    {{ $settings['about_us'] ?? 'Elevating elegance and style.' }}
+                </p>
             </div>
             <div>
                 <h4 class="font-bold text-gray-900 mb-4 tracking-wider uppercase text-sm">Shop</h4>
