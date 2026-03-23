@@ -43,7 +43,7 @@
     </style>
 </head>
 
-<body class="font-sans antialiased bg-stone-50 text-gray-900 pb-28 md:pb-0">
+<body class="font-sans antialiased bg-stone-50 text-gray-900 pb-20 md:pb-0">
 
     <!-- Top Notice Bar -->
     @if(($settings['notice_active'] ?? '1') == '1')
@@ -56,8 +56,18 @@
     <header class="bg-white sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
+                <!-- Hamburger (Mobile) -->
+                <div class="flex items-center md:hidden">
+                    <button class="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center justify-start flex-1 md:flex-none">
+                <div class="flex-shrink-0 flex items-center justify-center flex-1 md:flex-none md:justify-start">
                     <a href="{{ url('/') }}" class="text-2xl font-serif font-semibold tracking-wider text-gray-900">
                         @if(isset($settings['site_logo']))
                             <img src="{{ asset('storage/' . $settings['site_logo']) }}" alt="Logo" class="h-8 w-auto">
@@ -120,8 +130,7 @@
                     {{ $settings['site_name'] ?? 'Musfiq' }}
                 </a>
                 <p class="text-sm text-gray-500 leading-relaxed">
-                    {{ $settings['about_us'] ?? 'Elevating elegance and style.' }}
-                </p>
+                    {{ $settings['about_us'] ?? 'Elevating elegance and style.' }}</p>
             </div>
             <div>
                 <h4 class="font-bold text-gray-900 mb-4 tracking-wider uppercase text-sm">Shop</h4>
