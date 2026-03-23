@@ -172,13 +172,43 @@
             <div>
                 <h4 class="font-bold text-gray-900 mb-4 tracking-wider uppercase text-sm">Contact</h4>
                 <ul class="space-y-2 text-sm text-gray-600">
-                    <li>{{ $settings['contact_email'] ?? 'support@musfiq.com' }}</li>
-                    <li>{{ $settings['contact_phone'] ?? '+1 234 567 890' }}</li>
+                    <li class="flex items-start">
+                        <svg class="h-4 w-4 mr-2 mt-0.5 text-gray-400" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>{{ $settings['contact_address'] ?? '123 Elegance St, NY 10001' }}</span>
+                    </li>
+                    <li class="flex items-center mt-2">
+                        <svg class="h-4 w-4 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <a href="mailto:{{ $settings['contact_email'] ?? 'support@musfiq.com' }}"
+                            class="hover:text-black transition">{{ $settings['contact_email'] ?? 'support@musfiq.com'
+                            }}</a>
+                    </li>
+                    <li class="flex items-center mt-2">
+                        <svg class="h-4 w-4 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <a href="tel:{{ $settings['contact_phone'] ?? '+1 234 567 890' }}"
+                            class="hover:text-black transition">{{ $settings['contact_phone'] ?? '+1 234 567 890' }}</a>
+                    </li>
                 </ul>
             </div>
         </div>
-        <div class="text-center text-xs text-gray-400 mt-12 border-t border-gray-200 pt-8 max-w-7xl mx-auto px-4">
-            &copy; {{ date('Y') }} {{ $settings['site_name'] ?? 'Musfiq' }}. All rights reserved.
+        <div
+            class="text-center text-xs text-gray-400 mt-12 border-t border-gray-200 pt-8 max-w-7xl mx-auto px-4 uppercase tracking-widest font-semibold flex flex-col md:flex-row justify-between items-center gap-4">
+            <span>&copy; {{ date('Y') }} {{ $settings['footer_copyright'] ?? 'Musfiq. All rights reserved.' }}</span>
+            <span class="flex gap-4">
+                <a href="#" class="hover:text-gray-900 transition">Privacy</a>
+                <a href="#" class="hover:text-gray-900 transition">Terms</a>
+            </span>
         </div>
     </footer>
 

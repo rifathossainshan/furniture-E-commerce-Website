@@ -57,7 +57,28 @@
                         <input type="text" name="contact_phone" value="{{ $settings['contact_phone'] ?? '+1 234 567 890' }}"
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
                     </div>
-                    <div class="md:col-span-2">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Office Address</label>
+                        <textarea name="contact_address" rows="2"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">{{ $settings['contact_address'] ?? '123 Elegance St, NY 10001' }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Facebook Link</label>
+                        <input type="url" name="social_facebook" value="{{ $settings['social_facebook'] ?? '#' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Instagram Link</label>
+                        <input type="url" name="social_instagram" value="{{ $settings['social_instagram'] ?? '#' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Copyright Text</label>
+                        <input type="text" name="footer_copyright"
+                            value="{{ $settings['footer_copyright'] ?? 'Musfiq. All rights reserved.' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
+                    <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Office Address</label>
                         <textarea name="contact_address" rows="2"
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">{{ $settings['contact_address'] ?? '123 Elegance St, Fashion District, NY 10001' }}</textarea>
