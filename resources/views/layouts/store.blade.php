@@ -112,7 +112,7 @@
                                 class="absolute -top-1.5 -right-2 bg-[#d4af37] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{{ count(session('cart')) }}</span>
                         @endif
                     </a>
-                    <a href="{{ route('profile.edit') }}"
+                    <a href="{{ route('dashboard') }}"
                         class="text-gray-600 hover:text-gray-900 transition hidden md:block">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
