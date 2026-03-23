@@ -71,16 +71,17 @@
             @forelse($categories as $category)
                 <div class="min-w-[140px] md:min-w-0 flex-shrink-0">
                     <a href="{{ route('shop', ['category' => $category->slug]) }}"
-                        class="block group text-center border border-transparent rounded-lg p-2 hover:border-[#d4af37] transition duration-300">
-                        <div class="w-full aspect-square mb-3 overflow-hidden rounded overflow-hidden shadow-sm">
+                        class="block group text-center border border-transparent rounded-lg p-4 hover:bg-stone-50 transition duration-300">
+                        <div
+                            class="w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 overflow-hidden rounded-full shadow-sm border border-gray-100">
                             @if($category->image)
                                 <img src="{{ asset('storage/' . $category->image) }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                    class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                             @else
                                 <div class="w-full h-full bg-stone-200"></div>
                             @endif
                         </div>
-                        <h4 class="text-sm font-semibold text-gray-900 mb-1">{{ $category->name }}</h4>
+                        <h4 class="text-sm font-semibold text-gray-900 mb-1 tracking-wide">{{ $category->name }}</h4>
                         <div class="text-[10px] text-gray-500 uppercase tracking-widest group-hover:text-[#d4af37] transition">
                             Explore</div>
                         <div class="w-6 h-[1px] bg-gray-300 mx-auto mt-2 group-hover:bg-[#d4af37] transition"></div>
@@ -119,7 +120,8 @@
 
                         <div class="pt-4 pb-2 text-center md:text-left">
                             <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">
-                                {{ $product->category->name ?? 'MUSFIQ' }}</div>
+                                {{ $product->category->name ?? 'MUSFIQ' }}
+                            </div>
                             <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $product->name }}</h4>
                             <p class="text-sm text-gray-900 font-bold mb-4">${{ number_format($product->price, 2) }}</p>
                             <form action="{{ route('cart.add', $product) }}" method="POST">
