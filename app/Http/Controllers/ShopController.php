@@ -28,4 +28,15 @@ class ShopController extends Controller
 
         return view('shop', compact('products', 'categories'));
     }
+
+    public function show($slug)
+    {
+        $product = Product::with('category')->where('slug', $slug)->where('status', true)->firstOrFail();
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->where('status', true)
+            ->take(4)->get();
+
+        return view('product', compact('product', 'relatedProducts'));
+    }
 }

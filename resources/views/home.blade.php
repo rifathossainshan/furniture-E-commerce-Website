@@ -102,7 +102,7 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             @forelse($products as $product)
                 <div class="group flex flex-col">
-                    <a href="#"
+                    <a href="{{ route('product.show', $product->slug) }}"
                         class="relative block overflow-hidden rounded mb-4 shadow-sm bg-white border border-gray-100 p-2">
                         <div class="aspect-[3/4] w-full overflow-hidden rounded">
                             @if($product->image)
