@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             'subtitle' => 'Discover our Spring/Summer 2026 Collection.',
             'button_text' => 'SHOP NEW ARRIVALS',
             'button_link' => '/shop',
-            'image' => '',
+            'image' => 'sliders/demo.jpg',
             'status' => true
         ]);
 
@@ -58,6 +58,7 @@ class DatabaseSeeder extends Seeder
             Category::create([
                 'name' => $cat,
                 'slug' => Str::slug($cat),
+                'image' => 'categories/demo.jpg',
                 'status' => true
             ]);
         }
@@ -71,6 +72,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'A beautifully crafted piece for your everyday elegance.',
                 'price' => rand(99, 499) + 0.99,
                 'stock' => rand(10, 50),
+                'image' => 'products/demo.jpg',
                 'is_featured' => $i <= 4,
                 'status' => true
             ]);
