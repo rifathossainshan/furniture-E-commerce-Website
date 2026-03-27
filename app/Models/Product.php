@@ -17,8 +17,13 @@ class Product extends Model
         'price',
         'stock',
         'image',
+        'images',
         'is_featured',
         'status'
+    ];
+
+    protected $casts = [
+        'images' => 'array',
     ];
 
     public function category()

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -32,6 +33,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|max:2048',
+            'images.*' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
             'status' => 'boolean'
         ]);
@@ -40,6 +42,14 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
+        }
+
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $file) {
+                $images[] = $file->store('products', 'public');
+            }
+            $data['images'] = $images;
         }
 
         Product::create($data);
@@ -61,6 +71,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|max:2048',
+            'images.*' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
             'status' => 'boolean'
         ]);
@@ -71,6 +82,14 @@ class ProductController extends Controller
             $data['image'] = $request->file('image')->store('products', 'public');
         }
 
+        if ($request->hasFile('images')) {
+            $images = is_array($product->images) ? $product->images : [];
+            foreach ($request->file('images') as $file) {
+                $images[] = $file->store('products', 'public');
+            }
+            $data['images'] = $images;
+        }
+
         $product->update($data);
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
@@ -79,5 +98,17 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
+    }
+
+    public function deleteImage(Product $product, $index)
+    {
+        $images = is_array($product->images) ? $product->images : [];
+        if (isset($images[$index])) {
+            Storage::disk('public')->delete($images[$index]);
+            unset($images[$index]);
+            $product->update(['images' => array_values($images)]);
+        }
+
+        return back()->with('success', 'Image deleted successfully.');
     }
 }

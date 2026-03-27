@@ -32,6 +32,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     });
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+    Route::delete('products/{product}/image/{index}', [\App\Http\Controllers\Admin\ProductController::class, 'deleteImage'])->name('products.image.delete');
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::resource('sliders', \App\Http\Controllers\Admin\SliderController::class);
     Route::resource('vouchers', \App\Http\Controllers\Admin\VoucherController::class);

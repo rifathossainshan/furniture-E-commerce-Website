@@ -12,12 +12,23 @@
         <div class="flex flex-col md:flex-row gap-12">
 
             <!-- Left: Image Gallery -->
-            <div class="w-full md:w-1/2">
-                <div class="aspect-[3/4] w-full overflow-hidden rounded bg-stone-100 mb-4 shadow-sm border border-gray-100">
-                    @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-full object-cover object-top"
-                            id="mainImage">
-                    @else
+            @php
+                $allImages = [];
+                if ($product->image) {
+                    $allImages[] = asset('storage/' . $product->image);
+                }
+                if (is_array($product->images)) {
+                    foreach($product->images as $img) {
+                        $allImages[] = asset('storage/' . $img);
+                    }
+                }
+            @endphp
+            <div class="w-full md:w-1/2" x-data="{ currentSlide: 0, images: {{ json_encode($allImages, JSON_UNESCAPED_SLASHES) }} }">
+                <div class="aspect-[3/4] w-full overflow-hidden rounded bg-stone-100 mb-4 shadow-sm border border-gray-100 relative group">
+                    <template x-if="images.length > 0">
+                        <img :src="images[currentSlide]" class="w-full h-full object-cover object-top transition duration-500">
+                    </template>
+                    <template x-if="images.length === 0">
                         <div class="w-full h-full flex flex-col justify-center items-center text-gray-400">
                             <svg class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
@@ -26,9 +37,37 @@
                             </svg>
                             <span>No Image Available</span>
                         </div>
-                    @endif
+                    </template>
+                    
+                    <!-- Slider Arrows (only show if more than 1 image) -->
+                    <template x-if="images.length > 1">
+                        <div>
+                            <!-- Prev Arrow -->
+                            <button @click="currentSlide = currentSlide > 0 ? currentSlide - 1 : images.length - 1" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition focus:outline-none">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+                            <!-- Next Arrow -->
+                            <button @click="currentSlide = currentSlide < images.length - 1 ? currentSlide + 1 : 0" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition focus:outline-none">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </template>
                 </div>
-                <!-- If you implement multiple images later, thumbnail gallery goes here -->
+                
+                <!-- Thumbnails Gallery -->
+                <template x-if="images.length > 1">
+                    <div class="grid grid-cols-4 gap-2 md:gap-4 mt-4">
+                        <template x-for="(img, index) in images" :key="index">
+                            <button @click="currentSlide = index" :class="{'ring-2 ring-gray-900 border-transparent': currentSlide === index, 'border-gray-200': currentSlide !== index}" class="aspect-[3/4] overflow-hidden rounded border transition focus:outline-none">
+                                <img :src="img" class="w-full h-full object-cover object-top hover:opacity-80 transition">
+                            </button>
+                        </template>
+                    </div>
+                </template>
             </div>
 
             <!-- Right: Product Info -->
