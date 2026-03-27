@@ -79,9 +79,9 @@
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
                     </div>
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Office Address</label>
-                        <textarea name="contact_address" rows="2"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">{{ $settings['contact_address'] ?? '123 Elegance St, Fashion District, NY 10001' }}</textarea>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">WhatsApp Link</label>
+                        <input type="url" name="social_whatsapp" value="{{ $settings['social_whatsapp'] ?? '#' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
                     </div>
                 </div>
             </div>
