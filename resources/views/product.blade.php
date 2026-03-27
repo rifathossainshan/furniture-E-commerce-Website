@@ -100,7 +100,7 @@
                             <svg class="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            In Stock ({{ $product->stock }} items)
+                            In Stock
                         </p>
                     @else
                         <p class="text-red-600 font-medium text-sm flex items-center">
@@ -113,12 +113,18 @@
                     @endif
                 </div>
 
-                <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-auto">
+                <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-auto flex flex-col md:flex-row gap-4">
                     @csrf
                     <button type="submit" @disabled($product->stock <= 0)
-                        class="w-full border border-[#d4af37] bg-[#d4af37] text-white hover:bg-[#c19b28] hover:border-[#c19b28] transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                        class="flex-1 border border-[#d4af37] bg-white text-[#d4af37] hover:bg-stone-50 transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
                         {{ $product->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
                     </button>
+                    @if($product->stock > 0)
+                        <button type="submit" name="buy_now" value="1"
+                            class="flex-1 border border-[#d4af37] bg-[#d4af37] text-white hover:bg-[#c19b28] hover:border-[#c19b28] transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm">
+                            Buy Now
+                        </button>
+                    @endif
                 </form>
 
                 <!-- Additional Guarantees -->
