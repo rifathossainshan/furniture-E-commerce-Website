@@ -23,13 +23,23 @@
                     }
                 }
             @endphp
+            <style>
+                .no-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .no-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            </style>
             <div class="w-full md:w-1/2" x-data="{ currentSlide: 0, images: {{ json_encode($allImages, JSON_UNESCAPED_SLASHES) }} }">
-                <div class="aspect-[3/4] w-full overflow-hidden rounded bg-stone-100 mb-4 shadow-sm border border-gray-100 relative group">
+                <!-- Main Image -->
+                <div class="w-full overflow-hidden bg-stone-100 mb-4 shadow-sm border border-gray-100 relative group">
                     <template x-if="images.length > 0">
-                        <img :src="images[currentSlide]" class="w-full h-full object-cover object-top transition duration-500">
+                        <img :src="images[currentSlide]" class="w-full h-auto object-cover object-center transition duration-500" style="aspect-ratio: 4/3;">
                     </template>
                     <template x-if="images.length === 0">
-                        <div class="w-full h-full flex flex-col justify-center items-center text-gray-400">
+                        <div class="w-full flex flex-col justify-center items-center text-gray-400" style="aspect-ratio: 4/3;">
                             <svg class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
@@ -38,34 +48,35 @@
                             <span>No Image Available</span>
                         </div>
                     </template>
-                    
-                    <!-- Slider Arrows (only show if more than 1 image) -->
-                    <template x-if="images.length > 1">
-                        <div>
-                            <!-- Prev Arrow -->
-                            <button @click="currentSlide = currentSlide > 0 ? currentSlide - 1 : images.length - 1" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition focus:outline-none">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                                </svg>
-                            </button>
-                            <!-- Next Arrow -->
-                            <button @click="currentSlide = currentSlide < images.length - 1 ? currentSlide + 1 : 0" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition focus:outline-none">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </template>
                 </div>
                 
-                <!-- Thumbnails Gallery -->
+                <!-- Thumbnails Gallery & Arrows -->
                 <template x-if="images.length > 1">
-                    <div class="grid grid-cols-4 gap-2 md:gap-4 mt-4">
-                        <template x-for="(img, index) in images" :key="index">
-                            <button @click="currentSlide = index" :class="{'ring-2 ring-gray-900 border-transparent': currentSlide === index, 'border-gray-200': currentSlide !== index}" class="aspect-[3/4] overflow-hidden rounded border transition focus:outline-none">
-                                <img :src="img" class="w-full h-full object-cover object-top hover:opacity-80 transition">
-                            </button>
-                        </template>
+                    <div class="flex items-center justify-center gap-2 mt-4">
+                        <!-- Prev Arrow -->
+                        <button @click="currentSlide = currentSlide > 0 ? currentSlide - 1 : images.length - 1" class="p-2 text-gray-400 hover:text-gray-900 focus:outline-none flex-shrink-0 transition">
+                            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- Thumbnails -->
+                        <div class="flex overflow-x-auto snap-x gap-3 py-1 no-scrollbar justify-center items-center px-2">
+                            <template x-for="(img, index) in images" :key="index">
+                                <button @click="currentSlide = index" 
+                                    :class="{'border-black': currentSlide === index, 'border-transparent': currentSlide !== index}" 
+                                    class="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 overflow-hidden border-2 transition focus:outline-none snap-start bg-white">
+                                    <img :src="img" class="w-full h-full object-cover hover:opacity-80 transition p-0.5">
+                                </button>
+                            </template>
+                        </div>
+
+                        <!-- Next Arrow -->
+                        <button @click="currentSlide = currentSlide < images.length - 1 ? currentSlide + 1 : 0" class="p-2 text-gray-400 hover:text-gray-900 focus:outline-none flex-shrink-0 transition">
+                            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
                     </div>
                 </template>
             </div>
