@@ -29,6 +29,11 @@
                 </button>
             </div>
             <nav class="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
+                <a href="{{ url('/') }}" target="_blank"
+                    class="block px-4 py-2 rounded mb-4 bg-gray-800 text-gray-300 hover:text-white border border-gray-700 flex justify-between items-center">
+                    Home Page
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
                 <a href="{{ route('admin.dashboard') }}"
                     class="block px-4 py-2 rounded {{ request()->routeIs('admin.dashboard') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300' }}">Dashboard</a>
                 <a href="{{ route('admin.orders.index') }}"
@@ -44,7 +49,9 @@
                 <a href="{{ route('admin.settings.index') }}"
                     class="block px-4 py-2 rounded {{ request()->routeIs('admin.settings.*') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300' }}">Settings</a>
             </nav>
-            <div class="p-4 border-t border-gray-800 pb-8 md:pb-4">
+            <div class="p-4 border-t border-gray-800 pb-8 md:pb-4 space-y-2">
+                <a href="{{ route('admin.password') }}"
+                    class="block px-4 py-2 rounded {{ request()->routeIs('admin.password') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">Change Password</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"

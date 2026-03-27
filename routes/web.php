@@ -31,6 +31,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         return redirect()->route('admin.dashboard');
     });
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/password', [\App\Http\Controllers\Admin\DashboardController::class, 'password'])->name('password');
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
     Route::delete('products/{product}/image/{index}', [\App\Http\Controllers\Admin\ProductController::class, 'deleteImage'])->name('products.image.delete');
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);

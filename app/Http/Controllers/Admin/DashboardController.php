@@ -26,4 +26,9 @@ class DashboardController extends Controller
             'recentOrders'
         ));
     }
+
+    public function password()
+    {
+        return view('admin.password');
+    }
 }
