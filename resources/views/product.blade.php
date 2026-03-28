@@ -197,10 +197,10 @@
                             </form>
 
                             <a href="{{ route('product.show', $related->slug) }}" class="block w-full">
-                                <div class="aspect-square w-full overflow-hidden rounded relative">
+                                <div class="w-full relative overflow-hidden rounded bg-stone-100" style="padding-bottom: 125%;">
                                     @if($related->image)
                                         <img src="{{ asset('storage/' . $related->image) }}"
-                                            class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-700">
+                                            class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition duration-700">
                                     @else
                                         <div class="w-full h-full bg-stone-100"></div>
                                     @endif

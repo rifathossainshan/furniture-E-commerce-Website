@@ -45,8 +45,7 @@
 
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             @forelse($products as $product)
-            <div class="group flex flex-col">
-            <div class="group relative flex flex-col overflow-hidden rounded mb-4 shadow-sm bg-white border border-gray-100 p-2">
+            <div class="group relative flex flex-col h-full overflow-hidden rounded mb-4 shadow-sm bg-white border border-gray-100 p-2">
                 
                 <!-- Wishlist Button -->
                 <form action="{{ route('wishlist.add', $product) }}" method="POST" class="absolute top-4 right-4 z-20">
@@ -59,9 +58,9 @@
                 </form>
 
                 <a href="{{ route('product.show', $product->slug) }}" class="block w-full">
-                    <div class="aspect-square w-full overflow-hidden rounded relative">
+                    <div class="w-full relative overflow-hidden rounded bg-stone-100" style="padding-bottom: 125%;">
                         @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-700">
+                            <img src="{{ asset('storage/' . $product->image) }}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition duration-700">
                         @else
                             <div class="w-full h-full bg-stone-100"></div>
                         @endif
@@ -92,7 +91,6 @@
                         </form>
                     </div>
                 </div>
-            </div>
             </div>
             @empty
             <div class="col-span-full py-12 text-center">

@@ -101,38 +101,51 @@
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             @forelse($products as $product)
-                <div class="group flex flex-col">
-                    <a href="{{ route('product.show', $product->slug) }}"
-                        class="relative block overflow-hidden rounded mb-4 shadow-sm bg-white border border-gray-100 p-2">
-                        <div class="aspect-[3/4] w-full overflow-hidden rounded">
+                <div class="group relative flex flex-col h-full overflow-hidden rounded shadow-sm bg-white border border-gray-100 p-2">
+                    <!-- Wishlist Button -->
+                    <form action="{{ route('wishlist.add', $product) }}" method="POST" class="absolute top-4 right-4 z-20">
+                        @csrf
+                        <button type="submit" class="p-2 bg-white rounded-full shadow hover:bg-gray-50 text-gray-400 hover:text-red-500 transition-colors {{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'text-red-500' : '' }}" title="Add to Wishlist">
+                            <svg class="w-4 h-4" {{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'fill="currentColor"' : 'fill="none"' }} stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                    </form>
+
+                    <a href="{{ route('product.show', $product->slug) }}" class="block w-full">
+                        <div class="w-full relative overflow-hidden rounded bg-stone-100" style="padding-bottom: 125%;">
                             @if($product->image)
                                 <img src="{{ asset('storage/' . $product->image) }}"
-                                    class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-700">
+                                    class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition duration-700">
                             @else
                                 <div class="w-full h-full bg-stone-100"></div>
                             @endif
                         </div>
-                        @if($product->is_featured)
-                            <div
-                                class="absolute top-4 left-4 text-[9px] font-bold text-white bg-black px-2 py-1 uppercase tracking-wider scale-0 group-hover:scale-100 transition-transform origin-top-left z-10">
-                                Featured</div>
-                        @endif
+                    </a>
 
-                        <div class="pt-4 pb-2 text-center md:text-left">
+                    @if($product->is_featured)
+                        <div class="absolute top-4 left-4 text-[9px] font-bold text-white bg-black px-2 py-1 uppercase tracking-wider scale-0 group-hover:scale-100 transition-transform origin-top-left z-10 pointer-events-none">
+                            Featured</div>
+                    @endif
+
+                    <div class="pt-4 pb-2 text-center md:text-left flex-1 flex flex-col flex-grow">
+                        <a href="{{ route('product.show', $product->slug) }}" class="block">
                             <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">
                                 {{ $product->category->name ?? 'MUSFIQ' }}
                             </div>
                             <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $product->name }}</h4>
                             <p class="text-sm text-gray-900 font-bold mb-4">${{ number_format($product->price, 2) }}</p>
+                        </a>
+                        <div class="mt-auto">
                             <form action="{{ route('cart.add', $product) }}" method="POST">
                                 @csrf
-                                <button type="submit"
-                                    class="w-full border border-[#d4af37] bg-white text-[#d4af37] hover:bg-[#d4af37] hover:text-white transition text-xs font-bold py-2.5 uppercase tracking-wider">
+                                <button type="submit" @disabled($product->stock <= 0)
+                                    class="w-full border border-[#d4af37] bg-white text-[#d4af37] hover:bg-[#d4af37] hover:text-white transition text-xs font-bold py-2.5 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
                                     Add to Cart
                                 </button>
                             </form>
                         </div>
-                    </a>
+                    </div>
                 </div>
             @empty
                 <p class="text-gray-500 text-center w-full col-span-full font-serif italic">No products available yet.</p>
