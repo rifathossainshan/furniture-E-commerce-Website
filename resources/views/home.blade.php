@@ -11,7 +11,7 @@
                     <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center px-8 md:px-24">
                         <div class="max-w-xl">
                             <h2 class="text-4xl md:text-6xl text-white font-serif uppercase tracking-widest leading-tight mb-4">
-                                {!! nl2br(e($slider->title)) !!}
+                                {!! $slider->title !!}
                             </h2>
                             @if($slider->subtitle)
                                 <p class="text-white text-sm md:text-base font-medium tracking-wide mb-8">
@@ -151,5 +151,43 @@
                 <p class="text-gray-500 text-center w-full col-span-full font-serif italic">No products available yet.</p>
             @endforelse
         </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('sliderContainer');
+            if (!container) return;
+            
+            const slides = container.children;
+            const totalSlides = slides.length;
+            if (totalSlides <= 1) return;
+
+            let currentIndex = 0;
+            const dotContainers = document.querySelectorAll('.absolute.bottom-6.left-0 button');
+            
+            function goToSlide(index) {
+                currentIndex = index;
+                container.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                dotContainers.forEach((dot, i) => {
+                    if (i === currentIndex) {
+                        dot.classList.replace('opacity-40', 'opacity-100');
+                    } else {
+                        dot.classList.replace('opacity-100', 'opacity-40');
+                    }
+                });
+            }
+            
+            dotContainers.forEach((dot, index) => {
+                dot.addEventListener('click', () => goToSlide(index));
+            });
+
+            // Auto-slide every 5 seconds
+            setInterval(() => {
+                let nextIndex = (currentIndex + 1) % totalSlides;
+                goToSlide(nextIndex);
+            }, 5000);
+        });
+    </script>
     </div>
 @endsection
