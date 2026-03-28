@@ -147,7 +147,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="space-y-4">
                 <a href="{{ url('/') }}" class="text-2xl font-serif font-semibold tracking-wider text-gray-900">
-                    {{ $settings['site_name'] ?? 'Musfiq' }}
+                    @if(isset($settings['site_logo']))
+                        <img src="{{ asset('storage/' . $settings['site_logo']) }}" alt="Logo" class="h-10 w-auto">
+                    @else
+                        {{ $settings['site_name'] ?? 'Musfiq' }}
+                    @endif
                 </a>
                 <p class="text-sm text-gray-500 leading-relaxed">
                     {{ $settings['about_us'] ?? 'Elevating elegance and style.' }}
