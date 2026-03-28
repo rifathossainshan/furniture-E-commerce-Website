@@ -3,7 +3,7 @@
 @section('header', 'Order Details: #' . $order->order_number)
 
 @section('content')
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div id="print-area" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-white rounded shadow p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Items Ordered</h3>
@@ -121,9 +121,16 @@
                 visibility: hidden;
             }
 
-            #wrapper,
-            #wrapper * {
+            #print-area,
+            #print-area * {
                 visibility: visible;
+            }
+
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
             }
 
             .bg-gray-100 {
