@@ -7,8 +7,8 @@
         <h2 class="text-xl font-semibold text-gray-800">Manage Orders</h2>
     </div>
 
-    <div class="bg-white rounded shadow overflow-hidden">
-        <table class="w-full text-left border-collapse">
+    <div class="bg-white rounded shadow overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-max">
             <thead>
                 <tr>
                     <th

@@ -44,6 +44,9 @@
                         <div class="text-sm text-red-600">Discount: <span
                                 class="font-medium ml-4">-${{ number_format($order->discount_amount, 2) }}</span></div>
                     @endif
+                    <div class="text-sm text-gray-600 mt-1">Delivery Charge: <span
+                            class="text-gray-900 font-medium ml-4">${{ number_format($order->delivery_charge ?? 0, 2) }}</span>
+                    </div>
                     <div class="text-lg font-bold text-gray-900 mt-2 border-t pt-2">Total: <span
                             class="ml-4">${{ number_format($order->final_amount, 2) }}</span></div>
                 </div>

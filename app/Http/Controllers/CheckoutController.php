@@ -63,8 +63,8 @@ class CheckoutController extends Controller
     {
         $request->validate([
             'address' => 'required|string',
-            'city' => 'required|string',
-            'phone' => 'required|string'
+            'phone' => 'required|string',
+            'delivery_area' => 'required|in:inside_dhaka,outside_dhaka'
         ]);
 
         $cart = session()->get('cart', []);
@@ -88,14 +88,18 @@ class CheckoutController extends Controller
             }
         }
 
-        $total = max(0, $subtotal - $discount);
-        $shippingAddress = $request->address . ', ' . $request->city . ' - Phone: ' . $request->phone;
+        $deliveryCharge = $request->delivery_area === 'inside_dhaka' ? 70 : 130;
+        $areaText = $request->delivery_area === 'inside_dhaka' ? 'Inside Dhaka' : 'Outside Dhaka';
+
+        $total = max(0, $subtotal - $discount) + $deliveryCharge;
+        $shippingAddress = $request->address . ' - ' . $areaText . ' - Phone: ' . $request->phone;
 
         $order = Order::create([
             'user_id' => auth()->id(),
             'order_number' => 'ORD-' . strtoupper(Str::random(8)),
             'total_amount' => $subtotal,
             'discount_amount' => $discount,
+            'delivery_charge' => $deliveryCharge,
             'final_amount' => $total,
             'status' => 'pending',
             'shipping_address' => $shippingAddress,
