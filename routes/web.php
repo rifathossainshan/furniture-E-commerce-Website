@@ -18,6 +18,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/voucher', [\App\Http\Controllers\CheckoutController::class, 'applyVoucher'])->name('checkout.voucher');
     Route::post('/checkout/place-order', [\App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
+    
+    Route::get('/order/{order}/invoice', [\App\Http\Controllers\UserController::class, 'invoice'])->name('order.invoice');
 });
 
 Route::middleware('auth')->group(function () {

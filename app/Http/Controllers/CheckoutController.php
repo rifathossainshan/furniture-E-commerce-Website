@@ -119,6 +119,6 @@ class CheckoutController extends Controller
 
         session()->forget(['cart', 'voucher_code']);
 
-        return redirect()->route('dashboard')->with('success', 'Order placed successfully! Order #' . $order->order_number);
+        return redirect()->route('order.invoice', $order)->with('success', 'Order placed successfully! Order #' . $order->order_number);
     }
 }

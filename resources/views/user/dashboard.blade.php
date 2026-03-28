@@ -82,7 +82,7 @@
                                 <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-1">Order Number</p>
                                 <p class="text-sm font-medium text-gray-900">#{{ $order->order_number }}</p>
                             </div>
-                            <div>
+                            <div class="flex items-center gap-4">
                                 <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider
                                         {{ $order->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
                                         {{ $order->status === 'confirmed' ? 'bg-blue-100 text-blue-800' : '' }}
@@ -91,6 +91,10 @@
                                         {{ $order->status === 'cancelled' ? 'bg-red-100 text-red-800' : '' }}">
                                     {{ $order->status }}
                                 </span>
+                                <a href="{{ route('order.invoice', $order) }}" class="text-gray-500 hover:text-black transition flex items-center gap-1 text-sm font-semibold uppercase tracking-wider">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    Invoice
+                                </a>
                             </div>
                         </div>
                         <div class="p-6">
