@@ -45,11 +45,13 @@
                         <td class="py-4 px-6 border-b border-gray-200 text-sm text-right">
                             <a href="{{ route('admin.categories.edit', $category) }}"
                                 class="text-blue-600 hover:text-blue-900 mr-3">Edit</a>
-                            <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="inline-block"
-                                onsubmit="return confirm('Are you sure?');">
+                            <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="inline-block flex items-center"
+                                x-data="{ confirming: false }"
+                                @submit.prevent="if(!confirming) { confirming = true; } else { $el.submit(); }">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                <button type="submit" :class="confirming ? 'text-white bg-red-600 px-2 rounded hover:bg-red-700' : 'text-red-600 hover:text-red-900'" x-text="confirming ? 'Are you sure?' : 'Delete'"></button>
+                                <button type="button" x-show="confirming" @click="confirming = false" x-cloak class="text-gray-500 text-xs ml-2 hover:text-gray-800">Cancel</button>
                             </form>
                         </td>
                     </tr>
