@@ -31,7 +31,7 @@ class ShopController extends Controller
 
     public function show($slug)
     {
-        $product = Product::with('category')->where('slug', $slug)->where('status', true)->firstOrFail();
+        $product = Product::with(['category', 'attributes'])->where('slug', $slug)->where('status', true)->firstOrFail();
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->where('status', true)

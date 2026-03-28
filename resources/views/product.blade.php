@@ -93,6 +93,20 @@
                     <p>{{ $product->description }}</p>
                 </div>
 
+                @if($product->attributes && $product->attributes->count() > 0)
+                <div class="mb-8 border-t border-gray-200 pt-6">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-4">Specifications</p>
+                    <div class="grid grid-cols-2 gap-y-4 gap-x-6">
+                        @foreach($product->attributes as $attribute)
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">{{ $attribute->name }}</span>
+                            <span class="text-sm font-medium text-gray-900">{{ $attribute->value }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
                 <div class="mb-8 border-t border-gray-200 pt-6">
                     <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-2">Availability</p>
                     @if($product->stock > 0)

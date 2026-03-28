@@ -52,7 +52,22 @@ class ProductController extends Controller
             $data['images'] = $images;
         }
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        if ($request->has('attributes')) {
+            $attributeNames = $request->input('attributes.name', []);
+            $attributeValues = $request->input('attributes.value', []);
+            
+            foreach ($attributeNames as $index => $name) {
+                if (!empty($name) && !empty($attributeValues[$index])) {
+                    $product->attributes()->create([
+                        'name' => $name,
+                        'value' => $attributeValues[$index]
+                    ]);
+                }
+            }
+        }
+
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
@@ -91,6 +106,26 @@ class ProductController extends Controller
         }
 
         $product->update($data);
+
+        if ($request->has('attributes')) {
+            $product->attributes()->delete();
+            
+            $attributeNames = $request->input('attributes.name', []);
+            $attributeValues = $request->input('attributes.value', []);
+            
+            foreach ($attributeNames as $index => $name) {
+                if (!empty($name) && !empty($attributeValues[$index])) {
+                    $product->attributes()->create([
+                        'name' => $name,
+                        'value' => $attributeValues[$index]
+                    ]);
+                }
+            }
+        } else {
+            // Also delete if attributes totally removed
+            $product->attributes()->delete();
+        }
+
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 

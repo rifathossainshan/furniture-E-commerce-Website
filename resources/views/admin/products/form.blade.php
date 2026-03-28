@@ -58,6 +58,49 @@
                     @error('description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
+                <!-- Dynamic Product Attributes -->
+                <div class="mb-6 p-4 border border-gray-200 rounded bg-gray-50" x-data="attributeHandler()">
+                    <div class="flex justify-between items-center mb-4">
+                        <label class="block text-gray-700 text-sm font-bold">Product Attributes</label>
+                        <button type="button" @click="addAttribute()" class="text-xs bg-gray-900 hover:bg-gray-800 text-white font-semibold py-1.5 px-3 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-900 transition">
+                            + Add Attribute
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <template x-for="(attr, index) in attributes" :key="index">
+                            <div class="flex items-center gap-3 bg-white p-2 border border-gray-200 rounded shadow-sm">
+                                <div class="flex-1">
+                                    <input type="text" :name="'attributes[name][' + index + ']'" x-model="attr.name" placeholder="Name (e.g. Size, Color)" class="w-full border-gray-300 rounded shadow-sm text-sm focus:border-gray-900 focus:ring-gray-900" required>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="text" :name="'attributes[value][' + index + ']'" x-model="attr.value" placeholder="Value (e.g. XL, Red)" class="w-full border-gray-300 rounded shadow-sm text-sm focus:border-gray-900 focus:ring-gray-900" required>
+                                </div>
+                                <div class="w-8 flex justify-center">
+                                    <button type="button" @click="removeAttribute(index)" class="text-red-500 hover:text-red-700 focus:outline-none transition" title="Remove Attribute">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                        <div x-show="attributes.length === 0" class="text-sm text-gray-500 italic text-center py-4 bg-white border border-dashed border-gray-300 rounded">No dynamic attributes added yet. Click "+ Add Attribute" to start.</div>
+                    </div>
+                </div>
+
+                <script>
+                    function attributeHandler() {
+                        return {
+                            attributes: @json($product->exists ? $product->attributes->map(fn($a) => ['name' => $a->name, 'value' => $a->value]) : []),
+                            addAttribute() {
+                                this.attributes.push({ name: '', value: '' });
+                            },
+                            removeAttribute(index) {
+                                this.attributes.splice(index, 1);
+                            }
+                        }
+                    }
+                </script>
+
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Primary Product Image</label>
                     <input type="file" name="image" class="w-full border border-gray-300 p-2 rounded">
