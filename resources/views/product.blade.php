@@ -141,6 +141,18 @@
                     @endif
                 </form>
 
+                <div class="mt-4">
+                    <form action="{{ route('wishlist.add', $product) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="flex items-center text-sm font-semibold tracking-wide transition {{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'text-red-500' : 'text-gray-500 hover:text-red-500' }}">
+                            <svg class="w-5 h-5 mr-2" {{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'fill="currentColor"' : 'fill="none"' }} stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            {{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'Saved to Wishlist' : 'Add to Wishlist' }}
+                        </button>
+                    </form>
+                </div>
+
                 <!-- Additional Guarantees -->
                 <div class="mt-8 grid grid-cols-2 gap-4 border-t border-gray-200 pt-6">
                     <div class="flex items-start text-gray-500 text-xs">
@@ -173,9 +185,18 @@
 
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     @foreach($relatedProducts as $related)
-                        <div class="group flex flex-col">
-                            <a href="{{ route('product.show', $related->slug) }}"
-                                class="relative block overflow-hidden rounded mb-4 shadow-sm bg-white border border-gray-100 p-2">
+                        <div class="group relative flex flex-col overflow-hidden rounded mb-4 shadow-sm bg-white border border-gray-100 p-2">
+                            <!-- Wishlist Button -->
+                            <form action="{{ route('wishlist.add', $related) }}" method="POST" class="absolute top-4 right-4 z-20">
+                                @csrf
+                                <button type="submit" class="p-2 bg-white rounded-full shadow hover:bg-gray-50 text-gray-400 hover:text-red-500 transition-colors {{ session('wishlist') && isset(session('wishlist')[$related->id]) ? 'text-red-500' : '' }}" title="Add to Wishlist">
+                                    <svg class="w-4 h-4" {{ session('wishlist') && isset(session('wishlist')[$related->id]) ? 'fill="currentColor"' : 'fill="none"' }} stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                </button>
+                            </form>
+
+                            <a href="{{ route('product.show', $related->slug) }}" class="block w-full">
                                 <div class="aspect-square w-full overflow-hidden rounded relative">
                                     @if($related->image)
                                         <img src="{{ asset('storage/' . $related->image) }}"
@@ -191,12 +212,16 @@
                                         </div>
                                     @endif
                                 </div>
+                            </a>
 
-                                <div class="pt-4 pb-2 text-center md:text-left">
+                            <div class="pt-4 pb-2 text-center md:text-left flex-1 flex flex-col flex-grow">
+                                <a href="{{ route('product.show', $related->slug) }}" class="block">
                                     <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">
                                         {{ $related->category->name ?? 'MUSFIQ' }}</div>
                                     <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $related->name }}</h4>
                                     <p class="text-sm text-gray-900 font-bold mb-4">${{ number_format($related->price, 2) }}</p>
+                                </a>
+                                <div class="mt-auto">
                                     <form action="{{ route('cart.add', $related) }}" method="POST">
                                         @csrf
                                         <button type="submit" @disabled($related->stock <= 0)
@@ -205,7 +230,7 @@
                                         </button>
                                     </form>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     @endforeach
                 </div>

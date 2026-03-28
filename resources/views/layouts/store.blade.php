@@ -112,6 +112,16 @@
                                 class="absolute -top-1.5 -right-2 bg-[#d4af37] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{{ count(session('cart')) }}</span>
                         @endif
                     </a>
+                    <a href="{{ route('wishlist.index') }}" class="text-gray-600 hover:text-gray-900 transition relative hidden md:block">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        @if(session('wishlist') && count(session('wishlist')) > 0)
+                            <span
+                                class="absolute -top-1.5 -right-2 bg-[#E4405F] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{{ count(session('wishlist')) }}</span>
+                        @endif
+                    </a>
                     <a href="{{ route('dashboard') }}"
                         class="text-gray-600 hover:text-gray-900 transition hidden md:block">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -257,11 +267,14 @@
             </svg>
             <span class="text-[10px] font-medium tracking-wide">Shop</span>
         </a>
-        <a href="#" class="flex flex-col items-center flex-1 text-gray-400 hover:text-gray-600">
+        <a href="{{ route('wishlist.index') }}" class="flex flex-col items-center flex-1 relative {{ request()->is('wishlist*') ? 'text-black' : 'text-gray-400 hover:text-gray-600' }}">
             <svg class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="{{ request()->is('wishlist*') ? '2.5' : '1.5' }}"
                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
+            @if(session('wishlist') && count(session('wishlist')) > 0)
+                <span class="absolute top-0 right-4 bg-[#E4405F] text-white text-[9px] font-bold px-1 rounded-full leading-none border border-white">{{ count(session('wishlist')) }}</span>
+            @endif
             <span class="text-[10px] font-medium tracking-wide">Wishlist</span>
         </a>
         <a href="{{ route('profile.edit') }}"
