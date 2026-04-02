@@ -28,7 +28,8 @@ class SliderController extends Controller
             'button_text' => 'nullable|string|max:100',
             'button_link' => 'nullable|string|max:255',
             'image' => 'required|image|max:3072',
-            'status' => 'boolean'
+            'status' => 'boolean',
+            'show_text' => 'boolean'
         ]);
 
         if ($request->hasFile('image')) {
@@ -52,7 +53,8 @@ class SliderController extends Controller
             'button_text' => 'nullable|string|max:100',
             'button_link' => 'nullable|string|max:255',
             'image' => 'nullable|image|max:3072',
-            'status' => 'boolean'
+            'status' => 'boolean',
+            'show_text' => 'boolean'
         ]);
 
         if ($request->hasFile('image')) {

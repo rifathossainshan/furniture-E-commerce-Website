@@ -53,11 +53,22 @@
                 @error('image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
-            <div class="mb-6 flex items-center">
-                <input type="hidden" name="status" value="0">
-                <input type="checkbox" name="status" value="1" {{ old('status', $slider->status ?? true) ? 'checked' : '' }}
-                    class="rounded border-gray-300 text-gray-900 shadow-sm focus:border-gray-900 focus:ring focus:ring-gray-900 focus:ring-opacity-50">
-                <label class="ml-2 block text-gray-700 text-sm font-bold">Active</label>
+            <div class="mb-6 flex items-center space-x-6">
+                <!-- Status Checkbox -->
+                <div class="flex items-center">
+                    <input type="hidden" name="status" value="0">
+                    <input type="checkbox" name="status" value="1" {{ old('status', $slider->status ?? true) ? 'checked' : '' }}
+                        class="rounded border-gray-300 text-gray-900 shadow-sm focus:border-gray-900 focus:ring focus:ring-gray-900 focus:ring-opacity-50">
+                    <label class="ml-2 block text-gray-700 text-sm font-bold">Active</label>
+                </div>
+                
+                <!-- Show Text Checkbox -->
+                <div class="flex items-center">
+                    <input type="hidden" name="show_text" value="0">
+                    <input type="checkbox" name="show_text" value="1" {{ old('show_text', $slider->show_text ?? true) ? 'checked' : '' }}
+                        class="rounded border-gray-300 text-gray-900 shadow-sm focus:border-gray-900 focus:ring focus:ring-gray-900 focus:ring-opacity-50">
+                    <label class="ml-2 block text-gray-700 text-sm font-bold">Show Text on Banner</label>
+                </div>
             </div>
 
             <div class="flex items-center justify-between">

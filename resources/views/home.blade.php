@@ -8,24 +8,26 @@
                 <div class="w-full flex-shrink-0 relative">
                     <img src="{{ asset('storage/' . $slider->image) }}"
                         class="w-full h-[60vh] md:h-[70vh] object-cover object-center" alt="{{ $slider->title }}">
-                    <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center px-8 md:px-24">
-                        <div class="max-w-xl">
-                            <h2 class="text-4xl md:text-6xl text-white font-serif uppercase tracking-widest leading-tight mb-4">
-                                {!! $slider->title !!}
-                            </h2>
-                            @if($slider->subtitle)
-                                <p class="text-white text-sm md:text-base font-medium tracking-wide mb-8">
-                                    {{ $slider->subtitle }}
-                                </p>
-                            @endif
-                            @if($slider->button_text)
-                                <a href="{{ $slider->button_link }}"
-                                    class="inline-block bg-[#d4af37] hover:bg-[#c19b28] text-white text-xs md:text-sm tracking-[0.2em] font-bold py-3 px-8 uppercase transition">
-                                    {{ $slider->button_text }}
-                                </a>
-                            @endif
+                    @if($slider->show_text ?? true)
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center px-8 md:px-24">
+                            <div class="max-w-xl">
+                                <h2 class="text-4xl md:text-6xl text-white font-serif uppercase tracking-widest leading-tight mb-4">
+                                    {!! $slider->title !!}
+                                </h2>
+                                @if($slider->subtitle)
+                                    <p class="text-white text-sm md:text-base font-medium tracking-wide mb-8">
+                                        {{ $slider->subtitle }}
+                                    </p>
+                                @endif
+                                @if($slider->button_text)
+                                    <a href="{{ $slider->button_link }}"
+                                        class="inline-block bg-[#d4af37] hover:bg-[#c19b28] text-white text-xs md:text-sm tracking-[0.2em] font-bold py-3 px-8 uppercase transition">
+                                        {{ $slider->button_text }}
+                                    </a>
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             @empty
                 <!-- Fallback if no sliders exist (matches reference) -->
