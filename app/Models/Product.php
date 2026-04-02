@@ -19,7 +19,10 @@ class Product extends Model
         'image',
         'images',
         'is_featured',
-        'status'
+        'status',
+        'meta_title',
+        'meta_description',
+        'meta_keywords'
     ];
 
     protected $casts = [

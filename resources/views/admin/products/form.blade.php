@@ -58,6 +58,32 @@
                     @error('description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
+                <!-- SEO Fields -->
+                <div class="mb-6 p-4 border border-gray-200 rounded bg-gray-50">
+                    <h3 class="block text-gray-700 text-sm font-bold mb-4 border-b pb-2">Search Engine Optimization (SEO)</h3>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Meta Title</label>
+                        <input type="text" name="meta_title" value="{{ old('meta_title', $product->meta_title) }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" placeholder="Optional. Max 60 characters for best results">
+                        @error('meta_title') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Meta Keywords</label>
+                        <input type="text" name="meta_keywords" value="{{ old('meta_keywords', $product->meta_keywords) }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" placeholder="e.g. elegant dress, summer collection, floral">
+                        @error('meta_keywords') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Meta Description</label>
+                        <textarea name="meta_description" rows="2"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" placeholder="Optional. Max 160 characters.">{{ old('meta_description', $product->meta_description) }}</textarea>
+                        @error('meta_description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
                 <!-- Dynamic Product Attributes -->
                 <div class="mb-6 p-4 border border-gray-200 rounded bg-gray-50" x-data="attributeHandler()">
                     <div class="flex justify-between items-center mb-4">

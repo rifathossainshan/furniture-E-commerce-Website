@@ -35,7 +35,10 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'images.*' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
-            'status' => 'boolean'
+            'status' => 'boolean',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string'
         ]);
 
         $data['slug'] = Str::slug($data['name']);
@@ -88,7 +91,10 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'images.*' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
-            'status' => 'boolean'
+            'status' => 'boolean',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string'
         ]);
 
         $data['slug'] = Str::slug($data['name']);

@@ -1,5 +1,27 @@
 @extends('layouts.store')
 
+@section('title', $product->meta_title ?: $product->name . ' - ' . ($settings['site_name'] ?? config('app.name', 'Musfiq')))
+
+@section('meta')
+    @if($product->meta_description)
+        <meta name="description" content="{{ $product->meta_description }}">
+    @endif
+    @if($product->meta_keywords)
+        <meta name="keywords" content="{{ $product->meta_keywords }}">
+    @endif
+    
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="{{ $product->meta_title ?: $product->name }}">
+    @if($product->meta_description)
+        <meta property="og:description" content="{{ $product->meta_description }}">
+    @endif
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if($product->image)
+        <meta property="og:image" content="{{ asset('storage/' . $product->image) }}">
+    @endif
+@endsection
+
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         @if(session('success'))
