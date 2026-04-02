@@ -162,7 +162,7 @@
                                 d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4">
                             </path>
                         </svg>
-                        <span>Free Global Shipping<br />on orders over $500</span>
+                        <span>{{ \App\Models\Setting::where('key', 'shipping_title')->value('value') ?? 'Free Global Shipping' }}<br />{{ \App\Models\Setting::where('key', 'shipping_subtitle')->value('value') ?? 'on orders over $500' }}</span>
                     </div>
                     <div class="flex items-start text-gray-500 text-xs">
                         <svg class="h-5 w-5 mr-3 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24"
@@ -170,7 +170,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <span>30-Day Free Returns<br />No questions asked</span>
+                        <span>{{ \App\Models\Setting::where('key', 'returns_title')->value('value') ?? '30-Day Free Returns' }}<br />{{ \App\Models\Setting::where('key', 'returns_subtitle')->value('value') ?? 'No questions asked' }}</span>
                     </div>
                 </div>
             </div>
