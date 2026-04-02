@@ -41,7 +41,7 @@
                             <span class="text-xs text-gray-500">{{ $order->user->email }}</span>
                         </td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm font-semibold text-gray-900">
-                            ${{ number_format($order->final_amount, 2) }}</td>
+                            ৳{{ number_format($order->final_amount, 2) }}</td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm">
                             <span class="px-2 py-1 leading-tight rounded-full text-xs font-semibold
                                 {{ $order->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}

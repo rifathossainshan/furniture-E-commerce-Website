@@ -40,7 +40,7 @@
                                         @endif
                                         <div>
                                             <h4 class="font-bold text-gray-900 text-sm mb-1">{{ $details['name'] }}</h4>
-                                            <p class="text-gray-500 text-sm">${{ number_format($details['price'], 2) }}</p>
+                                            <p class="text-gray-500 text-sm">৳{{ number_format($details['price'], 2) }}</p>
                                         </div>
                                     </td>
                                     <td class="py-6 text-center">
@@ -55,7 +55,7 @@
                                         </form>
                                     </td>
                                     <td class="py-6 text-right font-bold text-gray-900">
-                                        ${{ number_format($details['price'] * $details['quantity'], 2) }}
+                                        ৳{{ number_format($details['price'] * $details['quantity'], 2) }}
                                     </td>
                                     <td class="py-6 text-right">
                                         <form action="{{ route('cart.remove') }}" method="POST">
@@ -82,7 +82,7 @@
                             Order Summary</h3>
                         <div class="flex justify-between mb-4 text-sm text-gray-600">
                             <span>Subtotal</span>
-                            <span class="font-medium text-gray-900">${{ number_format($total, 2) }}</span>
+                            <span class="font-medium text-gray-900">৳{{ number_format($total, 2) }}</span>
                         </div>
                         <div class="flex justify-between mb-6 text-sm text-gray-600 border-b border-gray-200 pb-6">
                             <span>Shipping</span>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="flex justify-between mb-8 text-lg font-bold text-gray-900">
                             <span>Total</span>
-                            <span>${{ number_format($total, 2) }}</span>
+                            <span>৳{{ number_format($total, 2) }}</span>
                         </div>
 
                         <a href="{{ route('checkout.index') }}"

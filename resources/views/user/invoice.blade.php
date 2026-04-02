@@ -78,8 +78,8 @@
             <tr class="border-b border-gray-200">
                 <td class="py-4 text-gray-800 font-medium">{{ $item->product->name ?? 'Deleted Product' }}</td>
                 <td class="py-4 text-gray-600 text-center">{{ $item->quantity }}</td>
-                <td class="py-4 text-gray-600 text-right">${{ number_format($item->price, 2) }}</td>
-                <td class="py-4 text-gray-900 font-bold text-right">${{ number_format($item->quantity * $item->price, 2) }}</td>
+                <td class="py-4 text-gray-600 text-right">৳{{ number_format($item->price, 2) }}</td>
+                <td class="py-4 text-gray-900 font-bold text-right">৳{{ number_format($item->quantity * $item->price, 2) }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -90,21 +90,21 @@
         <div class="w-1/2">
             <div class="flex justify-between py-2 border-b border-gray-100">
                 <span class="text-gray-600">Subtotal</span>
-                <span class="font-medium text-gray-900">${{ number_format($order->total_amount, 2) }}</span>
+                <span class="font-medium text-gray-900">৳{{ number_format($order->total_amount, 2) }}</span>
             </div>
             @if($order->discount_amount > 0)
             <div class="flex justify-between py-2 border-b border-gray-100 text-red-600">
                 <span>Discount</span>
-                <span>- ${{ number_format($order->discount_amount, 2) }}</span>
+                <span>- ৳{{ number_format($order->discount_amount, 2) }}</span>
             </div>
             @endif
             <div class="flex justify-between py-2 border-b border-gray-100">
                 <span class="text-gray-600">Delivery Charge</span>
-                <span class="font-medium text-gray-900">${{ number_format($order->delivery_charge, 2) }}</span>
+                <span class="font-medium text-gray-900">৳{{ number_format($order->delivery_charge, 2) }}</span>
             </div>
             <div class="flex justify-between py-3 border-t-2 border-gray-800 mt-2 text-lg">
                 <span class="font-bold text-gray-900 uppercase tracking-wider text-sm mt-1">Grand Total</span>
-                <span class="font-bold text-black">${{ number_format($order->final_amount, 2) }}</span>
+                <span class="font-bold text-black">৳{{ number_format($order->final_amount, 2) }}</span>
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@
         </div>
         <div class="bg-white rounded shadow p-6 border-l-4 border-green-500">
             <h3 class="text-gray-500 text-sm font-semibold uppercase tracking-wider mb-2">Total Revenue</h3>
-            <p class="text-3xl font-bold text-gray-800">${{ number_format($totalRevenue, 2) }}</p>
+            <p class="text-3xl font-bold text-gray-800">৳{{ number_format($totalRevenue, 2) }}</p>
         </div>
         <div class="bg-white rounded shadow p-6 border-l-4 border-purple-500">
             <h3 class="text-gray-500 text-sm font-semibold uppercase tracking-wider mb-2">Total Products</h3>
@@ -54,7 +54,7 @@
                             </td>
                             <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">{{ $order->user->name }}</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-900">
-                                ${{ number_format($order->final_amount, 2) }}</td>
+                                ৳{{ number_format($order->final_amount, 2) }}</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-sm">
                                 <span class="px-2 py-1 leading-tight rounded-full text-xs font-semibold
                                     {{ $order->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}

@@ -87,7 +87,7 @@
                     {{ $product->category->name ?? 'MUSFIQ' }}</div>
                 <h1 class="text-3xl md:text-4xl font-serif text-gray-900 leading-tight mb-4">{{ $product->name }}</h1>
 
-                <p class="text-2xl text-gray-900 font-bold mb-6">${{ number_format($product->price, 2) }}</p>
+                <p class="text-2xl text-gray-900 font-bold mb-6">৳{{ number_format($product->price, 2) }}</p>
 
                 <div class="prose prose-sm text-gray-600 mb-8">
                     <p>{{ $product->description }}</p>
@@ -219,7 +219,7 @@
                                     <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">
                                         {{ $related->category->name ?? 'MUSFIQ' }}</div>
                                     <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $related->name }}</h4>
-                                    <p class="text-sm text-gray-900 font-bold mb-4">${{ number_format($related->price, 2) }}</p>
+                                    <p class="text-sm text-gray-900 font-bold mb-4">৳{{ number_format($related->price, 2) }}</p>
                                 </a>
                                 <div class="mt-auto">
                                     <form action="{{ route('cart.add', $related) }}" method="POST">

@@ -38,7 +38,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="py-4 px-6 border-b border-gray-200 text-sm font-bold text-gray-900">{{ $voucher->code }}</td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">
-                            {{ $voucher->type === 'percent' ? rtrim(rtrim($voucher->amount, '0'), '.') . '%' : '$' . number_format($voucher->amount, 2) }}
+                            {{ $voucher->type === 'percent' ? rtrim(rtrim($voucher->amount, '0'), '.') . '%' : '৳' . number_format($voucher->amount, 2) }}
                         </td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">
                             {{ $voucher->used_count }} / {{ $voucher->usage_limit ?: '∞' }}

@@ -44,7 +44,7 @@
                     <div class="pt-4 pb-2 text-center md:text-left flex-1 flex flex-col flex-grow">
                         <a href="{{ route('product.show', $details['slug'] ?? '#') }}" class="block">
                             <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $details['name'] }}</h4>
-                            <p class="text-sm text-gray-900 font-bold mb-4">${{ number_format($details['price'], 2) }}</p>
+                            <p class="text-sm text-gray-900 font-bold mb-4">৳{{ number_format($details['price'], 2) }}</p>
                         </a>
                         <div class="mt-auto">
                             <form action="{{ route('cart.add', ['product' => $details['product_id']]) }}" method="POST">
