@@ -83,6 +83,16 @@
                         <input type="url" name="social_whatsapp" value="{{ $settings['social_whatsapp'] ?? '#' }}"
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
                     </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Developer Name</label>
+                        <input type="text" name="developer_name" value="{{ $settings['developer_name'] ?? 'Shan' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Developer Link</label>
+                        <input type="url" name="developer_link" value="{{ $settings['developer_link'] ?? 'https://rifathossainshan.github.io/Portfolio/' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
                 </div>
             </div>
 
