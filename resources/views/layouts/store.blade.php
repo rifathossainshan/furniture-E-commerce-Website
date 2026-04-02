@@ -239,6 +239,7 @@
         <div
             class="text-center text-xs text-gray-400 mt-12 border-t border-gray-200 pt-8 max-w-7xl mx-auto px-4 uppercase tracking-widest font-semibold flex flex-col md:flex-row justify-between items-center gap-4">
             <span>&copy; {{ date('Y') }} {{ $settings['footer_copyright'] ?? 'Musfiq. All rights reserved.' }}</span>
+            <span class="normal-case tracking-normal">Developed by <a href="https://rifathossainshan.github.io/Portfolio/" target="_blank" class="font-bold hover:text-gray-900 transition">Shan</a></span>
             <span class="flex gap-4">
                 <a href="#" class="hover:text-gray-900 transition">Privacy</a>
                 <a href="#" class="hover:text-gray-900 transition">Terms</a>
