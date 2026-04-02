@@ -133,7 +133,93 @@
                 </div>
             </div>
 
-            <div class="flex items-center justify-end">
+            <div class="mb-8 border-t pt-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-6 bg-gray-50 p-3 border-l-4 border-gray-900 rounded-r">About Page Full Configuration</h3>
+                
+                <h4 class="text-md font-bold text-gray-700 mb-4 mt-6 border-b pb-2">1. Hero Section</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Hero Title</label>
+                        <input type="text" name="about_hero_title" value="{{ $settings['about_hero_title'] ?? 'Redefining<br>Modern Elegance' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Hero Subtitle</label>
+                        <input type="text" name="about_hero_subtitle" value="{{ $settings['about_hero_subtitle'] ?? 'Our Story' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
+                    <!-- Hero BG Upload -->
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Background Image</label>
+                        <input type="file" name="about_hero_bg" class="w-full text-sm">
+                        @if(isset($settings['about_hero_bg']))
+                            <img src="{{ asset('storage/' . $settings['about_hero_bg']) }}"
+                                class="h-20 mt-2 object-cover bg-gray-100 p-1 rounded">
+                        @endif
+                    </div>
+                </div>
+
+                <h4 class="text-md font-bold text-gray-700 mb-4 mt-8 border-b pb-2">2. Story Section (Images & Info)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Established Year</label>
+                        <input type="text" name="about_est_year" value="{{ $settings['about_est_year'] ?? '2026' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Collections Badge</label>
+                        <input type="text" name="about_collections" value="{{ $settings['about_collections'] ?? 'Premium' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
+                    </div>
+                    <!-- Side BG Upload -->
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Side Feature Image</label>
+                        <input type="file" name="about_feature_image" class="w-full text-sm">
+                        @if(isset($settings['about_feature_image']))
+                            <img src="{{ asset('storage/' . $settings['about_feature_image']) }}"
+                                class="h-20 mt-2 object-cover bg-gray-100 p-1 rounded">
+                        @endif
+                    </div>
+                </div>
+
+                <h4 class="text-md font-bold text-gray-700 mb-4 mt-8 border-b pb-2">3. Core Values (3 items)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Value 1 -->
+                    <div class="bg-gray-50 p-4 border border-gray-200 rounded">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Value 1 Title</label>
+                        <input type="text" name="about_core_1_title" value="{{ $settings['about_core_1_title'] ?? 'Unmatched Quality' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 mb-3 text-sm">
+                        
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Value 1 Description</label>
+                        <textarea name="about_core_1_desc" rows="3"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 text-xs">{{ $settings['about_core_1_desc'] ?? 'Every piece is crafted meticulously with premium materials to ensure durability and lasting beauty.' }}</textarea>
+                    </div>
+                    
+                    <!-- Value 2 -->
+                    <div class="bg-gray-50 p-4 border border-gray-200 rounded">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Value 2 Title</label>
+                        <input type="text" name="about_core_2_title" value="{{ $settings['about_core_2_title'] ?? 'Global Appeal' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 mb-3 text-sm">
+                        
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Value 2 Description</label>
+                        <textarea name="about_core_2_desc" rows="3"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 text-xs">{{ $settings['about_core_2_desc'] ?? 'Our aesthetic transcends borders, bringing a universal sense of sophisticated style directly to you.' }}</textarea>
+                    </div>
+
+                    <!-- Value 3 -->
+                    <div class="bg-gray-50 p-4 border border-gray-200 rounded">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Value 3 Title</label>
+                        <input type="text" name="about_core_3_title" value="{{ $settings['about_core_3_title'] ?? 'Exceptional Service' }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 mb-3 text-sm">
+                        
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Value 3 Description</label>
+                        <textarea name="about_core_3_desc" rows="3"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 text-xs">{{ $settings['about_core_3_desc'] ?? 'We are dedicated to providing a shopping experience as refined and flawless as the products we offer.' }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end mt-8 border-t pt-6">
                 <button type="submit"
                     class="bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded focus:outline-none focus:shadow-outline text-lg">
                     Save All Settings

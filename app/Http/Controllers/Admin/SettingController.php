@@ -17,19 +17,24 @@ class SettingController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->except(['_token', 'site_logo']);
+        $data = $request->except('_token');
+        $files = $request->allFiles();
 
+        // Process standard text data
         foreach ($data as $key => $value) {
-            Setting::updateOrCreate(
-                ['key' => $key],
-                ['value' => is_array($value) ? json_encode($value) : $value]
-            );
+            if (!array_key_exists($key, $files)) {
+                Setting::updateOrCreate(
+                    ['key' => $key],
+                    ['value' => is_array($value) ? json_encode($value) : $value]
+                );
+            }
         }
 
-        if ($request->hasFile('site_logo')) {
-            $path = $request->file('site_logo')->store('settings', 'public');
+        // Process any uploaded files
+        foreach ($files as $key => $file) {
+            $path = $file->store('settings', 'public');
             Setting::updateOrCreate(
-                ['key' => 'site_logo'],
+                ['key' => $key],
                 ['value' => $path]
             );
         }
