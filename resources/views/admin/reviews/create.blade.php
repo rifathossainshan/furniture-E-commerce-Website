@@ -71,7 +71,7 @@
         </div>
 
         <div class="mt-8 border-t border-gray-200 pt-6">
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow transition">
+            <button type="submit" class="text-white font-bold py-2 px-6 rounded shadow transition" style="background-color: #2563eb;">
                 Save & Publish Review
             </button>
         </div>

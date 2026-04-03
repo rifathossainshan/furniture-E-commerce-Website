@@ -6,7 +6,7 @@
     <div class="bg-white rounded shadow overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h3 class="text-lg font-semibold text-gray-800">All Reviews</h3>
-            <a href="{{ route('admin.reviews.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm shadow transition">
+            <a href="{{ route('admin.reviews.create') }}" class="text-white font-bold py-2 px-4 rounded text-sm shadow transition" style="background-color: #2563eb;">
                 + Add Manual Review
             </a>
         </div>
@@ -68,7 +68,7 @@
                             @if($review->status !== 'approved')
                             <form action="{{ route('admin.reviews.approve', $review->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-3 py-1.5 rounded transition shadow-sm">
+                                <button type="submit" class="text-white text-xs font-semibold px-3 py-1.5 rounded transition shadow-sm" style="background-color: #16a34a;">
                                     Approve
                                 </button>
                             </form>
@@ -77,7 +77,7 @@
                             @if($review->status !== 'rejected')
                             <form action="{{ route('admin.reviews.reject', $review->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-3 py-1.5 rounded transition shadow-sm">
+                                <button type="submit" class="text-white text-xs font-semibold px-3 py-1.5 rounded transition shadow-sm" style="background-color: #dc2626;">
                                     Reject
                                 </button>
                             </form>
@@ -89,7 +89,7 @@
                             <form action="{{ route('admin.reviews.reply', $review->id) }}" method="POST" class="flex gap-2">
                                 @csrf
                                 <input type="text" name="admin_reply" value="{{ $review->admin_reply }}" placeholder="Write admin reply..." required class="flex-1 text-sm border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-2">
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded transition shadow-sm whitespace-nowrap">
+                                <button type="submit" class="text-white text-xs font-semibold px-4 py-2 rounded transition shadow-sm whitespace-nowrap" style="background-color: #2563eb;">
                                     {{ $review->admin_reply ? 'Update Reply' : 'Send Reply' }}
                                 </button>
                             </form>
