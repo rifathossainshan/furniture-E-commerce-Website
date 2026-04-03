@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', $settings['site_name'] ?? config('app.name', 'Musfiq'))</title>
+    <title>@yield('title', $settings['site_name'] ?? config('app.name', 'My Store'))</title>
     @if(isset($settings['site_logo']))
         <link rel="icon" href="{{ asset('storage/' . $settings['site_logo']) }}">
     @endif
@@ -100,7 +100,7 @@
                         @if(isset($settings['site_logo']))
                             <img src="{{ asset('storage/' . $settings['site_logo']) }}" alt="Logo" class="h-8 w-auto">
                         @else
-                            {{ $settings['site_name'] ?? 'Musfiq' }}
+                            {{ $settings['site_name'] ?? config('app.name', 'My Store') }}
                         @endif
                     </a>
                 </div>
@@ -181,7 +181,7 @@
                     @if(isset($settings['site_logo']))
                         <img src="{{ asset('storage/' . $settings['site_logo']) }}" alt="Logo" class="h-10 w-auto">
                     @else
-                        {{ $settings['site_name'] ?? 'Musfiq' }}
+                        {{ $settings['site_name'] ?? config('app.name', 'My Store') }}
                     @endif
                 </a>
                 <p class="text-sm text-gray-500 leading-relaxed">
@@ -242,8 +242,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        <a href="mailto:{{ $settings['contact_email'] ?? 'support@musfiq.com' }}"
-                            class="hover:text-black transition">{{ $settings['contact_email'] ?? 'support@musfiq.com'
+                        <a href="mailto:{{ $settings['contact_email'] ?? 'support@example.com' }}"
+                            class="hover:text-black transition">{{ $settings['contact_email'] ?? 'support@example.com'
                             }}</a>
                     </li>
                     <li class="flex items-center mt-2">
@@ -259,7 +259,7 @@
         </div>
         <div
             class="text-center text-xs text-gray-400 mt-12 border-t border-gray-200 pt-8 max-w-7xl mx-auto px-4 uppercase tracking-widest font-semibold flex flex-col md:flex-row justify-between items-center gap-4">
-            <span>&copy; {{ date('Y') }} {{ $settings['footer_copyright'] ?? 'Musfiq. All rights reserved.' }}</span>
+            <span>&copy; {{ date('Y') }} {{ $settings['footer_copyright'] ?? (config('app.name', 'My Store') . '. All rights reserved.') }}</span>
             <span class="normal-case tracking-normal">Developed by <a href="https://rifathossainshan.github.io/Portfolio/" target="_blank" class="font-bold hover:text-gray-900 transition">Shan</a></span>
             <span class="flex gap-4">
                 <a href="#" class="hover:text-gray-900 transition">Privacy</a>

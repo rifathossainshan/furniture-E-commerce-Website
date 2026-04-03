@@ -12,7 +12,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Site Name</label>
-                        <input type="text" name="site_name" value="{{ $settings['site_name'] ?? 'Musfiq' }}"
+                        <input type="text" name="site_name" value="{{ $settings['site_name'] ?? 'My Store' }}"
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
                     </div>
                     <div>
@@ -49,7 +49,7 @@
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
                         <input type="email" name="contact_email"
-                            value="{{ $settings['contact_email'] ?? 'support@musfiq.com' }}"
+                            value="{{ $settings['contact_email'] ?? 'support@example.com' }}"
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
                     </div>
                     <div>
@@ -75,7 +75,7 @@
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Copyright Text</label>
                         <input type="text" name="footer_copyright"
-                            value="{{ $settings['footer_copyright'] ?? 'Musfiq. All rights reserved.' }}"
+                            value="{{ $settings['footer_copyright'] ?? 'My Store. All rights reserved.' }}"
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
                     </div>
                     <div>
@@ -92,7 +92,7 @@
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">About Us</label>
                         <textarea name="about_us" rows="4"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">{{ $settings['about_us'] ?? 'Welcome to Musfiq. We redefine elegance.' }}</textarea>
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">{{ $settings['about_us'] ?? 'Welcome to our store. We redefine elegance.' }}</textarea>
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Return Policy</label>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musfiq Admin Dashboard</title>
+    <title>{{ $settings['site_name'] ?? config('app.name', 'Admin') }} - Dashboard</title>
     @php
         $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
     @endphp
@@ -25,7 +25,7 @@
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
             class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-white flex-shrink-0 flex flex-col transition-transform duration-300 ease-in-out -translate-x-full md:static md:translate-x-0 h-full">
             <div class="p-6 text-2xl font-bold border-b border-gray-800 flex justify-between items-center">
-                <span>Musfiq</span>
+                <span class="truncate pr-2">{{ $settings['site_name'] ?? 'Store Admin' }}</span>
                 <button type="button" @click="sidebarOpen = false"
                     class="md:hidden p-2 -mr-2 text-gray-400 hover:text-white focus:outline-none">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
