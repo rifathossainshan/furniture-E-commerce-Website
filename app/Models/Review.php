@@ -9,11 +9,19 @@ class Review extends Model
     protected $fillable = [
         'product_id',
         'user_id',
+        'customer_name',
         'rating',
         'comment',
         'status',
         'admin_reply',
         'replied_at',
+        'review_date',
+        'is_admin_added',
+    ];
+
+    protected $casts = [
+        'review_date' => 'datetime',
+        'is_admin_added' => 'boolean',
     ];
 
     public function product()

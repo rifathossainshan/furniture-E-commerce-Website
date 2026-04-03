@@ -2,11 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
 class AdminReviewController extends Controller
 {
+    public function create()
+    {
+        $products = Product::where('status', true)->get();
+        return view('admin.reviews.create', compact('products'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'product_id' => ['required', 'exists:products,id'],
+            'customer_name' => ['required', 'string', 'max:255'],
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['nullable', 'string', 'max:2000'],
+            'review_date' => ['nullable', 'date'],
+            'images' => ['nullable', 'array', 'max:3'],
+            'images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
+
+        $review = Review::create([
+            'product_id' => $request->product_id,
+            'customer_name' => $request->customer_name,
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+            'status' => 'approved',
+            'is_admin_added' => true,
+            'review_date' => $request->review_date,
+        ]);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('reviews', 'public');
+
+                $review->images()->create([
+                    'image' => $path,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.reviews.index')->with('success', 'Manual review added successfully.');
+    }
+
     public function index()
     {
         $reviews = Review::with(['product', 'user', 'images'])

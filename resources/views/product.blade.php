@@ -231,14 +231,14 @@
                             <div class="bg-white border border-gray-100 p-6 shadow-sm">
                                 <div class="flex justify-between items-start mb-4">
                                     <div>
-                                        <strong class="text-gray-900 text-lg">{{ $review->user->name }}</strong>
+                                        <strong class="text-gray-900 text-lg">{{ $review->customer_name ?? ($review->user->name ?? 'Guest') }}</strong>
                                         <div class="flex items-center mt-1">
                                             @for($i=1; $i<=5; $i++)
                                                 <svg class="w-4 h-4 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                                                 </svg>
                                             @endfor
-                                            <span class="text-xs text-gray-500 ml-2">{{ $review->created_at->format('M d, Y') }}</span>
+                                            <span class="text-xs text-gray-500 ml-2">{{ ($review->review_date ?? $review->created_at)->format('M d, Y') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -273,9 +273,15 @@
                     <div class="bg-stone-50 p-6 md:p-8">
                         <h4 class="text-lg font-bold text-gray-900 uppercase tracking-widest mb-6">Write a Review</h4>
                         
-                        @auth
                             <form action="{{ route('reviews.store', $product->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
+
+                                @guest
+                                <div class="mb-4">
+                                    <label class="block text-xs font-bold text-gray-900 uppercase tracking-widest mb-2">Your Name</label>
+                                    <input type="text" name="customer_name" required placeholder="Enter your full name" class="w-full border-gray-200 focus:border-gray-900 focus:ring-0 text-gray-900 bg-white p-3">
+                                </div>
+                                @endguest
 
                                 <div class="mb-4">
                                     <label class="block text-xs font-bold text-gray-900 uppercase tracking-widest mb-2">Rating</label>
@@ -304,14 +310,6 @@
                                     Submit Review
                                 </button>
                             </form>
-                        @else
-                            <div class="text-center py-8 border border-dashed border-gray-300">
-                                <p class="text-gray-600 mb-4">You must be logged in to write a review.</p>
-                                <a href="{{ route('login') }}" class="inline-block border border-black bg-white text-black hover:bg-black hover:text-white transition px-6 py-2 tracking-widest text-xs font-bold uppercase">
-                                    Login Now
-                                </a>
-                            </div>
-                        @endauth
                     </div>
                 </div>
             </div>

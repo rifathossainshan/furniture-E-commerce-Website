@@ -6,6 +6,9 @@
     <div class="bg-white rounded shadow overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h3 class="text-lg font-semibold text-gray-800">All Reviews</h3>
+            <a href="{{ route('admin.reviews.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm shadow transition">
+                + Add Manual Review
+            </a>
         </div>
 
         @if(session('success'))
@@ -29,7 +32,13 @@
 
                     <div class="mb-4 text-sm text-gray-600">
                         <p class="mb-1"><strong class="text-gray-900">Product:</strong> {{ $review->product->name ?? 'Deleted Product' }}</p>
-                        <p class="mb-1"><strong class="text-gray-900">Customer:</strong> {{ $review->user->name ?? 'Unknown User' }} <span class="text-xs text-gray-400">({{ $review->created_at->format('M d, Y h:i A') }})</span></p>
+                        <p class="mb-1">
+                            <strong class="text-gray-900">Customer:</strong> {{ $review->customer_name ?? ($review->user->name ?? 'Guest') }} 
+                            <span class="text-xs text-gray-400">({{ ($review->review_date ?? $review->created_at)->format('M d, Y h:i A') }})</span>
+                            @if($review->is_admin_added)
+                                <span class="ml-2 bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Admin Added</span>
+                            @endif
+                        </p>
                         <p class="mb-1"><strong class="text-gray-900">Rating:</strong> <span class="text-yellow-500 font-bold">{{ $review->rating }}/5</span></p>
                     </div>
 

@@ -12,6 +12,7 @@ class ReviewController extends Controller
     public function store(Request $request, Product $product)
     {
         $request->validate([
+            'customer_name' => [Auth::check() ? 'nullable' : 'required', 'string', 'max:255'],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'comment' => ['nullable', 'string', 'max:2000'],
             'images' => ['nullable', 'array', 'max:3'],
@@ -21,9 +22,11 @@ class ReviewController extends Controller
         $review = Review::create([
             'product_id' => $product->id,
             'user_id' => Auth::id(),
+            'customer_name' => Auth::check() ? null : $request->customer_name,
             'rating' => $request->rating,
             'comment' => $request->comment,
             'status' => 'pending',
+            'is_admin_added' => false,
         ]);
 
         if ($request->hasFile('images')) {
