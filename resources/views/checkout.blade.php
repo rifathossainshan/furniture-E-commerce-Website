@@ -25,7 +25,7 @@
             </div>
         @endif
 
-        <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form" class="flex flex-col lg:flex-row gap-12 lg:gap-20">
+        <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form" class="flex flex-col lg:flex-row gap-12 lg:gap-20" onsubmit="fbq('track', 'Lead');">
             @csrf
             
             <!-- Left Column: Billing Details -->

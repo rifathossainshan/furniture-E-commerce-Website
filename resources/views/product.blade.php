@@ -23,6 +23,15 @@
 @endsection
 
 @section('content')
+    <script>
+    fbq('track', 'ViewContent', {
+      content_name: '{{ addslashes($product->name) }}',
+      content_ids: ['{{ $product->id }}'],
+      content_type: 'product',
+      value: {{ $product->price }},
+      currency: 'BDT'
+    });
+    </script>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         @if(session('success'))
             <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded relative mb-8">
@@ -149,7 +158,7 @@
                     @endif
                 </div>
 
-                <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-auto flex flex-col md:flex-row gap-4">
+                <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-auto flex flex-col md:flex-row gap-4" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($product->name) }}', content_ids: ['{{ $product->id }}'], content_type: 'product', value: {{ $product->price }}, currency: 'BDT' });">
                     @csrf
                     <button type="submit" @disabled($product->stock <= 0)
                         class="flex-1 border border-[#d4af37] bg-white text-[#d4af37] hover:bg-stone-50 transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
@@ -244,7 +253,7 @@
                                     <p class="text-sm text-gray-900 font-bold mb-4">৳{{ number_format($related->price, 2) }}</p>
                                 </a>
                                 <div class="mt-auto">
-                                    <form action="{{ route('cart.add', $related) }}" method="POST">
+                                    <form action="{{ route('cart.add', $related) }}" method="POST" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($related->name) }}', content_ids: ['{{ $related->id }}'], content_type: 'product', value: {{ $related->price }}, currency: 'BDT' });">
                                         @csrf
                                         <button type="submit" @disabled($related->stock <= 0)
                                             class="w-full border border-[#d4af37] bg-white text-[#d4af37] hover:bg-[#d4af37] hover:text-white transition text-xs font-bold py-2.5 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
