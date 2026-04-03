@@ -80,10 +80,13 @@ class AdminReviewController extends Controller
     {
         $request->validate([
             'admin_reply' => ['required', 'string', 'max:2000'],
+            'reply_by' => ['required', 'string', 'max:255'],
         ]);
 
         $review->update([
             'admin_reply' => $request->admin_reply,
+            'reply_by' => $request->reply_by,
+            'is_verified_reply' => true,
             'replied_at' => now(),
         ]);
 

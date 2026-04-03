@@ -94,11 +94,24 @@
                         </div>
 
                         <!-- Admin Reply Form -->
-                        <div class="ml-auto w-full md:w-1/2">
-                            <form action="{{ route('admin.reviews.reply', $review->id) }}" method="POST" class="flex gap-2">
+                        <div class="ml-auto w-full md:w-3/4">
+                            <form action="{{ route('admin.reviews.reply', $review->id) }}" method="POST" class="flex gap-2 items-end">
                                 @csrf
-                                <input type="text" name="admin_reply" value="{{ $review->admin_reply }}" placeholder="Write admin reply..." required class="flex-1 text-sm border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-2">
-                                <button type="submit" class="text-white text-xs font-semibold px-4 py-2 rounded transition shadow-sm whitespace-nowrap" style="background-color: #2563eb;">
+                                <div class="w-1/3">
+                                    <label class="text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-1 block">Reply As</label>
+                                    <select name="reply_by" class="w-full text-sm border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-2 h-[38px]">
+                                        <option value="Admin" {{ $review->reply_by === 'Admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="Musfiq (Owner)" {{ $review->reply_by === 'Musfiq (Owner)' ? 'selected' : '' }}>Musfiq (Owner)</option>
+                                        <option value="Royal Support" {{ $review->reply_by === 'Royal Support' ? 'selected' : '' }}>Royal Support</option>
+                                        <option value="Customer Care" {{ $review->reply_by === 'Customer Care' ? 'selected' : '' }}>Customer Care</option>
+                                        <option value="Team Royal" {{ $review->reply_by === 'Team Royal' ? 'selected' : '' }}>Team Royal</option>
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-1 block">Response Message</label>
+                                    <input type="text" name="admin_reply" value="{{ $review->admin_reply }}" placeholder="Write admin reply..." required class="w-full text-sm border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-2 h-[38px]">
+                                </div>
+                                <button type="submit" class="text-white text-xs font-semibold px-4 py-2 rounded transition shadow-sm whitespace-nowrap h-[38px]" style="background-color: #2563eb;">
                                     {{ $review->admin_reply ? 'Update Reply' : 'Send Reply' }}
                                 </button>
                             </form>
