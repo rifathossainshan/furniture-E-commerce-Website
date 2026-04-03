@@ -14,7 +14,11 @@ class HomeController extends Controller
     {
         $sliders = Slider::where('status', true)->get();
         $categories = Category::where('status', true)->get();
-        $products = Product::with('category')->where('status', true)->latest()->take(8)->get();
+        $products = Product::with('category')
+            ->withAvg(['reviews' => function ($query) {
+                $query->where('status', 'approved');
+            }], 'rating')
+            ->where('status', true)->latest()->take(8)->get();
 
         return view('home', compact('sliders', 'categories', 'products'));
     }

@@ -1,0 +1,103 @@
+@extends('layouts.admin')
+
+@section('header', 'Manage Customer Reviews')
+
+@section('content')
+    <div class="bg-white rounded shadow overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-gray-800">All Reviews</h3>
+        </div>
+
+        @if(session('success'))
+            <div class="bg-green-50 text-green-700 px-6 py-3 border-b border-green-200 text-sm">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="p-6 space-y-6">
+            @forelse($reviews as $review)
+                <div class="border border-gray-200 rounded p-5 relative">
+                    <!-- Status Badge -->
+                    <div class="absolute top-5 right-5">
+                        <span class="px-2 py-1 leading-tight rounded-full text-xs font-semibold
+                            {{ $review->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                            {{ $review->status === 'approved' ? 'bg-green-100 text-green-800' : '' }}
+                            {{ $review->status === 'rejected' ? 'bg-red-100 text-red-800' : '' }}">
+                            {{ ucfirst($review->status) }}
+                        </span>
+                    </div>
+
+                    <div class="mb-4 text-sm text-gray-600">
+                        <p class="mb-1"><strong class="text-gray-900">Product:</strong> {{ $review->product->name ?? 'Deleted Product' }}</p>
+                        <p class="mb-1"><strong class="text-gray-900">Customer:</strong> {{ $review->user->name ?? 'Unknown User' }} <span class="text-xs text-gray-400">({{ $review->created_at->format('M d, Y h:i A') }})</span></p>
+                        <p class="mb-1"><strong class="text-gray-900">Rating:</strong> <span class="text-yellow-500 font-bold">{{ $review->rating }}/5</span></p>
+                    </div>
+
+                    @if($review->comment)
+                        <div class="mb-4">
+                            <strong class="text-gray-900 text-sm block mb-1">Comment:</strong>
+                            <p class="text-gray-700 bg-gray-50 p-3 rounded text-sm">{{ $review->comment }}</p>
+                        </div>
+                    @endif
+
+                    @if($review->images->count())
+                        <div class="mb-4">
+                            <strong class="text-gray-900 text-sm block mb-2">Attached Images:</strong>
+                            <div class="flex gap-2 flex-wrap">
+                                @foreach($review->images as $img)
+                                    <a href="{{ asset('storage/' . $img->image) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $img->image) }}" class="w-16 h-16 object-cover rounded border border-gray-200 shadow-sm hover:opacity-80 transition">
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap items-end gap-4 mt-6 pt-4 border-t border-gray-100">
+                        <div class="flex gap-2">
+                            @if($review->status !== 'approved')
+                            <form action="{{ route('admin.reviews.approve', $review->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-3 py-1.5 rounded transition shadow-sm">
+                                    Approve
+                                </button>
+                            </form>
+                            @endif
+
+                            @if($review->status !== 'rejected')
+                            <form action="{{ route('admin.reviews.reject', $review->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-3 py-1.5 rounded transition shadow-sm">
+                                    Reject
+                                </button>
+                            </form>
+                            @endif
+                        </div>
+
+                        <!-- Admin Reply Form -->
+                        <div class="ml-auto w-full md:w-1/2">
+                            <form action="{{ route('admin.reviews.reply', $review->id) }}" method="POST" class="flex gap-2">
+                                @csrf
+                                <input type="text" name="admin_reply" value="{{ $review->admin_reply }}" placeholder="Write admin reply..." required class="flex-1 text-sm border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 p-2">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded transition shadow-sm whitespace-nowrap">
+                                    {{ $review->admin_reply ? 'Update Reply' : 'Send Reply' }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center py-10">
+                    <p class="text-gray-500">No reviews found.</p>
+                </div>
+            @endforelse
+        </div>
+
+        @if($reviews->hasPages())
+            <div class="px-6 py-4 border-t border-gray-200">
+                {{ $reviews->links() }}
+            </div>
+        @endif
+    </div>
+@endsection

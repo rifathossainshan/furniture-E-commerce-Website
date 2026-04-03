@@ -11,7 +11,9 @@ class ShopController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with('category')->where('status', true);
+        $query = Product::with('category')->withAvg(['reviews' => function ($query) {
+            $query->where('status', 'approved');
+        }], 'rating')->where('status', true);
 
         if ($request->filled('q')) {
             $query->where('name', 'like', '%' . $request->q . '%');
@@ -35,6 +37,9 @@ class ShopController extends Controller
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->where('status', true)
+            ->withAvg(['reviews' => function ($query) {
+                $query->where('status', 'approved');
+            }], 'rating')
             ->take(4)->get();
 
         return view('product', compact('product', 'relatedProducts'));

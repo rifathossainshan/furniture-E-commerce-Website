@@ -136,7 +136,10 @@
                                 {{ $product->category->name ?? 'MUSFIQ' }}
                             </div>
                             <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $product->name }}</h4>
-                            <p class="text-sm text-gray-900 font-bold mb-4">৳{{ number_format($product->price, 2) }}</p>
+                            <p class="text-sm text-gray-900 font-bold mb-1">৳{{ number_format($product->price, 2) }}</p>
+                            <div class="text-xs text-gray-500 font-semibold mb-4">
+                                <span class="text-yellow-500">★</span> {{ number_format($product->reviews_avg_rating ?? 0, 1) }}
+                            </div>
                         </a>
                         <div class="mt-auto">
                             <form action="{{ route('cart.add', $product) }}" method="POST">

@@ -207,6 +207,116 @@
             </div>
         </div>
 
+        <!-- Customer Reviews Section -->
+        <div class="mt-24 border-t border-gray-200 pt-16">
+            <div class="mb-10">
+                <h3 class="text-2xl font-serif text-gray-900 tracking-wider">Customer Reviews</h3>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <!-- Review List -->
+                <div class="w-full md:w-2/3">
+                    @php
+                        $approvedReviews = $product->reviews()->with(['user', 'images'])->where('status', 'approved')->latest()->get();
+                    @endphp
+
+                    @if(session('success_review'))
+                        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded relative mb-6">
+                            <span class="block sm:inline">{{ session('success_review') }}</span>
+                        </div>
+                    @endif
+
+                    <div class="space-y-8">
+                        @forelse($approvedReviews as $review)
+                            <div class="bg-white border border-gray-100 p-6 shadow-sm">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <strong class="text-gray-900 text-lg">{{ $review->user->name }}</strong>
+                                        <div class="flex items-center mt-1">
+                                            @for($i=1; $i<=5; $i++)
+                                                <svg class="w-4 h-4 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                </svg>
+                                            @endfor
+                                            <span class="text-xs text-gray-500 ml-2">{{ $review->created_at->format('M d, Y') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if($review->comment)
+                                    <p class="text-gray-700 text-sm mb-4">{{ $review->comment }}</p>
+                                @endif
+
+                                @if($review->images->count())
+                                    <div class="flex flex-wrap gap-2 mt-4">
+                                        @foreach($review->images as $img)
+                                            <img src="{{ asset('storage/' . $img->image) }}" class="w-20 h-20 object-cover border border-gray-200">
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                @if($review->admin_reply)
+                                    <div class="mt-6 p-4 bg-stone-50 border-l-4 border-[#d4af37]">
+                                        <strong class="text-sm text-gray-900 uppercase tracking-widest block mb-2">Admin Reply</strong>
+                                        <p class="text-gray-700 text-sm">{{ $review->admin_reply }}</p>
+                                    </div>
+                                @endif
+                            </div>
+                        @empty
+                            <p class="text-gray-500 italic">There are no reviews for this product yet.</p>
+                        @endforelse
+                    </div>
+                </div>
+
+                <!-- Review Form -->
+                <div class="w-full md:w-1/3">
+                    <div class="bg-stone-50 p-6 md:p-8">
+                        <h4 class="text-lg font-bold text-gray-900 uppercase tracking-widest mb-6">Write a Review</h4>
+                        
+                        @auth
+                            <form action="{{ route('reviews.store', $product->id) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+
+                                <div class="mb-4">
+                                    <label class="block text-xs font-bold text-gray-900 uppercase tracking-widest mb-2">Rating</label>
+                                    <select name="rating" required class="w-full border-gray-200 focus:border-gray-900 focus:ring-0 text-gray-900 bg-white p-3">
+                                        <option value="">Select rating</option>
+                                        <option value="5">5 Stars - Excellent</option>
+                                        <option value="4">4 Stars - Good</option>
+                                        <option value="3">3 Stars - Average</option>
+                                        <option value="2">2 Stars - Poor</option>
+                                        <option value="1">1 Star - Terrible</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="block text-xs font-bold text-gray-900 uppercase tracking-widest mb-2">Your Review</label>
+                                    <textarea name="comment" rows="4" placeholder="Share your experience..." class="w-full border-gray-200 focus:border-gray-900 focus:ring-0 text-gray-900 bg-white p-3 resize-none"></textarea>
+                                </div>
+
+                                <div class="mb-6">
+                                    <label class="block text-xs font-bold text-gray-900 uppercase tracking-widest mb-2">Add Photos (Max 3)</label>
+                                    <input type="file" name="images[]" multiple accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-gray-900 file:text-white hover:file:bg-gray-800">
+                                    <p class="text-[10px] text-gray-400 mt-1 uppercase">Valid formats: JPG, PNG, WEBP. Max size: 2MB.</p>
+                                </div>
+
+                                <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm">
+                                    Submit Review
+                                </button>
+                            </form>
+                        @else
+                            <div class="text-center py-8 border border-dashed border-gray-300">
+                                <p class="text-gray-600 mb-4">You must be logged in to write a review.</p>
+                                <a href="{{ route('login') }}" class="inline-block border border-black bg-white text-black hover:bg-black hover:text-white transition px-6 py-2 tracking-widest text-xs font-bold uppercase">
+                                    Login Now
+                                </a>
+                            </div>
+                        @endauth
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Related Products -->
         @if(count($relatedProducts) > 0)
             <div class="mt-24">

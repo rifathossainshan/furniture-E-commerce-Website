@@ -52,6 +52,8 @@
                     class="block px-4 py-2 rounded {{ request()->routeIs('admin.sliders.*') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300' }}">Sliders</a>
                 <a href="{{ route('admin.vouchers.index') }}"
                     class="block px-4 py-2 rounded {{ request()->routeIs('admin.vouchers.*') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300' }}">Vouchers</a>
+                <a href="{{ route('admin.reviews.index') }}"
+                    class="block px-4 py-2 rounded {{ request()->routeIs('admin.reviews.*') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300' }}">Reviews</a>
                 <a href="{{ route('admin.settings.index') }}"
                     class="block px-4 py-2 rounded {{ request()->routeIs('admin.settings.*') ? 'bg-gray-800 text-white' : 'hover:bg-gray-800 text-gray-300' }}">Settings</a>
             </nav>
