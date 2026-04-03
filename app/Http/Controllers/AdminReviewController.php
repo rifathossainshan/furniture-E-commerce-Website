@@ -89,4 +89,11 @@ class AdminReviewController extends Controller
 
         return back()->with('success', 'Reply added successfully.');
     }
+
+    public function destroy(Review $review)
+    {
+        $review->delete();
+
+        return back()->with('success', 'Review deleted successfully.');
+    }
 }

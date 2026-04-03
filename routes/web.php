@@ -56,6 +56,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/reviews/{review}/approve', [\App\Http\Controllers\AdminReviewController::class, 'approve'])->name('reviews.approve');
     Route::post('/reviews/{review}/reject', [\App\Http\Controllers\AdminReviewController::class, 'reject'])->name('reviews.reject');
     Route::post('/reviews/{review}/reply', [\App\Http\Controllers\AdminReviewController::class, 'reply'])->name('reviews.reply');
+    Route::delete('/reviews/{review}', [\App\Http\Controllers\AdminReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -82,6 +82,15 @@
                                 </button>
                             </form>
                             @endif
+
+                            <!-- Delete Button -->
+                            <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-white text-xs font-semibold px-3 py-1.5 rounded transition shadow-sm" style="background-color: #4b5563;">
+                                    Delete
+                                </button>
+                            </form>
                         </div>
 
                         <!-- Admin Reply Form -->
