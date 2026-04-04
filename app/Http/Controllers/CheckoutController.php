@@ -62,6 +62,7 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'name' => 'required|string',
             'address' => 'required|string',
             'phone' => 'required|string',
             'delivery_area' => 'required|in:inside_dhaka,outside_dhaka'
@@ -92,10 +93,10 @@ class CheckoutController extends Controller
         $areaText = $request->delivery_area === 'inside_dhaka' ? 'Inside Dhaka' : 'Outside Dhaka';
 
         $total = max(0, $subtotal - $discount) + $deliveryCharge;
-        $shippingAddress = $request->address . ' - ' . $areaText . ' - Phone: ' . $request->phone;
+        $shippingAddress = "{$request->name} - {$request->address} - {$areaText} - Phone: {$request->phone}";
 
         $order = Order::create([
-            'user_id' => auth()->id(),
+            'user_id' => auth()->check() ? auth()->id() : null,
             'order_number' => 'ORD-' . strtoupper(Str::random(8)),
             'total_amount' => $subtotal,
             'discount_amount' => $discount,

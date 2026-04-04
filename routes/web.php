@@ -19,13 +19,13 @@ Route::delete('/wishlist/remove', [\App\Http\Controllers\WishlistController::cla
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\UserController::class, 'dashboard'])->name('dashboard');
-
-    Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout/voucher', [\App\Http\Controllers\CheckoutController::class, 'applyVoucher'])->name('checkout.voucher');
-    Route::post('/checkout/place-order', [\App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
-    
-    Route::get('/order/{order}/invoice', [\App\Http\Controllers\UserController::class, 'invoice'])->name('order.invoice');
 });
+
+// Guest-accessible checkout routes
+Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout/voucher', [\App\Http\Controllers\CheckoutController::class, 'applyVoucher'])->name('checkout.voucher');
+Route::post('/checkout/place-order', [\App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/order/{order}/invoice', [\App\Http\Controllers\UserController::class, 'invoice'])->name('order.invoice');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -60,3 +60,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
 require __DIR__ . '/auth.php';
+
+Route::get('/migrate-db', function() {
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    return 'Database migrated successfully on shared hosting!';
+});

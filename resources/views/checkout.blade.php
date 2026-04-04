@@ -36,7 +36,7 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-gray-900 text-sm font-bold uppercase mb-2">FULL NAME</label>
-                        <input type="text" name="name" value="{{ auth()->user()->name }}" required
+                        <input type="text" name="name" value="{{ auth()->check() ? auth()->user()->name : '' }}" required
                             class="w-full border-gray-200 focus:border-gray-900 focus:ring-0 text-gray-900 bg-white shadow-sm p-3">
                     </div>
 
