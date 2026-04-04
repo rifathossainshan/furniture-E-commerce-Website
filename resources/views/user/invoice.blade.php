@@ -90,8 +90,8 @@ fbq('track', 'Purchase', {
     <!-- Billing Info -->
     <div class="mb-12">
         <h3 class="text-sm font-semibold text-gray-800 uppercase tracking-widest border-b pb-2 mb-4">Billed To</h3>
-        <p class="font-bold text-gray-900">{{ $order->user->name ?? 'Guest' }}</p>
-        <p class="text-gray-600 mt-1">{{ $order->user->email ?? '' }}</p>
+        <p class="font-bold text-gray-900">{{ optional($order->user)->name ?? 'Guest' }}</p>
+        <p class="text-gray-600 mt-1">{{ optional($order->user)->email ?? '' }}</p>
         <p class="text-gray-600 mt-1">{{ $order->shipping_address }}</p>
     </div>
 

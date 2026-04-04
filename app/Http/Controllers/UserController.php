@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function invoice(Order $order)
     {
-        if ($order->user_id !== auth()->id() && !auth()->user()->is_admin) {
+        if ($order->user_id !== auth()->id() && !optional(auth()->user())->is_admin) {
             abort(403, 'Unauthorized access to this invoice');
         }
         
