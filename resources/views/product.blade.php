@@ -113,8 +113,24 @@
             </div>
 
             <!-- Right: Product Info -->
+            @php
+                // Build attribute map safely without arrow functions
+                $attrMap = [];
+                if ($product->attributes && $product->attributes->count() > 0) {
+                    foreach ($product->attributes as $attr) {
+                        $vals = array_filter(array_map('trim', explode(',', $attr->value)));
+                        foreach ($vals as $v) {
+                            $attrMap[$attr->name][] = $v;
+                        }
+                    }
+                    // Deduplicate values per name
+                    foreach ($attrMap as $k => $v) {
+                        $attrMap[$k] = array_values(array_unique($v));
+                    }
+                }
+            @endphp
             <div class="w-full md:w-1/2 flex flex-col pt-4 md:pt-10"
-                x-data="productOptions({{ json_encode($product->attributes->groupBy('name')->map(fn($group) => $group->pluck('value')->flatMap(fn($v) => array_map('trim', explode(',', $v)))->values()->toArray()) }})">
+                x-data="productOptions({{ json_encode($attrMap) }})">
                 <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-2">
                     {{ $product->category->name ?? 'MUSFIQ' }}</div>
                 <h1 class="text-3xl md:text-4xl font-serif text-gray-900 leading-tight mb-4">{{ $product->name }}</h1>
@@ -125,26 +141,19 @@
                     <p>{{ $product->description }}</p>
                 </div>
 
-                @if($product->attributes && $product->attributes->count() > 0)
+                @if(!empty($attrMap))
                 <div class="mb-8 border-t border-gray-200 pt-6">
                     <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-4">Specifications</p>
                     <div class="space-y-5">
-                        @php
-                            $groupedAttributes = $product->attributes->groupBy('name');
-                        @endphp
-                        @foreach($groupedAttributes as $attrName => $attrGroup)
-                            @php
-                                // Merge all comma-separated values across rows with the same name
-                                $allValues = $attrGroup->flatMap(fn($a) => array_map('trim', explode(',', $a->value)))->filter()->values();
-                            @endphp
+                        @foreach($attrMap as $attrName => $allValues)
                             <div>
                                 <p class="text-sm font-bold text-gray-800 mb-2">{{ $attrName }}</p>
-                                @if($allValues->count() > 1)
+                                @if(count($allValues) > 1)
                                     {{-- Multiple values → show as selectable pill buttons --}}
                                     <div class="flex flex-wrap gap-2">
                                         @foreach($allValues as $val)
                                             <button type="button"
-                                                @click="selectAttr('{{ $attrName }}', '{{ $val }}')"
+                                                @click="selectAttr('{{ addslashes($attrName) }}', '{{ addslashes($val) }}')"
                                                 :class="selectedAttrs['{{ $attrName }}'] === '{{ $val }}' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'"
                                                 class="px-4 py-1.5 rounded-full border text-sm font-medium transition-all duration-150 focus:outline-none">
                                                 {{ $val }}
@@ -153,8 +162,8 @@
                                     </div>
                                     <p x-show="errors['{{ $attrName }}']" class="text-red-500 text-xs mt-1">Please select a {{ $attrName }}</p>
                                 @else
-                                    {{-- Single value → just show as bold text --}}
-                                    <span class="text-sm font-medium text-gray-900">{{ $allValues->first() }}</span>
+                                    {{-- Single value → just show as text --}}
+                                    <span class="text-sm font-medium text-gray-900">{{ $allValues[0] ?? '' }}</span>
                                 @endif
                             </div>
                         @endforeach
