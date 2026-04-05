@@ -25,7 +25,7 @@
             <!-- Left: Text Content -->
             <div class="lg:col-span-6 lg:col-start-1 order-2 lg:order-1">
                 <div class="mb-8">
-                    <h2 class="text-3xl md:text-4xl font-serif text-gray-900 mb-6">About Musfiq</h2>
+                    <h2 class="text-3xl md:text-4xl font-serif text-gray-900 mb-6">About</h2>
                     <div class="w-16 h-1 bg-[#d4af37] mb-8"></div>
                 </div>
                 
