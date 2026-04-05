@@ -37,8 +37,8 @@
                         <td class="py-4 px-6 border-b border-gray-200 text-sm font-bold text-gray-900">
                             #{{ $order->order_number }}</td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">
-                            {{ $order->user->name }}<br>
-                            <span class="text-xs text-gray-500">{{ $order->user->email }}</span>
+                            {{ optional($order->user)->name ?? 'Guest' }}<br>
+                            <span class="text-xs text-gray-500">{{ optional($order->user)->email ?? 'No email' }}</span>
                         </td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm font-semibold text-gray-900">
                             ৳{{ number_format($order->final_amount, 2) }}</td>

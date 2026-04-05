@@ -84,8 +84,8 @@
                 <div class="text-sm space-y-3">
                     <div>
                         <span class="font-medium text-gray-700 block">Customer:</span>
-                        <p>{{ $order->user->name }}</p>
-                        <p class="text-gray-500">{{ $order->user->email }}</p>
+                        <p>{{ optional($order->user)->name ?? 'Guest' }}</p>
+                        <p class="text-gray-500">{{ optional($order->user)->email ?? 'No email' }}</p>
                     </div>
                     <div>
                         <span class="font-medium text-gray-700 block">Payment Method:</span>

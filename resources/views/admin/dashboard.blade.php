@@ -52,7 +52,7 @@
                         <tr class="hover:bg-gray-50">
                             <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-900">#{{ $order->order_number }}
                             </td>
-                            <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">{{ $order->user->name }}</td>
+                            <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">{{ optional($order->user)->name ?? 'Guest' }}</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-900">
                                 ৳{{ number_format($order->final_amount, 2) }}</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-sm">
