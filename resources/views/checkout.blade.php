@@ -95,6 +95,15 @@
                                 <div class="pr-4">
                                     <h4 class="font-bold text-gray-900 uppercase text-sm leading-snug">{{ $details['name'] }}</h4>
                                     <p class="text-gray-500 text-xs mt-1">Qty: {{ $details['quantity'] }}</p>
+                                    @if(!empty($details['selected_attributes']))
+                                        <div class="flex flex-wrap gap-1 mt-1.5">
+                                            @foreach($details['selected_attributes'] as $attrName => $attrVal)
+                                                <span class="inline-flex items-center text-[10px] font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded-full px-2 py-0.5">
+                                                    <span class="font-bold mr-0.5">{{ $attrName }}:</span> {{ $attrVal }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
                                 <span class="font-bold text-gray-900 whitespace-nowrap">৳{{ number_format($details['price'] * $details['quantity']) }}</span>
                             </div>

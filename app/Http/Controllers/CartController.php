@@ -22,15 +22,28 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$product->id])) {
-            $cart[$product->id]['quantity']++;
+        // Collect selected attributes from form (e.g. attr_Size => 42, attr_Color => Red)
+        $selectedAttributes = [];
+        foreach ($request->all() as $key => $val) {
+            if (str_starts_with($key, 'attr_') && $val !== '') {
+                $attrName = str_replace('attr_', '', $key);
+                $selectedAttributes[$attrName] = $val;
+            }
+        }
+
+        // Create a unique cart key based on product id + selected attributes
+        $cartKey = $product->id . (count($selectedAttributes) ? '_' . md5(json_encode($selectedAttributes)) : '');
+
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity']++;
         } else {
-            $cart[$product->id] = [
-                "name" => $product->name,
-                "quantity" => 1,
-                "price" => $product->price,
-                "image" => $product->image,
-                "product_id" => $product->id
+            $cart[$cartKey] = [
+                "name"                => $product->name,
+                "quantity"            => 1,
+                "price"               => $product->price,
+                "image"               => $product->image,
+                "product_id"          => $product->id,
+                "selected_attributes" => $selectedAttributes,
             ];
         }
 

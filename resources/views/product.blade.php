@@ -113,7 +113,8 @@
             </div>
 
             <!-- Right: Product Info -->
-            <div class="w-full md:w-1/2 flex flex-col pt-4 md:pt-10">
+            <div class="w-full md:w-1/2 flex flex-col pt-4 md:pt-10"
+                x-data="productOptions({{ json_encode($product->attributes->groupBy('name')->map(fn($group) => $group->pluck('value')->flatMap(fn($v) => array_map('trim', explode(',', $v)))->values()->toArray()) }})">
                 <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-2">
                     {{ $product->category->name ?? 'MUSFIQ' }}</div>
                 <h1 class="text-3xl md:text-4xl font-serif text-gray-900 leading-tight mb-4">{{ $product->name }}</h1>
@@ -127,12 +128,35 @@
                 @if($product->attributes && $product->attributes->count() > 0)
                 <div class="mb-8 border-t border-gray-200 pt-6">
                     <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-4">Specifications</p>
-                    <div class="grid grid-cols-2 gap-y-4 gap-x-6">
-                        @foreach($product->attributes as $attribute)
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">{{ $attribute->name }}</span>
-                            <span class="text-sm font-medium text-gray-900">{{ $attribute->value }}</span>
-                        </div>
+                    <div class="space-y-5">
+                        @php
+                            $groupedAttributes = $product->attributes->groupBy('name');
+                        @endphp
+                        @foreach($groupedAttributes as $attrName => $attrGroup)
+                            @php
+                                // Merge all comma-separated values across rows with the same name
+                                $allValues = $attrGroup->flatMap(fn($a) => array_map('trim', explode(',', $a->value)))->filter()->values();
+                            @endphp
+                            <div>
+                                <p class="text-sm font-bold text-gray-800 mb-2">{{ $attrName }}</p>
+                                @if($allValues->count() > 1)
+                                    {{-- Multiple values → show as selectable pill buttons --}}
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach($allValues as $val)
+                                            <button type="button"
+                                                @click="selectAttr('{{ $attrName }}', '{{ $val }}')"
+                                                :class="selectedAttrs['{{ $attrName }}'] === '{{ $val }}' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'"
+                                                class="px-4 py-1.5 rounded-full border text-sm font-medium transition-all duration-150 focus:outline-none">
+                                                {{ $val }}
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                    <p x-show="errors['{{ $attrName }}']" class="text-red-500 text-xs mt-1">Please select a {{ $attrName }}</p>
+                                @else
+                                    {{-- Single value → just show as bold text --}}
+                                    <span class="text-sm font-medium text-gray-900">{{ $allValues->first() }}</span>
+                                @endif
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -158,9 +182,13 @@
                     @endif
                 </div>
 
-                <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-auto flex flex-col md:flex-row gap-4" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($product->name) }}', content_ids: ['{{ $product->id }}'], content_type: 'product', value: {{ $product->price }}, currency: 'BDT' });">
+                <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-auto flex flex-col md:flex-row gap-4" @submit.prevent="submitCartForm($event)" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($product->name) }}', content_ids: ['{{ $product->id }}'], content_type: 'product', value: {{ $product->price }}, currency: 'BDT' });">
                     @csrf
-                    <button type="submit" @disabled($product->stock <= 0)
+                    {{-- Dynamic hidden inputs for selected attributes appended by Alpine --}}
+                    <template x-for="(val, key) in selectedAttrs" :key="key">
+                        <input type="hidden" :name="'attr_' + key" :value="val">
+                    </template>
+                    <button type="submit" name="buy_now" value="0" @disabled($product->stock <= 0)
                         class="flex-1 border border-[#d4af37] bg-white text-[#d4af37] hover:bg-stone-50 transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
                         {{ $product->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
                     </button>
@@ -171,6 +199,39 @@
                         </button>
                     @endif
                 </form>
+
+                <script>
+                function productOptions(attributeMap) {
+                    // attributeMap: { "Size": ["42","43","44"], "Color": ["Red","Blue"] }
+                    const requiresSelection = {};
+                    for (const name in attributeMap) {
+                        if (attributeMap[name].length > 1) {
+                            requiresSelection[name] = true;
+                        }
+                    }
+                    return {
+                        selectedAttrs: {},
+                        errors: {},
+                        selectAttr(name, val) {
+                            this.selectedAttrs[name] = val;
+                            this.errors[name] = false;
+                        },
+                        submitCartForm(event) {
+                            // Validate required selections
+                            let valid = true;
+                            this.errors = {};
+                            for (const name in requiresSelection) {
+                                if (!this.selectedAttrs[name]) {
+                                    this.errors[name] = true;
+                                    valid = false;
+                                }
+                            }
+                            if (!valid) return;
+                            event.target.submit();
+                        }
+                    };
+                }
+                </script>
 
                 <div class="mt-4">
                     <form action="{{ route('wishlist.add', $product) }}" method="POST">

@@ -109,13 +109,14 @@ class CheckoutController extends Controller
 
         foreach ($cart as $id => $item) {
             OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $id,
-                'quantity' => $item['quantity'],
-                'price' => $item['price']
+                'order_id'            => $order->id,
+                'product_id'          => $item['product_id'] ?? $id,
+                'quantity'            => $item['quantity'],
+                'price'               => $item['price'],
+                'selected_attributes' => !empty($item['selected_attributes']) ? $item['selected_attributes'] : null,
             ]);
 
-            Product::where('id', $id)->decrement('stock', $item['quantity']);
+            Product::where('id', $item['product_id'] ?? $id)->decrement('stock', $item['quantity']);
         }
 
         session()->forget(['cart', 'voucher_code']);

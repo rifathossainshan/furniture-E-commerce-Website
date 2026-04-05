@@ -108,7 +108,18 @@ fbq('track', 'Purchase', {
         <tbody>
             @foreach($order->items as $item)
             <tr class="border-b border-gray-200">
-                <td class="py-4 text-gray-800 font-medium">{{ $item->product->name ?? 'Deleted Product' }}</td>
+                <td class="py-4 text-gray-800 font-medium">
+                    {{ $item->product->name ?? 'Deleted Product' }}
+                    @if(!empty($item->selected_attributes))
+                        <div class="flex flex-wrap gap-1 mt-1.5">
+                            @foreach($item->selected_attributes as $attrName => $attrVal)
+                                <span style="display:inline-block; font-size:10px; font-weight:600; background:#f3f4f6; border:1px solid #d1d5db; border-radius:999px; padding:1px 8px; color:#374151;">
+                                    <strong>{{ $attrName }}:</strong> {{ $attrVal }}
+                                </span>
+                            @endforeach
+                        </div>
+                    @endif
+                </td>
                 <td class="py-4 text-gray-600 text-center">{{ $item->quantity }}</td>
                 <td class="py-4 text-gray-600 text-right">৳{{ number_format($item->price, 2) }}</td>
                 <td class="py-4 text-gray-900 font-bold text-right">৳{{ number_format($item->quantity * $item->price, 2) }}</td>

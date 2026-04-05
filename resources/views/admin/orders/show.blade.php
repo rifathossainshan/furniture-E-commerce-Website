@@ -26,7 +26,18 @@
                                     @else
                                         <div class="w-10 h-10 rounded bg-gray-200"></div>
                                     @endif
-                                    <span class="text-sm font-medium">{{ $item->product->name ?? 'Deleted Product' }}</span>
+                                    <div>
+                                        <span class="text-sm font-medium">{{ $item->product->name ?? 'Deleted Product' }}</span>
+                                        @if(!empty($item->selected_attributes))
+                                            <div class="flex flex-wrap gap-1 mt-1">
+                                                @foreach($item->selected_attributes as $attrName => $attrVal)
+                                                    <span class="inline-flex items-center text-[10px] font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded-full px-2 py-0.5">
+                                                        <span class="font-bold mr-0.5">{{ $attrName }}:</span> {{ $attrVal }}
+                                                    </span>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td class="py-3 text-sm text-center">৳{{ number_format($item->price, 2) }}</td>
                                 <td class="py-3 text-sm text-center">{{ $item->quantity }}</td>
