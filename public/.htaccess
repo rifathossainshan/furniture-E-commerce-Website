@@ -18,10 +18,8 @@
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
-    # Serve storage files via PHP script if symlink is broken (InfinityFree fix)
-    # If the /storage/ path is requested but the file does not physically exist (broken symlink)
+    # ALWAYS serve storage files via PHP script (InfinityFree symlink fix)
     RewriteCond %{REQUEST_URI} ^/storage/(.+)$
-    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^storage/(.+)$ /storage-serve.php?file=$1 [L,QSA]
 
     # Send Requests To Front Controller...
