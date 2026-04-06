@@ -40,6 +40,16 @@ return [
 
         'public' => [
             'driver' => 'local',
+            'root' => public_path('uploads'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/uploads',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        // Legacy 'storage' disk alias for backward compatibility
+        'storage_legacy' => [
+            'driver' => 'local',
             'root' => public_path('storage'),
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
