@@ -1,4 +1,4 @@
-﻿@extends('layouts.store')
+@extends('layouts.store')
 
 @section('title', $product->meta_title ?: $product->name . ' - ' . ($settings['site_name'] ?? config('app.name', 'Musfiq')))
 
@@ -193,16 +193,17 @@
 
                 <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-auto flex flex-col md:flex-row gap-4" @submit.prevent="submitCartForm($event)" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($product->name) }}', content_ids: ['{{ $product->id }}'], content_type: 'product', value: {{ $product->price }}, currency: 'BDT' });">
                     @csrf
+                    <input type="hidden" name="buy_now" :value="buyNow">
                     {{-- Dynamic hidden inputs for selected attributes appended by Alpine --}}
                     <template x-for="(val, key) in selectedAttrs" :key="key">
                         <input type="hidden" :name="'attr_' + key" :value="val">
                     </template>
-                    <button type="submit" name="buy_now" value="0" @disabled($product->stock <= 0)
+                    <button type="submit" @click="buyNow = 0" @disabled($product->stock <= 0)
                         class="flex-1 border border-[#d4af37] bg-white text-[#d4af37] hover:bg-stone-50 transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
                         {{ $product->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
                     </button>
                     @if($product->stock > 0)
-                        <button type="submit" name="buy_now" value="1"
+                        <button type="submit" @click="buyNow = 1"
                             class="flex-1 border border-[#d4af37] bg-[#d4af37] text-white hover:bg-[#c19b28] hover:border-[#c19b28] transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm">
                             Buy Now
                         </button>
@@ -221,6 +222,7 @@
                     return {
                         selectedAttrs: {},
                         errors: {},
+                        buyNow: 0,
                         selectAttr(name, val) {
                             this.selectedAttrs[name] = val;
                             this.errors[name] = false;

@@ -49,7 +49,7 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
         
-        if ($request->has('buy_now')) {
+        if ($request->buy_now == 1) {
             return redirect()->route('checkout.index');
         }
         
