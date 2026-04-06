@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('header', $product->exists ? 'Edit Product' : 'Add Product')
 
@@ -132,7 +132,7 @@
                     <input type="file" name="image" class="w-full border border-gray-300 p-2 rounded">
                     @if($product->image)
                         <div class="mt-2 text-sm text-gray-500">Current Image: <img
-                                src="{{ asset('storage/' . $product->image) }}" class="w-32 mt-2 rounded object-cover shadow">
+                                src="{{ asset($product->image) }}" class="w-32 mt-2 rounded object-cover shadow">
                         </div>
                     @endif
                     @error('image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
@@ -176,7 +176,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @foreach($product->images as $index => $img)
                             <div class="relative group border p-1 rounded shadow-sm">
-                                <img src="{{ asset('storage/' . $img) }}" class="w-full h-32 rounded object-cover">
+                                <img src="{{ asset($img) }}" class="w-full h-32 rounded object-cover">
                                 <form action="{{ route('admin.products.image.delete', ['product' => $product->id, 'index' => $index]) }}" method="POST" class="absolute top-2 right-2">
                                     @csrf
                                     @method('DELETE')

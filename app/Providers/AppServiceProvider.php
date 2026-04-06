@@ -25,9 +25,11 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // Smart image URL helper — serves from uploads/ or storage/ depending on where the file exists
+        // @simg($path) → asset($path)
+        // DB stores the full relative path: "uploads/products/abc.jpg"
+        // asset() converts it to the full public URL.
         Blade::directive('simg', function ($path) {
-            return "<?php echo (function(\$p) { if (!\$p) return ''; \$u = public_path('uploads/' . \$p); \$s = public_path('storage/' . \$p); if (file_exists(\$u)) return asset('uploads/' . \$p); if (file_exists(\$s)) return asset('storage/' . \$p); return asset('uploads/' . \$p); })($path); ?>";
+            return "<?php echo $path ? asset($path) : ''; ?>";
         });
     }
 }

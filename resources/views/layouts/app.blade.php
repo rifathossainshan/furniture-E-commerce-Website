@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -10,7 +10,7 @@
         @endphp
         <title>{{ $settings['site_name'] ?? config('app.name', 'Laravel') }}</title>
         @if(isset($settings['site_logo']))
-            <link rel="icon" href="{{ asset('storage/' . $settings['site_logo']) }}">
+            <link rel="icon" href="{{ asset($settings['site_logo']) }}">
         @endif
 
         <!-- Fonts -->

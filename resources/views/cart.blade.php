@@ -1,4 +1,4 @@
-@extends('layouts.store')
+﻿@extends('layouts.store')
 
 @section('content')
     <div class="bg-stone-100 py-12">
@@ -33,7 +33,7 @@
                                 <tr class="border-b border-gray-100">
                                     <td class="py-6 flex items-center gap-4">
                                         @if($details['image'])
-                                            <img src="{{ asset('storage/' . $details['image']) }}"
+                                            <img src="{{ asset($details['image']) }}"
                                                 class="w-20 h-24 object-cover rounded shadow-sm">
                                         @else
                                             <div class="w-20 h-24 bg-stone-200 rounded"></div>

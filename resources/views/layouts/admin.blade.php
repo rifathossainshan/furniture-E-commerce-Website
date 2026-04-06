@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $settings['site_name'] ?? config('app.name', 'Admin') }} - Dashboard</title>
     @php
         $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
     @endphp
-    @if(isset($settings['site_logo']))
-        <link rel="icon" href="{{ asset('storage/' . $settings['site_logo']) }}">
+    <title>{{ $settings['site_name'] ?? config('app.name', 'Admin') }} - Dashboard</title>
+    @if(!empty($settings['site_logo']))
+        <link rel="icon" type="image/png" href="{{ asset($settings['site_logo']) }}">
     @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

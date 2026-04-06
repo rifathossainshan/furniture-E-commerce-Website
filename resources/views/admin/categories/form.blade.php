@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('header', $category->exists ? 'Edit Category' : 'Add Category')
 
@@ -23,7 +23,7 @@
                 <label class="block text-gray-700 text-sm font-bold mb-2">Image</label>
                 <input type="file" name="image" class="w-full">
                 @if($category->image)
-                    <div class="mt-2 text-sm text-gray-500">Current Image: <img src="{{ asset('storage/' . $category->image) }}"
+                    <div class="mt-2 text-sm text-gray-500">Current Image: <img src="{{ asset($category->image) }}"
                             class="h-16 mt-1 rounded object-cover"></div>
                 @endif
                 @error('image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror

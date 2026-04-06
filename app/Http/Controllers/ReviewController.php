@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\ReviewImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ReviewController extends Controller
 {
@@ -31,10 +33,15 @@ class ReviewController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('reviews', 'public');
+                // Generate a unique filename
+                $fileName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                $relativePath = 'uploads/reviews/' . $fileName;
+
+                // Move file directly to public/uploads/reviews
+                $image->move(public_path('uploads/reviews'), $fileName);
 
                 $review->images()->create([
-                    'image' => $path,
+                    'image' => $relativePath,
                 ]);
             }
         }

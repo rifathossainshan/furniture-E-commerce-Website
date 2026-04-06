@@ -10,8 +10,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', $settings['site_name'] ?? config('app.name', 'My Store'))</title>
-    @if(isset($settings['site_logo']))
-        <link rel="icon" href="{{ asset('storage/' . $settings['site_logo']) }}">
+    @if(!empty($settings['site_logo']))
+        <link rel="icon" type="image/png" href="{{ asset($settings['site_logo']) }}">
     @endif
     @yield('meta')
 
@@ -98,7 +98,7 @@
                 <div class="flex-shrink-0 flex items-center justify-center flex-1 md:flex-none md:justify-start">
                     <a href="{{ url('/') }}" class="text-2xl font-serif font-semibold tracking-wider text-gray-900">
                         @if(isset($settings['site_logo']))
-                            <img src="{{ asset('storage/' . $settings['site_logo']) }}" alt="Logo" class="h-8 w-auto">
+                            <img src="{{ asset($settings['site_logo']) }}" alt="Logo" class="h-8 w-auto">
                         @else
                             {{ $settings['site_name'] ?? config('app.name', 'My Store') }}
                         @endif
@@ -179,7 +179,7 @@
             <div class="space-y-4">
                 <a href="{{ url('/') }}" class="text-2xl font-serif font-semibold tracking-wider text-gray-900">
                     @if(isset($settings['site_logo']))
-                        <img src="{{ asset('storage/' . $settings['site_logo']) }}" alt="Logo" class="h-10 w-auto">
+                        <img src="{{ asset($settings['site_logo']) }}" alt="Logo" class="h-10 w-auto">
                     @else
                         {{ $settings['site_name'] ?? config('app.name', 'My Store') }}
                     @endif

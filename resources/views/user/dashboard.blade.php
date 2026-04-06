@@ -1,4 +1,4 @@
-@extends('layouts.store')
+﻿@extends('layouts.store')
 
 @section('content')
     <div class="bg-stone-100 py-12">
@@ -101,7 +101,7 @@
                             @foreach($order->items as $item)
                                 <div class="flex items-center gap-4 {{ !$loop->last ? 'mb-4 pb-4 border-b border-gray-100' : '' }}">
                                     @if($item->product && $item->product->image)
-                                        <img src="{{ asset('storage/' . $item->product->image) }}"
+                                        <img src="{{ asset($item->product->image) }}"
                                             class="w-16 h-20 object-cover rounded border border-gray-100">
                                     @else
                                         <div class="w-16 h-20 bg-stone-100 rounded border border-gray-100"></div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -71,7 +71,7 @@ fbq('track', 'Purchase', {
     <div class="flex justify-between items-start mb-12">
         <div>
             @if(isset($settings['site_logo']))
-                <img src="{{ asset('storage/' . $settings['site_logo']) }}" alt="{{ $settings['site_name'] ?? 'Logo' }}" style="max-height: 60px;">
+                <img src="{{ asset($settings['site_logo']) }}" alt="{{ $settings['site_name'] ?? 'Logo' }}" style="max-height: 60px;">
             @else
                 <h1 class="text-3xl font-bold tracking-widest uppercase">{{ $settings['site_name'] ?? 'Store Name' }}</h1>
             @endif

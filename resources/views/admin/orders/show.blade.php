@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('header', 'Order Details: #' . $order->order_number)
 
@@ -21,7 +21,7 @@
                             <tr class="border-b">
                                 <td class="py-3 flex items-center gap-3">
                                     @if($item->product && $item->product->image)
-                                        <img src="{{ asset('storage/' . $item->product->image) }}"
+                                        <img src="{{ asset($item->product->image) }}"
                                             class="w-10 h-10 object-cover rounded">
                                     @else
                                         <div class="w-10 h-10 rounded bg-gray-200"></div>

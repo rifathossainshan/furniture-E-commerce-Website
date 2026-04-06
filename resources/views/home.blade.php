@@ -1,4 +1,4 @@
-@extends('layouts.store')
+﻿@extends('layouts.store')
 
 @section('content')
     <!-- Hero Slider -->
@@ -6,7 +6,7 @@
         <div class="flex transition-transform duration-500 ease-in-out" id="sliderContainer">
             @forelse($sliders as $slider)
                 <div class="w-full flex-shrink-0 relative">
-                    <img src="{{ asset('storage/' . $slider->image) }}"
+                    <img src="{{ asset($slider->image) }}"
                         class="w-full h-[60vh] md:h-[70vh] object-cover object-center" alt="{{ $slider->title }}">
                     @if($slider->show_text ?? true)
                         <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center px-8 md:px-24">
@@ -77,7 +77,7 @@
                         <div
                             class="w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 overflow-hidden rounded-full shadow-sm border border-gray-100">
                             @if($category->image)
-                                <img src="{{ asset('storage/' . $category->image) }}"
+                                <img src="{{ asset($category->image) }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                             @else
                                 <div class="w-full h-full bg-stone-200"></div>
@@ -117,7 +117,7 @@
                     <a href="{{ route('product.show', $product->slug) }}" class="block w-full">
                         <div class="w-full relative overflow-hidden rounded bg-stone-100" style="padding-bottom: 125%;">
                             @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}"
+                                <img src="{{ asset($product->image) }}"
                                     class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition duration-700">
                             @else
                                 <div class="w-full h-full bg-stone-100"></div>

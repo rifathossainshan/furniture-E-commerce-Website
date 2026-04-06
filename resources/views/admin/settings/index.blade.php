@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('header', 'Site Settings')
 
@@ -19,7 +19,7 @@
                         <label class="block text-gray-700 text-sm font-bold mb-2">Site Logo</label>
                         <input type="file" name="site_logo" class="w-full text-sm">
                         @if(isset($settings['site_logo']))
-                            <img src="{{ asset('storage/' . $settings['site_logo']) }}"
+                            <img src="{{ asset($settings['site_logo']) }}"
                                 class="h-10 mt-2 object-contain bg-gray-100 p-1 rounded">
                         @endif
                     </div>
@@ -153,7 +153,7 @@
                         <label class="block text-gray-700 text-sm font-bold mb-2">Background Image</label>
                         <input type="file" name="about_hero_bg" class="w-full text-sm">
                         @if(isset($settings['about_hero_bg']))
-                            <img src="{{ asset('storage/' . $settings['about_hero_bg']) }}"
+                            <img src="{{ asset($settings['about_hero_bg']) }}"
                                 class="h-20 mt-2 object-cover bg-gray-100 p-1 rounded">
                         @endif
                     </div>
@@ -176,7 +176,7 @@
                         <label class="block text-gray-700 text-sm font-bold mb-2">Side Feature Image</label>
                         <input type="file" name="about_feature_image" class="w-full text-sm">
                         @if(isset($settings['about_feature_image']))
-                            <img src="{{ asset('storage/' . $settings['about_feature_image']) }}"
+                            <img src="{{ asset($settings['about_feature_image']) }}"
                                 class="h-20 mt-2 object-cover bg-gray-100 p-1 rounded">
                         @endif
                     </div>

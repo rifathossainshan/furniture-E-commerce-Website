@@ -1,11 +1,11 @@
-@extends('layouts.store')
+﻿@extends('layouts.store')
 
 @section('content')
 <!-- Hero Section -->
 <div class="relative bg-stone-900 overflow-hidden text-center md:text-left">
     <!-- Background Texture/Overlay -->
     <div class="absolute inset-0 z-0 opacity-40">
-        <img src="{{ \App\Models\Setting::where('key', 'about_hero_bg')->value('value') ? asset('storage/' . \App\Models\Setting::where('key', 'about_hero_bg')->value('value')) : 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2671&auto=format&fit=crop' }}" class="w-full h-full object-cover object-center filter grayscale" alt="Fashion background">
+        <img src="{{ \App\Models\Setting::where('key', 'about_hero_bg')->value('value') ? asset(\App\Models\Setting::where('key', 'about_hero_bg')->value('value')) : 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2671&auto=format&fit=crop' }}" class="w-full h-full object-cover object-center filter grayscale" alt="Fashion background">
     </div>
     <div class="absolute inset-0 z-10 bg-gradient-to-t md:bg-gradient-to-r from-stone-950 via-stone-900/80 to-transparent"></div>
     
@@ -54,7 +54,7 @@
             <!-- Right: Feature Image -->
             <div class="lg:col-span-5 lg:col-start-8 order-1 lg:order-2 group">
                 <div class="relative overflow-hidden w-full bg-stone-100 aspect-[3/4] sm:aspect-[4/5] object-cover rounded-sm shadow-xl">
-                    <img src="{{ \App\Models\Setting::where('key', 'about_feature_image')->value('value') ? asset('storage/' . \App\Models\Setting::where('key', 'about_feature_image')->value('value')) : 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop' }}" 
+                    <img src="{{ \App\Models\Setting::where('key', 'about_feature_image')->value('value') ? asset(\App\Models\Setting::where('key', 'about_feature_image')->value('value')) : 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop' }}" 
                          alt="About Us Aesthetic" 
                          class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105">
                 </div>

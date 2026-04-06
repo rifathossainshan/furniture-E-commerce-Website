@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('header', $slider->exists ? 'Edit Slider' : 'Add Slider')
 
@@ -47,7 +47,7 @@
                 <input type="file" name="image" class="w-full" {{ !$slider->exists ? 'required' : '' }}>
                 <p class="text-xs text-gray-500 mt-1">For best results, use a wide, high-resolution image.</p>
                 @if($slider->image)
-                    <div class="mt-2 text-sm text-gray-500">Current Image: <img src="{{ asset('storage/' . $slider->image) }}"
+                    <div class="mt-2 text-sm text-gray-500">Current Image: <img src="{{ asset($slider->image) }}"
                             class="w-48 mt-1 rounded object-cover"></div>
                 @endif
                 @error('image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror

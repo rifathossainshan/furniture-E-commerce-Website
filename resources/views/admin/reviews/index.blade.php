@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('header', 'Manage Customer Reviews')
 
@@ -54,8 +54,8 @@
                             <strong class="text-gray-900 text-sm block mb-2">Attached Images:</strong>
                             <div class="flex gap-2 flex-wrap">
                                 @foreach($review->images as $img)
-                                    <a href="{{ asset('storage/' . $img->image) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $img->image) }}" class="w-16 h-16 object-cover rounded border border-gray-200 shadow-sm hover:opacity-80 transition">
+                                    <a href="{{ asset($img->image) }}" target="_blank">
+                                        <img src="{{ asset($img->image) }}" class="w-16 h-16 object-cover rounded border border-gray-200 shadow-sm hover:opacity-80 transition">
                                     </a>
                                 @endforeach
                             </div>

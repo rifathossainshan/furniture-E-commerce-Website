@@ -1,4 +1,4 @@
-@extends('layouts.store')
+﻿@extends('layouts.store')
 
 @section('title', $product->meta_title ?: $product->name . ' - ' . ($settings['site_name'] ?? config('app.name', 'Musfiq')))
 
@@ -18,7 +18,7 @@
     <meta property="og:type" content="product">
     <meta property="og:url" content="{{ url()->current() }}">
     @if($product->image)
-        <meta property="og:image" content="{{ asset('storage/' . $product->image) }}">
+        <meta property="og:image" content="{{ asset($product->image) }}">
     @endif
 @endsection
 
@@ -46,11 +46,11 @@
             @php
                 $allImages = [];
                 if ($product->image) {
-                    $allImages[] = asset('storage/' . $product->image);
+                    $allImages[] = asset($product->image);
                 }
                 if (is_array($product->images)) {
                     foreach($product->images as $img) {
-                        $allImages[] = asset('storage/' . $img);
+                        $allImages[] = asset($img);
                     }
                 }
             @endphp
@@ -320,7 +320,7 @@
                                 @if($review->images->count())
                                     <div class="flex flex-wrap gap-2 mt-4">
                                         @foreach($review->images as $img)
-                                            <img src="{{ asset('storage/' . $img->image) }}" class="w-20 h-20 object-cover border border-gray-200">
+                                            <img src="{{ asset($img->image) }}" class="w-20 h-20 object-cover border border-gray-200">
                                         @endforeach
                                     </div>
                                 @endif
@@ -416,7 +416,7 @@
                             <a href="{{ route('product.show', $related->slug) }}" class="block w-full">
                                 <div class="w-full relative overflow-hidden rounded bg-stone-100" style="padding-bottom: 125%;">
                                     @if($related->image)
-                                        <img src="{{ asset('storage/' . $related->image) }}"
+                                        <img src="{{ asset($related->image) }}"
                                             class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition duration-700">
                                     @else
                                         <div class="w-full h-full bg-stone-100"></div>

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\ReviewImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AdminReviewController extends Controller
 {
@@ -38,10 +40,13 @@ class AdminReviewController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('reviews', 'public');
+                $fileName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                $relativePath = 'uploads/reviews/' . $fileName;
+
+                $image->move(public_path('uploads/reviews'), $fileName);
 
                 $review->images()->create([
-                    'image' => $path,
+                    'image' => $relativePath,
                 ]);
             }
         }
@@ -95,8 +100,20 @@ class AdminReviewController extends Controller
 
     public function destroy(Review $review)
     {
+        // Delete all associated images from the filesystem
+        foreach ($review->images as $reviewImage) {
+            $this->removeImageFile($reviewImage->image);
+        }
+
         $review->delete();
 
         return back()->with('success', 'Review deleted successfully.');
+    }
+
+    private function removeImageFile(?string $path): void
+    {
+        if ($path && file_exists(public_path($path))) {
+            unlink(public_path($path));
+        }
     }
 }

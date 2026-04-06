@@ -1,4 +1,4 @@
-@extends('layouts.store')
+﻿@extends('layouts.store')
 
 @section('content')
 <div class="bg-stone-100 py-12">
@@ -60,7 +60,7 @@
                 <a href="{{ route('product.show', $product->slug) }}" class="block w-full">
                     <div class="w-full relative overflow-hidden rounded bg-stone-100" style="padding-bottom: 125%;">
                         @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition duration-700">
+                            <img src="{{ asset($product->image) }}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition duration-700">
                         @else
                             <div class="w-full h-full bg-stone-100"></div>
                         @endif

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('header', 'Categories')
 
@@ -29,7 +29,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-900 flex items-center gap-3">
                             @if($category->image)
-                                <img src="{{ asset('storage/' . $category->image) }}" class="w-10 h-10 rounded object-cover">
+                                <img src="{{ asset($category->image) }}" class="w-10 h-10 rounded object-cover">
                             @else
                                 <div class="w-10 h-10 rounded bg-gray-200 flex items-center justify-center text-gray-500">No Img
                                 </div>

@@ -9,6 +9,26 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    // ─── Helper: upload image to public/uploads/{folder} ────────────────────
+    private function uploadImage($file, string $folder): string
+    {
+        $dir = public_path("uploads/{$folder}");
+        if (!file_exists($dir)) {
+            mkdir($dir, 0775, true);
+        }
+        $fileName = time() . '_' . Str::random(6) . '.' . $file->getClientOriginalExtension();
+        $file->move($dir, $fileName);
+        return "uploads/{$folder}/{$fileName}";
+    }
+
+    // ─── Helper: delete image from public/ ──────────────────────────────────
+    private function deleteImage(?string $path): void
+    {
+        if ($path && file_exists(public_path($path))) {
+            unlink(public_path($path));
+        }
+    }
+
     public function index()
     {
         $categories = Category::latest()->get();
@@ -23,15 +43,15 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
-            'status' => 'boolean'
+            'name'   => 'required|string|max:255',
+            'image'  => 'nullable|image|max:2048',
+            'status' => 'boolean',
         ]);
 
         $data['slug'] = Str::slug($data['name']);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('categories', 'public');
+            $data['image'] = $this->uploadImage($request->file('image'), 'categories');
         }
 
         Category::create($data);
@@ -46,15 +66,16 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
-            'status' => 'boolean'
+            'name'   => 'required|string|max:255',
+            'image'  => 'nullable|image|max:2048',
+            'status' => 'boolean',
         ]);
 
         $data['slug'] = Str::slug($data['name']);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('categories', 'public');
+            $this->deleteImage($category->image);   // delete old
+            $data['image'] = $this->uploadImage($request->file('image'), 'categories');
         }
 
         $category->update($data);
@@ -64,9 +85,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
-            if ($category->image) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($category->image);
-            }
+            $this->deleteImage($category->image);
             $category->delete();
             return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
         } catch (\Exception $e) {

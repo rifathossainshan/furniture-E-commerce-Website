@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('header', 'Sliders')
 
@@ -31,7 +31,7 @@
                 @forelse($sliders as $slider)
                     <tr class="hover:bg-gray-50">
                         <td class="py-4 px-6 border-b border-gray-200">
-                            <img src="{{ asset('storage/' . $slider->image) }}"
+                            <img src="{{ asset($slider->image) }}"
                                 class="w-32 h-16 object-cover rounded shadow-sm">
                         </td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm">
