@@ -15,6 +15,7 @@ class Slider extends Model
         'button_text',
         'button_link',
         'image',
+        'mobile_image',
         'status',
         'show_text'
     ];

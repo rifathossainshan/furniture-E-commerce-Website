@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('header', $slider->exists ? 'Edit Slider' : 'Add Slider')
 
@@ -42,15 +42,25 @@
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Slider Image <span
-                        class="text-red-500">*</span></label>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Desktop Slider Image <span class="text-red-500">*</span></label>
                 <input type="file" name="image" class="w-full" {{ !$slider->exists ? 'required' : '' }}>
                 <p class="text-xs text-gray-500 mt-1">For best results, use a wide, high-resolution image.</p>
                 @if($slider->image)
                     <div class="mt-2 text-sm text-gray-500">Current Image: <img src="{{ asset($slider->image) }}"
-                            class="w-48 mt-1 rounded object-cover"></div>
+                            class="w-48 mt-1 rounded shadow-sm border border-gray-100"></div>
                 @endif
                 @error('image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Mobile Slider Image (Optional)</label>
+                <input type="file" name="mobile_image" class="w-full">
+                <p class="text-xs text-gray-500 mt-1">For better results on mobile, use a portrait (tall) image (e.g., 800x1200).</p>
+                @if($slider->mobile_image)
+                    <div class="mt-2 text-sm text-gray-500">Current Mobile Image: <img src="{{ asset($slider->mobile_image) }}"
+                            class="w-32 mt-1 rounded shadow-sm border border-gray-100"></div>
+                @endif
+                @error('mobile_image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-6 flex items-center space-x-6">
