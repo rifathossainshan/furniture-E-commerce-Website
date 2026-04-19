@@ -47,18 +47,13 @@ class SliderController extends Controller
             'subtitle'    => 'nullable|string|max:255',
             'button_text' => 'nullable|string|max:100',
             'button_link' => 'nullable|string|max:255',
-            'image'          => 'required|image|max:4096',
-            'mobile_image'   => 'nullable|image|max:4096',
-            'status'         => 'boolean',
-            'show_text'      => 'boolean',
+            'image'       => 'required|image|max:4096',
+            'status'      => 'boolean',
+            'show_text'   => 'boolean',
         ]);
 
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->file('image'), 'sliders');
-        }
-
-        if ($request->hasFile('mobile_image')) {
-            $data['mobile_image'] = $this->uploadImage($request->file('mobile_image'), 'sliders');
         }
 
         Slider::create($data);
@@ -77,20 +72,14 @@ class SliderController extends Controller
             'subtitle'    => 'nullable|string|max:255',
             'button_text' => 'nullable|string|max:100',
             'button_link' => 'nullable|string|max:255',
-            'image'          => 'nullable|image|max:4096',
-            'mobile_image'   => 'nullable|image|max:4096',
-            'status'         => 'boolean',
-            'show_text'      => 'boolean',
+            'image'       => 'nullable|image|max:4096',
+            'status'      => 'boolean',
+            'show_text'   => 'boolean',
         ]);
 
         if ($request->hasFile('image')) {
             $this->deleteImage($slider->image);   // delete old
             $data['image'] = $this->uploadImage($request->file('image'), 'sliders');
-        }
-
-        if ($request->hasFile('mobile_image')) {
-            $this->deleteImage($slider->mobile_image);   // delete old
-            $data['mobile_image'] = $this->uploadImage($request->file('mobile_image'), 'sliders');
         }
 
         $slider->update($data);
@@ -100,7 +89,6 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         $this->deleteImage($slider->image);
-        $this->deleteImage($slider->mobile_image);
         $slider->delete();
         return redirect()->route('admin.sliders.index')->with('success', 'Slider deleted successfully.');
     }
