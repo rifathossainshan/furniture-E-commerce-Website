@@ -1,4 +1,4 @@
-﻿@extends('layouts.store')
+@extends('layouts.store')
 
 @section('content')
     <div class="bg-stone-100 py-12">
@@ -49,7 +49,7 @@
                         <div class="mt-auto">
                             <form action="{{ route('cart.add', ['product' => $details['product_id']]) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="w-full border border-[#d4af37] bg-white text-[#d4af37] hover:bg-[#d4af37] hover:text-white transition text-xs font-bold py-2.5 uppercase tracking-wider">
+                                <button type="submit" class="w-full border border-[#9b2a59] bg-white text-[#9b2a59] hover:bg-[#9b2a59] hover:text-white transition text-xs font-bold py-2.5 uppercase tracking-wider">
                                     Add to Cart
                                 </button>
                             </form>

@@ -80,7 +80,7 @@
                 </div>
 
                 <!-- Place Order Button -->
-                <button type="submit" class="w-full bg-black text-white font-bold py-5 px-4 tracking-widest uppercase mb-10 hover:bg-gray-800 transition">
+                <button type="submit" class="w-full btn-primary font-bold py-5 px-4 tracking-widest uppercase mb-10">
                     PLACE ORDER
                 </button>
 

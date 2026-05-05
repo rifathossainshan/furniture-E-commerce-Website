@@ -41,6 +41,29 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* Custom UI Elements */
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6a8b, #a83279);
+            color: #ffffff !important;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ff4f75, #8e2a68);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(168, 50, 121, 0.4);
+        }
     </style>
 
     <!-- Meta Pixel Code -->
@@ -77,25 +100,8 @@
     <header class="bg-white sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Hamburger (Mobile) -->
-                <div class="flex items-center md:hidden">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen"
-                        class="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900">
-                        <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg x-show="mobileMenuOpen" style="display: none;" class="h-6 w-6" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center justify-center flex-1 md:flex-none md:justify-start">
+                <div class="flex-shrink-0 flex items-center justify-start">
                     <a href="{{ url('/') }}" class="text-2xl font-serif font-semibold tracking-wider text-gray-900">
                         @if(isset($settings['site_logo']))
                             <img src="{{ asset($settings['site_logo']) }}" alt="Logo" class="h-8 w-auto">
@@ -115,7 +121,7 @@
                         class="text-gray-700 hover:text-black font-medium text-sm transition tracking-wider uppercase">About</a>
                 </nav>
 
-                <!-- Icons -->
+                <!-- Icons & Hamburger -->
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('shop') }}" class="text-gray-600 hover:text-gray-900 transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -130,7 +136,7 @@
                         </svg>
                         @if(session('cart') && count(session('cart')) > 0)
                             <span
-                                class="absolute -top-1.5 -right-2 bg-[#d4af37] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{{ count(session('cart')) }}</span>
+                                class="absolute -top-1.5 -right-2 bg-[#9b2a59] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{{ count(session('cart')) }}</span>
                         @endif
                     </a>
                     <a href="{{ route('wishlist.index') }}" class="text-gray-600 hover:text-gray-900 transition relative hidden md:block">
@@ -150,6 +156,23 @@
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                     </a>
+
+                    <!-- Hamburger (Mobile) -->
+                    <div class="flex items-center md:hidden ml-2">
+                        <button @click="mobileMenuOpen = !mobileMenuOpen"
+                            class="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900 p-1.5 bg-[#fcf1f4] hover:bg-[#f3e5e9] rounded-md transition">
+                            <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg x-show="mobileMenuOpen" style="display: none;" class="h-6 w-6" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

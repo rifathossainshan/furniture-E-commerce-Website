@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('header', 'Order Details: #' . $order->order_number)
 
@@ -39,27 +39,27 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="py-3 text-sm text-center">৳{{ number_format($item->price, 2) }}</td>
+                                <td class="py-3 text-sm text-center">?{{ number_format($item->price, 2) }}</td>
                                 <td class="py-3 text-sm text-center">{{ $item->quantity }}</td>
                                 <td class="py-3 text-sm text-right font-semibold">
-                                    ৳{{ number_format($item->price * $item->quantity, 2) }}</td>
+                                    ?{{ number_format($item->price * $item->quantity, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="mt-4 flex flex-col items-end space-y-2">
                     <div class="text-sm text-gray-600">Subtotal: <span
-                            class="text-gray-900 font-medium ml-4">৳{{ number_format($order->total_amount, 2) }}</span>
+                            class="text-gray-900 font-medium ml-4">?{{ number_format($order->total_amount, 2) }}</span>
                     </div>
                     @if($order->discount_amount > 0)
                         <div class="text-sm text-red-600">Discount: <span
-                                class="font-medium ml-4">-৳{{ number_format($order->discount_amount, 2) }}</span></div>
+                                class="font-medium ml-4">-?{{ number_format($order->discount_amount, 2) }}</span></div>
                     @endif
                     <div class="text-sm text-gray-600 mt-1">Delivery Charge: <span
-                            class="text-gray-900 font-medium ml-4">৳{{ number_format($order->delivery_charge ?? 0, 2) }}</span>
+                            class="text-gray-900 font-medium ml-4">?{{ number_format($order->delivery_charge ?? 0, 2) }}</span>
                     </div>
                     <div class="text-lg font-bold text-gray-900 mt-2 border-t pt-2">Total: <span
-                            class="ml-4">৳{{ number_format($order->final_amount, 2) }}</span></div>
+                            class="ml-4">?{{ number_format($order->final_amount, 2) }}</span></div>
                 </div>
             </div>
         </div>

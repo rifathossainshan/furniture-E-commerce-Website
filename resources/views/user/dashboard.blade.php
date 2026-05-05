@@ -1,4 +1,4 @@
-﻿@extends('layouts.store')
+@extends('layouts.store')
 
 @section('content')
     <div class="bg-stone-100 py-12">
@@ -76,7 +76,7 @@
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-1">Total</p>
-                                <p class="text-sm font-medium text-gray-900">৳{{ number_format($order->final_amount, 2) }}</p>
+                                <p class="text-sm font-medium text-gray-900">?{{ number_format($order->final_amount, 2) }}</p>
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-1">Order Number</p>
@@ -110,7 +110,7 @@
                                         <h4 class="font-bold text-gray-900 text-sm">
                                             {{ $item->product->name ?? 'Product Unavailable' }}</h4>
                                         <p class="text-sm text-gray-500 mt-1">Qty: {{ $item->quantity }} x
-                                            ৳{{ number_format($item->price, 2) }}</p>
+                                            ?{{ number_format($item->price, 2) }}</p>
                                     </div>
                                 </div>
                             @endforeach
@@ -124,7 +124,7 @@
                         </svg>
                         <p class="text-gray-500 font-medium mb-4">You haven't placed any orders yet.</p>
                         <a href="{{ route('shop') }}"
-                            class="inline-block bg-[#d4af37] border border-[#d4af37] hover:bg-[#c19b28] hover:border-[#c19b28] text-white transition text-xs font-bold py-2.5 px-6 uppercase tracking-wider">
+                            class="inline-block bg-[#9b2a59] border border-[#9b2a59] hover:bg-[#7a2146] hover:border-[#7a2146] text-white transition text-xs font-bold py-2.5 px-6 uppercase tracking-wider">
                             Start Shopping
                         </a>
                     </div>

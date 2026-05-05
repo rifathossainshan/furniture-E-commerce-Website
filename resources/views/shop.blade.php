@@ -1,4 +1,4 @@
-﻿@extends('layouts.store')
+@extends('layouts.store')
 
 @section('content')
 <div class="bg-stone-100 py-12">
@@ -76,19 +76,19 @@
                     <div class="absolute top-4 left-4 text-[9px] font-bold text-white bg-black px-2 py-1 uppercase tracking-wider scale-0 group-hover:scale-100 transition-transform origin-top-left z-10 pointer-events-none">Featured</div>
                 @endif
                 
-                <div class="pt-4 pb-2 text-center md:text-left flex-1 flex flex-col flex-grow">
+                <div class="pt-4 pb-2 text-center flex-1 flex flex-col flex-grow">
                     <a href="{{ route('product.show', $product->slug) }}" class="block">
                         <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">{{ $product->category->name ?? 'MUSFIQ' }}</div>
-                        <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $product->name }}</h4>
-                        <p class="text-sm text-gray-900 font-bold mb-1">৳{{ number_format($product->price, 2) }}</p>
-                        <div class="text-xs text-gray-500 font-semibold mb-4">
-                            <span class="text-yellow-500">★</span> {{ number_format($product->reviews_avg_rating ?? 0, 1) }}
+                        <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 uppercase">{{ $product->name }}</h4>
+                        <p class="text-base text-gray-900 font-bold mb-2">৳{{ number_format($product->price, 2) }}</p>
+                        <div class="text-xs text-gray-500 font-semibold mb-4 flex justify-center items-center gap-1">
+                            <span class="text-gray-500">★</span> {{ number_format($product->reviews_avg_rating ?? 0, 1) }}
                         </div>
                     </a>
                     <div class="mt-auto">
                         <form action="{{ route('cart.add', $product) }}" method="POST">
                             @csrf
-                            <button type="submit" @disabled($product->stock <= 0) class="w-full border border-[#d4af37] bg-white text-[#d4af37] hover:bg-[#d4af37] hover:text-white transition text-xs font-bold py-2.5 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
+                            <button type="submit" @disabled($product->stock <= 0) class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
                                 Add to Cart
                             </button>
                         </form>

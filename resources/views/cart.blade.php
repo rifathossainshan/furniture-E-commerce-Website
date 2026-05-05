@@ -1,4 +1,4 @@
-﻿@extends('layouts.store')
+@extends('layouts.store')
 
 @section('content')
     <div class="bg-stone-100 py-12">
@@ -94,7 +94,7 @@
                         </div>
 
                         <a href="{{ route('checkout.index') }}"
-                            class="block w-full text-center bg-[#d4af37] border border-[#d4af37] hover:bg-[#c19b28] hover:border-[#c19b28] text-white transition text-sm font-bold py-4 uppercase tracking-wider shadow-sm">
+                            class="btn-primary w-full text-center py-4 tracking-wider shadow-sm">
                             Proceed to Checkout
                         </a>
                         <a href="{{ route('shop') }}"

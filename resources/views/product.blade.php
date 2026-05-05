@@ -199,12 +199,12 @@
                         <input type="hidden" :name="'attr_' + key" :value="val">
                     </template>
                     <button type="submit" @click="buyNow = 0" @disabled($product->stock <= 0)
-                        class="flex-1 border border-[#d4af37] bg-white text-[#d4af37] hover:bg-stone-50 transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
-                        {{ $product->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
+                        class="w-full md:w-auto btn-primary text-sm font-bold uppercase tracking-wider py-4 px-8 disabled:opacity-50">
+                        Add to Cart
                     </button>
                     @if($product->stock > 0)
                         <button type="submit" @click="buyNow = 1"
-                            class="flex-1 border border-[#d4af37] bg-[#d4af37] text-white hover:bg-[#c19b28] hover:border-[#c19b28] transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm">
+                            class="w-full md:w-auto bg-white border border-[#a83279] text-[#a83279] hover:bg-[#a83279] hover:text-white transition py-4 px-8 text-sm font-bold uppercase tracking-wider rounded-[25px]">
                             Buy Now
                         </button>
                     @endif
@@ -328,7 +328,7 @@
                                 @endif
 
                                 @if($review->admin_reply)
-                                    <div class="mt-6 p-4 bg-stone-50 border-l-4 border-[#d4af37]">
+                                    <div class="mt-6 p-4 bg-stone-50 border-l-4 border-[#9b2a59]">
                                         <div class="flex items-center mb-2">
                                             <strong class="text-sm text-gray-900 uppercase tracking-widest">{{ $review->reply_by ?? 'Admin' }}</strong>
                                             @if($review->is_verified_reply)
@@ -386,7 +386,7 @@
                                     <p class="text-[10px] text-gray-400 mt-1 uppercase">Valid formats: JPG, PNG, WEBP. Max size: 2MB.</p>
                                 </div>
 
-                                <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 transition py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm">
+                                <button type="submit" class="w-full btn-primary py-4 tracking-[0.2em] text-sm font-bold uppercase shadow-sm">
                                     Submit Review
                                 </button>
                             </form>
@@ -433,18 +433,21 @@
                                 </div>
                             </a>
 
-                            <div class="pt-4 pb-2 text-center md:text-left flex-1 flex flex-col flex-grow">
+                            <div class="pt-4 pb-2 text-center flex-1 flex flex-col flex-grow">
                                 <a href="{{ route('product.show', $related->slug) }}" class="block">
                                     <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">
                                         {{ $related->category->name ?? 'MUSFIQ' }}</div>
-                                    <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $related->name }}</h4>
-                                    <p class="text-sm text-gray-900 font-bold mb-4">৳{{ number_format($related->price, 2) }}</p>
+                                    <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 uppercase">{{ $related->name }}</h4>
+                                    <p class="text-base text-gray-900 font-bold mb-2">৳{{ number_format($related->price, 2) }}</p>
+                                    <div class="text-xs text-gray-500 font-semibold mb-4 flex justify-center items-center gap-1">
+                                        <span class="text-gray-500">★</span> {{ number_format($related->reviews_avg_rating ?? 0, 1) }}
+                                    </div>
                                 </a>
                                 <div class="mt-auto">
                                     <form action="{{ route('cart.add', $related) }}" method="POST" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($related->name) }}', content_ids: ['{{ $related->id }}'], content_type: 'product', value: {{ $related->price }}, currency: 'BDT' });">
                                         @csrf
                                         <button type="submit" @disabled($related->stock <= 0)
-                                            class="w-full border border-[#d4af37] bg-white text-[#d4af37] hover:bg-[#d4af37] hover:text-white transition text-xs font-bold py-2.5 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
+                                            class="w-full btn-primary text-xs font-bold py-2.5 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
                                             Add to Cart
                                         </button>
                                     </form>

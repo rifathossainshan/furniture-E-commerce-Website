@@ -21,7 +21,7 @@
                                 @endif
                                 @if($slider->button_text)
                                     <a href="{{ $slider->button_link }}"
-                                        class="inline-block bg-[#d4af37] hover:bg-[#c19b28] text-white text-xs md:text-sm tracking-[0.2em] font-bold py-3 px-8 uppercase transition">
+                                        class="btn-primary text-xs md:text-sm tracking-[0.2em]">
                                         {{ $slider->button_text }}
                                     </a>
                                 @endif
@@ -45,7 +45,7 @@
                                 Discover our curated collections.
                             </p>
                             <a href="{{ route('shop') }}"
-                                class="inline-block bg-transparent border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white text-xs md:text-sm tracking-[0.2em] font-bold py-3 px-8 uppercase transition">
+                                class="btn-primary text-xs md:text-sm tracking-[0.2em]">
                                 SHOP COLLECTION
                             </a>
                         </div>
@@ -84,9 +84,9 @@
                             @endif
                         </div>
                         <h4 class="text-sm font-semibold text-gray-900 mb-1 tracking-wide">{{ $category->name }}</h4>
-                        <div class="text-[10px] text-gray-500 uppercase tracking-widest group-hover:text-[#d4af37] transition">
+                        <div class="text-[10px] text-gray-500 uppercase tracking-widest group-hover:text-[#9b2a59] transition">
                             Explore</div>
-                        <div class="w-6 h-[1px] bg-gray-300 mx-auto mt-2 group-hover:bg-[#d4af37] transition"></div>
+                        <div class="w-6 h-[1px] bg-gray-300 mx-auto mt-2 group-hover:bg-[#9b2a59] transition"></div>
                     </a>
                 </div>
             @empty
@@ -130,22 +130,22 @@
                             Featured</div>
                     @endif
 
-                    <div class="pt-4 pb-2 text-center md:text-left flex-1 flex flex-col flex-grow">
+                    <div class="pt-4 pb-2 text-center flex-1 flex flex-col flex-grow">
                         <a href="{{ route('product.show', $product->slug) }}" class="block">
                             <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">
                                 {{ $product->category->name ?? 'MUSFIQ' }}
                             </div>
-                            <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 h-10">{{ $product->name }}</h4>
-                            <p class="text-sm text-gray-900 font-bold mb-1">৳{{ number_format($product->price, 2) }}</p>
-                            <div class="text-xs text-gray-500 font-semibold mb-4">
-                                <span class="text-yellow-500">★</span> {{ number_format($product->reviews_avg_rating ?? 0, 1) }}
+                            <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 uppercase">{{ $product->name }}</h4>
+                            <p class="text-base text-gray-900 font-bold mb-2">৳{{ number_format($product->price, 2) }}</p>
+                            <div class="text-xs text-gray-500 font-semibold mb-4 flex justify-center items-center gap-1">
+                                <span class="text-gray-500">★</span> {{ number_format($product->reviews_avg_rating ?? 0, 1) }}
                             </div>
                         </a>
                         <div class="mt-auto">
                             <form action="{{ route('cart.add', $product) }}" method="POST">
                                 @csrf
                                 <button type="submit" @disabled($product->stock <= 0)
-                                    class="w-full border border-[#d4af37] bg-white text-[#d4af37] hover:bg-[#d4af37] hover:text-white transition text-xs font-bold py-2.5 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
+                                    class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
                                     Add to Cart
                                 </button>
                             </form>
