@@ -136,6 +136,7 @@
                                 {{ $product->category->name ?? 'MUSFIQ' }}
                             </div>
                             <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 uppercase">{{ $product->name }}</h4>
+                            <p class="text-[11px] text-gray-500 mb-2 line-clamp-2">{{ Str::limit(strip_tags($product->description), 60) }}</p>
                             <p class="text-base text-gray-900 font-bold mb-2">৳{{ number_format($product->price, 2) }}</p>
                             <div class="text-xs text-gray-500 font-semibold mb-4 flex justify-center items-center gap-1">
                                 <span class="text-gray-500">★</span> {{ number_format($product->reviews_avg_rating ?? 0, 1) }}

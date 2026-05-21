@@ -1,12 +1,24 @@
 @extends('layouts.store')
 
 @section('content')
+@if(isset($selectedCategory))
+<div class="bg-stone-100 py-12 relative overflow-hidden">
+    @if($selectedCategory->image)
+        <img src="{{ asset($selectedCategory->image) }}" class="absolute inset-0 w-full h-full object-cover opacity-20">
+    @endif
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h1 class="text-4xl font-serif text-gray-900 tracking-widest uppercase mb-4">{{ $selectedCategory->name }}</h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">Explore our full range of premium products in this category.</p>
+    </div>
+</div>
+@else
 <div class="bg-stone-100 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl font-serif text-gray-900 tracking-widest uppercase mb-4">Shop Collection</h1>
         <p class="text-gray-600 max-w-2xl mx-auto">Explore our full range of premium products. Find exactly what you are looking for.</p>
     </div>
 </div>
+@endif
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row gap-8">
     
@@ -80,6 +92,7 @@
                     <a href="{{ route('product.show', $product->slug) }}" class="block">
                         <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">{{ $product->category->name ?? 'MUSFIQ' }}</div>
                         <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 uppercase">{{ $product->name }}</h4>
+                        <p class="text-[11px] text-gray-500 mb-2 line-clamp-2">{{ Str::limit(strip_tags($product->description), 60) }}</p>
                         <p class="text-base text-gray-900 font-bold mb-2">৳{{ number_format($product->price, 2) }}</p>
                         <div class="text-xs text-gray-500 font-semibold mb-4 flex justify-center items-center gap-1">
                             <span class="text-gray-500">★</span> {{ number_format($product->reviews_avg_rating ?? 0, 1) }}

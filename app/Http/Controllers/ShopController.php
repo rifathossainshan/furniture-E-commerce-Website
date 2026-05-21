@@ -19,7 +19,9 @@ class ShopController extends Controller
             $query->where('name', 'like', '%' . $request->q . '%');
         }
 
+        $selectedCategory = null;
         if ($request->filled('category')) {
+            $selectedCategory = Category::where('slug', $request->category)->first();
             $query->whereHas('category', function ($q) use ($request) {
                 $q->where('slug', $request->category);
             });
@@ -28,7 +30,7 @@ class ShopController extends Controller
         $products = $query->latest()->paginate(16)->withQueryString();
         $categories = Category::where('status', true)->get();
 
-        return view('shop', compact('products', 'categories'));
+        return view('shop', compact('products', 'categories', 'selectedCategory'));
     }
 
     public function show($slug)
