@@ -48,6 +48,7 @@ class CategoryController extends Controller
             'image'  => 'nullable|image|max:2048',
             'status' => 'boolean',
             'text_color' => 'required|in:black,white,red,golden,blue',
+            'subtitle_color' => 'nullable|in:black,white,red,golden,blue',
         ]);
 
         $data['slug'] = Str::slug($data['name']);
@@ -73,6 +74,7 @@ class CategoryController extends Controller
             'image'  => 'nullable|image|max:2048',
             'status' => 'boolean',
             'text_color' => 'required|in:black,white,red,golden,blue',
+            'subtitle_color' => 'nullable|in:black,white,red,golden,blue',
         ]);
 
         $data['slug'] = Str::slug($data['name']);

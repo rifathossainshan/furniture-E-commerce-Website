@@ -4,11 +4,14 @@
 @if(isset($selectedCategory))
 <div class="bg-stone-100 py-12 relative overflow-hidden">
     @if($selectedCategory->image)
-        <img src="{{ asset($selectedCategory->image) }}" class="absolute inset-0 w-full h-full object-cover opacity-20">
+        <img src="{{ asset($selectedCategory->image) }}" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black" style="opacity: 0.5;"></div>
     @endif
     @php
         $titleColor = 'text-gray-900';
         $descColor = 'text-gray-600';
+        
+        // Map Title Color
         if($selectedCategory->text_color === 'white') {
             $titleColor = 'text-white';
             $descColor = 'text-gray-100';
@@ -21,6 +24,21 @@
         } elseif($selectedCategory->text_color === 'blue') {
             $titleColor = 'text-blue-600';
             $descColor = 'text-blue-500';
+        }
+
+        // Map Subtitle Color (if explicitly set)
+        if($selectedCategory->subtitle_color) {
+            if($selectedCategory->subtitle_color === 'white') {
+                $descColor = 'text-white';
+            } elseif($selectedCategory->subtitle_color === 'black') {
+                $descColor = 'text-gray-900';
+            } elseif($selectedCategory->subtitle_color === 'red') {
+                $descColor = 'text-red-600';
+            } elseif($selectedCategory->subtitle_color === 'golden') {
+                $descColor = 'text-yellow-500';
+            } elseif($selectedCategory->subtitle_color === 'blue') {
+                $descColor = 'text-blue-600';
+            }
         }
     @endphp
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
