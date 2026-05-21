@@ -6,9 +6,26 @@
     @if($selectedCategory->image)
         <img src="{{ asset($selectedCategory->image) }}" class="absolute inset-0 w-full h-full object-cover opacity-20">
     @endif
+    @php
+        $titleColor = 'text-gray-900';
+        $descColor = 'text-gray-600';
+        if($selectedCategory->text_color === 'white') {
+            $titleColor = 'text-white';
+            $descColor = 'text-gray-100';
+        } elseif($selectedCategory->text_color === 'red') {
+            $titleColor = 'text-red-600';
+            $descColor = 'text-red-500';
+        } elseif($selectedCategory->text_color === 'golden') {
+            $titleColor = 'text-yellow-500';
+            $descColor = 'text-yellow-400';
+        } elseif($selectedCategory->text_color === 'blue') {
+            $titleColor = 'text-blue-600';
+            $descColor = 'text-blue-500';
+        }
+    @endphp
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h1 class="text-4xl font-serif text-gray-900 tracking-widest uppercase mb-4">{{ $selectedCategory->name }}</h1>
-        <p class="text-gray-600 max-w-2xl mx-auto">Explore our full range of premium products in this category.</p>
+        <h1 class="text-4xl font-serif tracking-widest uppercase mb-4 {{ $titleColor }}">{{ $selectedCategory->name }}</h1>
+        <p class="max-w-2xl mx-auto {{ $descColor }}">Explore our full range of premium products in this category.</p>
     </div>
 </div>
 @else

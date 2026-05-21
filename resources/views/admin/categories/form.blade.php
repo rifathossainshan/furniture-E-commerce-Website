@@ -29,6 +29,18 @@
                 @error('image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Text Color (On Image)</label>
+                <select name="text_color" class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" required>
+                    <option value="black" {{ old('text_color', $category->text_color) == 'black' ? 'selected' : '' }}>Black</option>
+                    <option value="white" {{ old('text_color', $category->text_color) == 'white' ? 'selected' : '' }}>White</option>
+                    <option value="red" {{ old('text_color', $category->text_color) == 'red' ? 'selected' : '' }}>Red</option>
+                    <option value="golden" {{ old('text_color', $category->text_color) == 'golden' ? 'selected' : '' }}>Golden</option>
+                    <option value="blue" {{ old('text_color', $category->text_color) == 'blue' ? 'selected' : '' }}>Blue</option>
+                </select>
+                @error('text_color') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
             <div class="mb-6 flex items-center">
                 <input type="hidden" name="status" value="0">
                 <input type="checkbox" name="status" value="1" {{ old('status', $category->status ?? true) ? 'checked' : '' }}
