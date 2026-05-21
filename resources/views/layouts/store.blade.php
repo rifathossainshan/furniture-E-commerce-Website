@@ -104,7 +104,7 @@
                 <div class="flex-shrink-0 flex items-center justify-start">
                     <a href="{{ url('/') }}" class="text-2xl font-serif font-semibold tracking-wider text-gray-900">
                         @if(isset($settings['site_logo']))
-                            <img src="{{ asset($settings['site_logo']) }}" alt="Logo" style="height: 60px; width: auto; object-fit: contain; padding: 4px 0;">
+                            <img src="{{ asset($settings['site_logo']) }}" alt="Logo" style="height: 60px; width: auto; object-fit: contain; transform: scale(1.4); transform-origin: left center; position: relative; z-index: 10;">
                         @else
                             {{ $settings['site_name'] ?? config('app.name', 'My Store') }}
                         @endif
