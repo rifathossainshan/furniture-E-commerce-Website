@@ -104,7 +104,7 @@
                 <div class="flex-shrink-0 flex items-center justify-start">
                     <a href="{{ url('/') }}" class="text-2xl font-serif font-semibold tracking-wider text-gray-900">
                         @if(isset($settings['site_logo']))
-                            <img src="{{ asset($settings['site_logo']) }}" alt="Logo" class="h-8 w-auto">
+                            <img src="{{ asset($settings['site_logo']) }}" alt="Logo" style="height: 60px; width: auto; object-fit: contain; padding: 4px 0;">
                         @else
                             {{ $settings['site_name'] ?? config('app.name', 'My Store') }}
                         @endif
@@ -202,7 +202,7 @@
             <div class="space-y-4">
                 <a href="{{ url('/') }}" class="text-2xl font-serif font-semibold tracking-wider text-gray-900">
                     @if(isset($settings['site_logo']))
-                        <img src="{{ asset($settings['site_logo']) }}" alt="Logo" class="h-10 w-auto">
+                        <img src="{{ asset($settings['site_logo']) }}" alt="Logo" style="height: 96px; width: auto; object-fit: contain;">
                     @else
                         {{ $settings['site_name'] ?? config('app.name', 'My Store') }}
                     @endif
