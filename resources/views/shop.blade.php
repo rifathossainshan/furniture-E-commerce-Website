@@ -25,7 +25,9 @@
     @endphp
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h1 class="text-4xl font-serif tracking-widest uppercase mb-4 {{ $titleColor }}">{{ $selectedCategory->name }}</h1>
-        <p class="max-w-2xl mx-auto {{ $descColor }}">Explore our full range of premium products in this category.</p>
+        @if($selectedCategory->description)
+            <p class="max-w-2xl mx-auto {{ $descColor }}">{{ $selectedCategory->description }}</p>
+        @endif
     </div>
 </div>
 @else

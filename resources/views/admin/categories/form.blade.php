@@ -20,6 +20,12 @@
             </div>
 
             <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Description / Subtitle</label>
+                <textarea name="description" rows="3" class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">{{ old('description', $category->description) }}</textarea>
+                @error('description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2">Image</label>
                 <input type="file" name="image" class="w-full">
                 @if($category->image)

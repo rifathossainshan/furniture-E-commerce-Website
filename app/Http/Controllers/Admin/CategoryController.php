@@ -44,6 +44,7 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name'   => 'required|string|max:255',
+            'description' => 'nullable|string',
             'image'  => 'nullable|image|max:2048',
             'status' => 'boolean',
             'text_color' => 'required|in:black,white,red,golden,blue',
@@ -68,6 +69,7 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name'   => 'required|string|max:255',
+            'description' => 'nullable|string',
             'image'  => 'nullable|image|max:2048',
             'status' => 'boolean',
             'text_color' => 'required|in:black,white,red,golden,blue',
