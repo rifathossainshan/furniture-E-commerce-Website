@@ -47,6 +47,7 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'category_id'    => 'nullable|exists:categories,id',
+            'button_type'    => 'required|in:default,buy_now,inquiry,inquiry_booking,inquiry_buy_now',
             'name'           => 'required|string|max:255',
             'description'    => 'nullable|string',
             'price'          => 'required|numeric|min:0',
@@ -103,6 +104,7 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'category_id'    => 'nullable|exists:categories,id',
+            'button_type'    => 'required|in:default,buy_now,inquiry,inquiry_booking,inquiry_buy_now',
             'name'           => 'required|string|max:255',
             'description'    => 'nullable|string',
             'price'          => 'required|numeric|min:0',

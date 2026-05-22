@@ -194,7 +194,10 @@
                 @php
                     $whatsapp = \App\Models\Setting::where('key', 'whatsapp')->value('value') ?? '+8801XXXXXXXXX';
                     $email = \App\Models\Setting::where('key', 'email')->value('value') ?? 'contact@example.com';
-                    $btnType = $product->category->button_type ?? 'buy_now';
+                    $btnType = $product->button_type;
+                    if (empty($btnType) || $btnType === 'default') {
+                        $btnType = $product->category->button_type ?? 'buy_now';
+                    }
                 @endphp
 
                 @if($btnType == 'inquiry')

@@ -137,7 +137,10 @@
                     </a>
                     <div class="mt-auto flex flex-col gap-2">
                         @php
-                            $btnType = $product->category->button_type ?? 'buy_now';
+                            $btnType = $product->button_type;
+                            if (empty($btnType) || $btnType === 'default') {
+                                $btnType = $product->category->button_type ?? 'buy_now';
+                            }
                         @endphp
 
                         @if($btnType == 'buy_now')
