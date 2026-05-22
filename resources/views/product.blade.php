@@ -240,7 +240,7 @@
                                 Send Inquiry
                             </a>
                             @if($product->stock > 0)
-                                <button type="submit" @click="buyNow = 1"
+                                <button type="submit" @click="buyNow = 1" name="is_booking" value="1"
                                     class="w-full md:w-auto bg-white border border-pink-700 text-pink-700 hover:bg-pink-700 hover:text-white transition py-4 px-8 text-sm font-bold uppercase tracking-wider rounded-[25px]">
                                     Booking
                                 </button>

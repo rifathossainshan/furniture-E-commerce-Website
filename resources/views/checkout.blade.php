@@ -5,13 +5,13 @@
     deliveryArea: 'inside_dhaka', 
     subtotal: {{ $subtotal }}, 
     discount: {{ $discount }}, 
-    get deliveryCharge() { return this.deliveryArea === 'inside_dhaka' ? 70 : 130; }, 
+    get deliveryCharge() { return {{ $isBooking ? '0' : "this.deliveryArea === 'inside_dhaka' ? 70 : 130" }}; }, 
     get total() { return Math.max(0, this.subtotal - this.discount) + this.deliveryCharge; } 
 }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center mb-10">
-            <h1 class="text-3xl font-bold text-gray-900 uppercase tracking-widest">CHECKOUT</h1>
+            <h1 class="text-3xl font-bold text-gray-900 uppercase tracking-widest">{{ $isBooking ? 'BOOKING' : 'CHECKOUT' }}</h1>
         </div>
 
         @if(session('error'))
@@ -52,6 +52,7 @@
                             class="w-full border-gray-200 focus:border-gray-900 focus:ring-0 text-gray-900 bg-white shadow-sm p-3 resize-none"></textarea>
                     </div>
 
+                    @if(!$isBooking)
                     <div class="pt-4">
                         <label class="block text-gray-900 text-sm font-bold uppercase mb-4">DELIVERY AREA</label>
                         <div class="space-y-3">
@@ -65,6 +66,7 @@
                             </label>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
 
@@ -81,7 +83,7 @@
 
                 <!-- Place Order Button -->
                 <button type="submit" class="w-full btn-primary font-bold py-5 px-4 tracking-widest uppercase mb-10">
-                    PLACE ORDER
+                    {{ $isBooking ? 'CONFIRM BOOKING' : 'PLACE ORDER' }}
                 </button>
 
                 <!-- Order Summary Box -->
@@ -123,10 +125,12 @@
                             </div>
                         @endif
 
+                        @if(!$isBooking)
                         <div class="flex justify-between">
                             <span class="uppercase">DELIVERY CHARGE</span>
                             <span class="text-gray-900" x-text="'৳' + deliveryCharge"></span>
                         </div>
+                        @endif
                     </div>
 
                     <div class="flex justify-between mt-6 pt-6 border-t-2 border-black text-xl font-bold text-gray-900">

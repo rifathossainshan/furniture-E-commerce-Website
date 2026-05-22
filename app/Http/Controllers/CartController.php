@@ -50,6 +50,11 @@ class CartController extends Controller
         session()->put('cart', $cart);
         
         if ($request->buy_now == 1) {
+            if ($request->has('is_booking') && $request->is_booking == 1) {
+                session()->put('is_booking', true);
+            } else {
+                session()->forget('is_booking');
+            }
             return redirect()->route('checkout.index');
         }
         

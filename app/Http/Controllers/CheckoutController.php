@@ -40,8 +40,9 @@ class CheckoutController extends Controller
         }
 
         $total = max(0, $subtotal - $discount);
+        $isBooking = session('is_booking', false);
 
-        return view('checkout', compact('cart', 'subtotal', 'discount', 'total'));
+        return view('checkout', compact('cart', 'subtotal', 'discount', 'total', 'isBooking'));
     }
 
     public function applyVoucher(Request $request)
@@ -61,12 +62,19 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $isBooking = session('is_booking', false);
+
+        $rules = [
             'name' => 'required|string',
             'address' => 'required|string',
             'phone' => 'required|string',
-            'delivery_area' => 'required|in:inside_dhaka,outside_dhaka'
-        ]);
+        ];
+
+        if (!$isBooking) {
+            $rules['delivery_area'] = 'required|in:inside_dhaka,outside_dhaka';
+        }
+
+        $request->validate($rules);
 
         $cart = session()->get('cart', []);
         if (count($cart) == 0) {
@@ -89,15 +97,20 @@ class CheckoutController extends Controller
             }
         }
 
-        $deliveryCharge = $request->delivery_area === 'inside_dhaka' ? 70 : 130;
-        $areaText = $request->delivery_area === 'inside_dhaka' ? 'Inside Dhaka' : 'Outside Dhaka';
+        if ($isBooking) {
+            $deliveryCharge = 0;
+            $areaText = 'Booking / N/A';
+        } else {
+            $deliveryCharge = $request->delivery_area === 'inside_dhaka' ? 70 : 130;
+            $areaText = $request->delivery_area === 'inside_dhaka' ? 'Inside Dhaka' : 'Outside Dhaka';
+        }
 
         $total = max(0, $subtotal - $discount) + $deliveryCharge;
         $shippingAddress = "{$request->name} - {$request->address} - {$areaText} - Phone: {$request->phone}";
 
         $order = Order::create([
             'user_id' => auth()->check() ? auth()->id() : null,
-            'order_number' => 'ORD-' . strtoupper(Str::random(8)),
+            'order_number' => ($isBooking ? 'BKG-' : 'ORD-') . strtoupper(Str::random(8)),
             'total_amount' => $subtotal,
             'discount_amount' => $discount,
             'delivery_charge' => $deliveryCharge,
@@ -119,8 +132,8 @@ class CheckoutController extends Controller
             Product::where('id', $item['product_id'] ?? $id)->decrement('stock', $item['quantity']);
         }
 
-        session()->forget(['cart', 'voucher_code']);
+        session()->forget(['cart', 'voucher_code', 'is_booking']);
 
-        return redirect()->route('order.invoice', $order)->with('success', 'Order placed successfully! Order #' . $order->order_number);
+        return redirect()->route('order.invoice', $order)->with('success', ($isBooking ? 'Booking confirmed successfully! Booking #' : 'Order placed successfully! Order #') . $order->order_number);
     }
 }

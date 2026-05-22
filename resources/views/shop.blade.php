@@ -162,6 +162,7 @@
                             <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full">
                                 @csrf
                                 <input type="hidden" name="buy_now" value="1">
+                                <input type="hidden" name="is_booking" value="1">
                                 <button type="submit" @disabled($product->stock <= 0) class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
                                     Booking
                                 </button>
