@@ -51,16 +51,24 @@
                     @error('category_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-4" x-data="{ btnType: '{{ old('button_type', $product->button_type ?? 'default') }}' }">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Button Type (On Product Cards)</label>
-                    <select name="button_type" class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" required>
-                        <option value="default" {{ old('button_type', $product->button_type ?? 'default') == 'default' ? 'selected' : '' }}>Default (Inherit from Category)</option>
-                        <option value="buy_now" {{ old('button_type', $product->button_type) == 'buy_now' ? 'selected' : '' }}>Buy Now / Add to Cart</option>
-                        <option value="inquiry" {{ old('button_type', $product->button_type) == 'inquiry' ? 'selected' : '' }}>Inquiry Only</option>
-                        <option value="inquiry_booking" {{ old('button_type', $product->button_type) == 'inquiry_booking' ? 'selected' : '' }}>Inquiry & Booking</option>
-                        <option value="inquiry_buy_now" {{ old('button_type', $product->button_type) == 'inquiry_buy_now' ? 'selected' : '' }}>Inquiry & Buy Now</option>
+                    <select name="button_type" x-model="btnType" class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" required>
+                        <option value="default">Default (Inherit from Category)</option>
+                        <option value="buy_now">Buy Now / Add to Cart</option>
+                        <option value="inquiry">Inquiry Only</option>
+                        <option value="inquiry_booking">Inquiry & Booking</option>
+                        <option value="inquiry_buy_now">Inquiry & Buy Now</option>
                     </select>
                     @error('button_type') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+
+                    <div x-show="btnType === 'inquiry' || btnType === 'inquiry_booking' || btnType === 'inquiry_buy_now'" class="mt-4 p-4 border border-gray-200 rounded bg-stone-50" x-cloak>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Product Specific WhatsApp Number</label>
+                        <input type="text" name="whatsapp_number" value="{{ old('whatsapp_number', $product->whatsapp_number) }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" placeholder="e.g. +8801XXXXXXXXX">
+                        <p class="text-xs text-gray-500 mt-1">Leave blank to use the global WhatsApp number.</p>
+                        @error('whatsapp_number') <span class="text-red-500 text-xs block mt-1">{{ $message }}</span> @enderror
+                    </div>
                 </div>
 
                 <div class="mb-4">

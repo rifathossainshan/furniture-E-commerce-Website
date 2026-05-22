@@ -192,7 +192,7 @@
                 </div>
 
                 @php
-                    $whatsapp = \App\Models\Setting::where('key', 'whatsapp')->value('value') ?? '+8801XXXXXXXXX';
+                    $whatsapp = $product->whatsapp_number ?: (\App\Models\Setting::where('key', 'whatsapp')->value('value') ?? '+8801XXXXXXXXX');
                     $email = \App\Models\Setting::where('key', 'email')->value('value') ?? 'contact@example.com';
                     $btnType = $product->button_type;
                     if (empty($btnType) || $btnType === 'default') {

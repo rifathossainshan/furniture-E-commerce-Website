@@ -12,6 +12,7 @@ class Product extends Model
     protected $fillable = [
         'category_id',
         'button_type',
+        'whatsapp_number',
         'name',
         'slug',
         'description',
