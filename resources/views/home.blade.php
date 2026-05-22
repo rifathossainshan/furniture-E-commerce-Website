@@ -142,14 +142,46 @@
                                 <span class="text-gray-500">★</span> {{ number_format($product->reviews_avg_rating ?? 0, 1) }}
                             </div>
                         </a>
-                        <div class="mt-auto">
-                            <form action="{{ route('cart.add', $product) }}" method="POST">
-                                @csrf
-                                <button type="submit" @disabled($product->stock <= 0)
-                                    class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
-                                    Add to Cart
-                                </button>
-                            </form>
+                        <div class="mt-auto flex flex-col gap-2">
+                            @php
+                                $btnType = $product->category->button_type ?? 'buy_now';
+                            @endphp
+
+                            @if($btnType == 'buy_now')
+                                <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full">
+                                    @csrf
+                                    <input type="hidden" name="buy_now" value="1">
+                                    <button type="submit" @disabled($product->stock <= 0) class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Buy Now
+                                    </button>
+                                </form>
+                            @elseif($btnType == 'inquiry')
+                                <a href="{{ route('product.show', $product->slug) }}" class="w-full bg-white border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider text-center py-2 px-4">
+                                    Send Inquiry
+                                </a>
+                            @elseif($btnType == 'inquiry_booking')
+                                <a href="{{ route('product.show', $product->slug) }}" class="w-full bg-white border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider text-center py-2 px-4">
+                                    Send Inquiry
+                                </a>
+                                <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full">
+                                    @csrf
+                                    <input type="hidden" name="buy_now" value="1">
+                                    <button type="submit" @disabled($product->stock <= 0) class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Booking
+                                    </button>
+                                </form>
+                            @elseif($btnType == 'inquiry_buy_now')
+                                <a href="{{ route('product.show', $product->slug) }}" class="w-full bg-white border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider text-center py-2 px-4">
+                                    Send Inquiry
+                                </a>
+                                <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full">
+                                    @csrf
+                                    <input type="hidden" name="buy_now" value="1">
+                                    <button type="submit" @disabled($product->stock <= 0) class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Buy Now
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>

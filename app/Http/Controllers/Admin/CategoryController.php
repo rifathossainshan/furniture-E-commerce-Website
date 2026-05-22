@@ -49,6 +49,7 @@ class CategoryController extends Controller
             'status' => 'boolean',
             'text_color' => 'required|in:black,white,red,golden,blue',
             'subtitle_color' => 'nullable|in:black,white,red,golden,blue',
+            'button_type' => 'required|in:buy_now,inquiry,inquiry_booking,inquiry_buy_now',
         ]);
 
         $data['slug'] = Str::slug($data['name']);
@@ -75,6 +76,7 @@ class CategoryController extends Controller
             'status' => 'boolean',
             'text_color' => 'required|in:black,white,red,golden,blue',
             'subtitle_color' => 'nullable|in:black,white,red,golden,blue',
+            'button_type' => 'required|in:buy_now,inquiry,inquiry_booking,inquiry_buy_now',
         ]);
 
         $data['slug'] = Str::slug($data['name']);
