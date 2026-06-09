@@ -61,7 +61,7 @@
     
     <!-- Sidebar / Filters -->
     <div class="w-full md:w-64 flex-shrink-0">
-        <form action="{{ route('shop') }}" method="GET" class="mb-8">
+        <form action="{{ route('shop') }}" method="GET" class="mb-8" onsubmit="fbq('track', 'Search', { search_string: this.q.value });">
             <div class="relative">
                 <input type="text" name="q" value="{{ request('q') }}" placeholder="Search products..." class="w-full pl-10 pr-4 py-2 border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm">
                 <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -144,7 +144,7 @@
                         @endphp
 
                         @if($btnType == 'buy_now')
-                            <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full">
+                            <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($product->name) }}', content_ids: ['{{ $product->id }}'], content_type: 'product', value: {{ $product->price }}, currency: 'BDT' });">
                                 @csrf
                                 <input type="hidden" name="buy_now" value="1">
                                 <button type="submit" @disabled($product->stock <= 0) class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
@@ -159,7 +159,7 @@
                             <a href="{{ route('product.show', $product->slug) }}" class="w-full bg-white border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider text-center py-2 px-4">
                                 Send Inquiry
                             </a>
-                            <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full">
+                            <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($product->name) }}', content_ids: ['{{ $product->id }}'], content_type: 'product', value: {{ $product->price }}, currency: 'BDT' });">
                                 @csrf
                                 <input type="hidden" name="buy_now" value="1">
                                 <input type="hidden" name="is_booking" value="1">
@@ -171,7 +171,7 @@
                             <a href="{{ route('product.show', $product->slug) }}" class="w-full bg-white border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider text-center py-2 px-4">
                                 Send Inquiry
                             </a>
-                            <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full">
+                            <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full" onsubmit="fbq('track', 'AddToCart', { content_name: '{{ addslashes($product->name) }}', content_ids: ['{{ $product->id }}'], content_type: 'product', value: {{ $product->price }}, currency: 'BDT' });">
                                 @csrf
                                 <input type="hidden" name="buy_now" value="1">
                                 <button type="submit" @disabled($product->stock <= 0) class="w-full btn-primary text-xs tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">

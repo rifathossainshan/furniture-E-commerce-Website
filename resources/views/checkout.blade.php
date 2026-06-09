@@ -1,6 +1,9 @@
 @extends('layouts.store')
 
 @section('content')
+<script>
+fbq('track', 'InitiateCheckout');
+</script>
 <div class="bg-white py-12" x-data="{ 
     deliveryArea: 'inside_dhaka', 
     subtotal: {{ $subtotal }}, 
@@ -25,7 +28,7 @@
             </div>
         @endif
 
-        <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form" class="flex flex-col lg:flex-row gap-12 lg:gap-20" onsubmit="fbq('track', 'Lead');">
+        <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form" class="flex flex-col lg:flex-row gap-12 lg:gap-20" onsubmit="fbq('track', 'AddPaymentInfo');">
             @csrf
             
             <!-- Left Column: Billing Details -->
