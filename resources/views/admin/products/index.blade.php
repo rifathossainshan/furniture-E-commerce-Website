@@ -53,7 +53,7 @@
                             <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">
                                 {{ $product->category->name ?? 'None' }}</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-sm font-semibold text-gray-900">
-                                ?{{ number_format($product->price, 2) }}</td>
+                                ৳{{ number_format($product->price, 2) }}</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">{{ $product->stock }}</td>
                             <td class="py-4 px-6 border-b border-gray-200 text-sm">
                                 <span

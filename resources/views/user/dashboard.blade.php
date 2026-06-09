@@ -76,7 +76,7 @@
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-1">Total</p>
-                                <p class="text-sm font-medium text-gray-900">?{{ number_format($order->final_amount, 2) }}</p>
+                                <p class="text-sm font-medium text-gray-900">৳{{ number_format($order->final_amount, 2) }}</p>
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-1">Order Number</p>
@@ -110,7 +110,7 @@
                                         <h4 class="font-bold text-gray-900 text-sm">
                                             {{ $item->product->name ?? 'Product Unavailable' }}</h4>
                                         <p class="text-sm text-gray-500 mt-1">Qty: {{ $item->quantity }} x
-                                            ?{{ number_format($item->price, 2) }}</p>
+                                            ৳{{ number_format($item->price, 2) }}</p>
                                     </div>
                                 </div>
                             @endforeach
