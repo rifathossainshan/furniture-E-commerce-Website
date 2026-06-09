@@ -37,8 +37,20 @@
                         <td class="py-4 px-6 border-b border-gray-200 text-sm font-bold text-gray-900">
                             #{{ $order->order_number }}</td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm text-gray-700">
-                            {{ optional($order->user)->name ?? 'Guest' }}<br>
-                            <span class="text-xs text-gray-500">{{ optional($order->user)->email ?? 'No email' }}</span>
+                            @php
+                                $addressParts = explode(' - ', $order->shipping_address);
+                                $customerName = $addressParts[0] ?? (optional($order->user)->name ?? 'Guest');
+                                
+                                $customerPhone = 'No phone';
+                                foreach($addressParts as $part) {
+                                    if(str_starts_with(trim($part), 'Phone:')) {
+                                        $customerPhone = str_replace('Phone:', '', $part);
+                                        break;
+                                    }
+                                }
+                            @endphp
+                            {{ $customerName }}<br>
+                            <span class="text-xs text-gray-500">{{ trim($customerPhone) }}</span>
                         </td>
                         <td class="py-4 px-6 border-b border-gray-200 text-sm font-semibold text-gray-900">
                             ৳{{ number_format($order->final_amount, 2) }}</td>
