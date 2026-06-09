@@ -95,16 +95,34 @@
                 <div class="text-sm space-y-3">
                     <div>
                         <span class="font-medium text-gray-700 block">Customer:</span>
-                        <p>{{ optional($order->user)->name ?? 'Guest' }}</p>
-                        <p class="text-gray-500">{{ optional($order->user)->email ?? 'No email' }}</p>
+                        @php
+                            $addressParts = explode(' - ', $order->shipping_address);
+                            $customerName = $addressParts[0] ?? (optional($order->user)->name ?? 'Guest');
+                            
+                            $customerPhone = 'No phone';
+                            foreach($addressParts as $part) {
+                                if(str_starts_with(trim($part), 'Phone:')) {
+                                    $customerPhone = str_replace('Phone:', '', $part);
+                                    break;
+                                }
+                            }
+                        @endphp
+                        <p>{{ $customerName }}</p>
+                        <p class="text-gray-500">{{ trim($customerPhone) }}</p>
                     </div>
                     <div>
                         <span class="font-medium text-gray-700 block">Payment Method:</span>
                         <p class="uppercase font-semibold">{{ $order->payment_method }}</p>
                     </div>
                     <div>
-                        <span class="font-medium text-gray-700 block">Shipping Address:</span>
-                        <p class="text-gray-600 whitespace-pre-wrap">{{ $order->shipping_address }}</p>
+                        <span class="font-medium text-gray-700 block mb-1">Shipping Address:</span>
+                        <div class="text-gray-600 bg-gray-50 p-3 rounded border border-gray-100">
+                            @foreach(explode(' - ', $order->shipping_address) as $part)
+                                @if(trim($part) !== '')
+                                    <div class="mb-1 last:mb-0">{{ trim($part) }}</div>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                     <div>
                         <span class="font-medium text-gray-700 block">Order Date:</span>
