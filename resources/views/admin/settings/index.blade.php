@@ -107,31 +107,7 @@
                 </div>
             </div>
 
-            <div class="mb-8 border-t pt-6">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">Product Page Guarantees</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Shipping Title</label>
-                        <input type="text" name="shipping_title" value="{{ $settings['shipping_title'] ?? 'Free Global Shipping' }}"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Shipping Subtitle</label>
-                        <input type="text" name="shipping_subtitle" value="{{ $settings['shipping_subtitle'] ?? 'on orders over $500' }}"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Returns Title</label>
-                        <input type="text" name="returns_title" value="{{ $settings['returns_title'] ?? '30-Day Free Returns' }}"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Returns Subtitle</label>
-                        <input type="text" name="returns_subtitle" value="{{ $settings['returns_subtitle'] ?? 'No questions asked' }}"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900">
-                    </div>
-                </div>
-            </div>
+
 
             <div class="mb-8 border-t pt-6">
                 <h3 class="text-xl font-bold text-gray-800 mb-6 bg-gray-50 p-3 border-l-4 border-gray-900 rounded-r">About Page Full Configuration</h3>
