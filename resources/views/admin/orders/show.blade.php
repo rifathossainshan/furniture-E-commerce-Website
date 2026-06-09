@@ -139,6 +139,20 @@
                         </svg>
                         Print Invoice
                     </button>
+                    <form action="{{ route('admin.orders.destroy', $order) }}" method="POST" class="mt-3 flex flex-col items-center w-full"
+                        x-data="{ confirming: false }"
+                        @submit.prevent="if(!confirming) { confirming = true; } else { $el.submit(); }">
+                        @csrf
+                        @method('DELETE')
+                        
+                        <div class="w-full flex items-center justify-between">
+                            <button type="submit" :class="confirming ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-red-50 text-red-700 hover:bg-red-100'" class="w-full border border-red-200 font-bold py-2 px-4 rounded flex justify-center items-center gap-2 transition-colors">
+                                <svg x-show="!confirming" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                <span x-text="confirming ? 'Are you sure? Click to confirm' : 'Delete Order'"></span>
+                            </button>
+                        </div>
+                        <button type="button" x-show="confirming" @click="confirming = false" x-cloak class="mt-2 text-gray-500 text-sm hover:text-gray-800 underline">Cancel Deletion</button>
+                    </form>
                 </div>
             </div>
         </div>

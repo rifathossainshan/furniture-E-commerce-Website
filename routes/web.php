@@ -46,7 +46,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::resource('sliders', \App\Http\Controllers\Admin\SliderController::class);
     Route::resource('vouchers', \App\Http\Controllers\Admin\VoucherController::class);
-    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class)->except(['create', 'store', 'destroy']);
+    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class)->except(['create', 'store']);
     Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [\App\Http\Controllers\Admin\SettingController::class, 'store'])->name('settings.store');
     

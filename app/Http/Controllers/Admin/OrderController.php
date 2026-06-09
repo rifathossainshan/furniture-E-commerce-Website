@@ -32,4 +32,14 @@ class OrderController extends Controller
 
         return redirect()->route('admin.orders.show', $order)->with('success', 'Order status updated successfully.');
     }
+
+    public function destroy(Order $order)
+    {
+        // Delete related order items automatically handled if there are cascading deletes, 
+        // but let's explicitly delete items to be safe if no cascade is set
+        $order->items()->delete();
+        $order->delete();
+
+        return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
+    }
 }
