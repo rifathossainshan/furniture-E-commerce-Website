@@ -2,12 +2,24 @@
 
 @section('content')
     <!-- Hero Slider -->
+    <style>
+        .custom-slider-wrapper {
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+        @media (min-width: 768px) {
+            .custom-slider-wrapper {
+                aspect-ratio: auto;
+                height: 70vh;
+            }
+        }
+    </style>
     <div class="relative w-full overflow-hidden bg-stone-100">
         <div class="flex transition-transform duration-500 ease-in-out" id="sliderContainer">
             @forelse($sliders as $slider)
-                <div class="w-full flex-shrink-0 relative">
+                <div class="w-full flex-shrink-0 custom-slider-wrapper group">
                     <img src="{{ asset($slider->image) }}"
-                        class="w-full h-[60vh] md:h-[70vh] object-cover object-center" alt="{{ $slider->title }}">
+                        class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ $slider->title }}">
                     @if($slider->show_text ?? true)
                         <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center px-8 md:px-24">
                             <div class="max-w-xl">
