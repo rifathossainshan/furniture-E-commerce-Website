@@ -17,4 +17,14 @@ require __DIR__.'/../vendor/autoload.php';
 /** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$app->handleRequest(Request::capture());
+try {
+    $app->handleRequest(Request::capture());
+} catch (\Throwable $e) {
+    echo "<div style='background:#fdd; padding:20px; border:2px solid red; font-family:sans-serif;'>";
+    echo "<h2>🚨 Force Caught Error:</h2>";
+    echo "<strong>Message:</strong> " . $e->getMessage() . "<br><br>";
+    echo "<strong>File:</strong> " . $e->getFile() . " on line <strong>" . $e->getLine() . "</strong><br><br>";
+    echo "<strong>Trace:</strong><br><pre>" . $e->getTraceAsString() . "</pre>";
+    echo "</div>";
+    die();
+}
