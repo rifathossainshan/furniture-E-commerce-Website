@@ -61,7 +61,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 require __DIR__ . '/auth.php';
 
+// ─── Secure DB Migration Route (Admin Only, Non-Production) ─────────
 Route::get('/migrate-db', function() {
+    // Block in production
+    if (app()->environment('production')) {
+        abort(403, 'Migration is disabled in production.');
+    }
+
     \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-    return 'Database migrated successfully on shared hosting!';
-});
+    return 'Database migrated successfully! (Logged in as: ' . auth()->user()->email . ')';
+})->middleware(['auth', 'admin'])->name('migrate.db');
+
