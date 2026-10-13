@@ -135,7 +135,18 @@
                     {{ $product->category->name ?? 'MUSFIQ' }}</div>
                 <h1 class="text-3xl md:text-4xl font-serif text-gray-900 leading-tight mb-4">{{ $product->name }}</h1>
 
-                <p class="text-2xl text-gray-900 font-bold mb-6">৳{{ number_format($product->price, 2) }}</p>
+                <div class="flex items-center gap-3 mb-6">
+                    <p class="text-2xl text-gray-900 font-bold">৳{{ number_format($product->price, 2) }}</p>
+                    @if($product->is_free_delivery)
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-200">
+                            ✓ Free Delivery
+                        </span>
+                    @elseif($product->inside_dhaka_delivery_charge !== null || $product->outside_dhaka_delivery_charge !== null)
+                        <span class="inline-flex items-center text-xs text-gray-500 bg-gray-50 px-2 py-0.5 rounded border border-gray-200">
+                            🚚 Delivery: ৳{{ $product->inside_dhaka_delivery_charge ?? 70 }} (Dhaka) / ৳{{ $product->outside_dhaka_delivery_charge ?? 130 }} (Outside)
+                        </span>
+                    @endif
+                </div>
 
                 <div class="prose prose-sm text-gray-600 mb-8 max-w-none">
                     <p>{!! nl2br(e($product->description)) !!}</p>

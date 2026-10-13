@@ -42,7 +42,48 @@ class CheckoutController extends Controller
         $total = max(0, $subtotal - $discount);
         $isBooking = session('is_booking', false);
 
-        return view('checkout', compact('cart', 'subtotal', 'discount', 'total', 'isBooking'));
+        // Calculate delivery charges based on cart products
+        $productIds = collect($cart)->pluck('product_id')->filter()->unique();
+        $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+
+        $insideDhakaCharge = 70;
+        $outsideDhakaCharge = 130;
+        $allFreeDelivery = count($cart) > 0;
+
+        foreach ($cart as $item) {
+            $pId = $item['product_id'] ?? null;
+            $prod = $pId ? ($products[$pId] ?? null) : null;
+
+            if ($prod && $prod->is_free_delivery) {
+                // this item has free delivery
+                continue;
+            } else {
+                $allFreeDelivery = false;
+                if ($prod && $prod->inside_dhaka_delivery_charge !== null) {
+                    $insideDhakaCharge = max($insideDhakaCharge, (float) $prod->inside_dhaka_delivery_charge);
+                }
+                if ($prod && $prod->outside_dhaka_delivery_charge !== null) {
+                    $outsideDhakaCharge = max($outsideDhakaCharge, (float) $prod->outside_dhaka_delivery_charge);
+                }
+            }
+        }
+
+        if ($allFreeDelivery) {
+            $insideDhakaCharge = 0;
+            $outsideDhakaCharge = 0;
+        }
+
+        return view('checkout', compact(
+            'cart',
+            'products',
+            'subtotal',
+            'discount',
+            'total',
+            'isBooking',
+            'insideDhakaCharge',
+            'outsideDhakaCharge',
+            'allFreeDelivery'
+        ));
     }
 
     public function applyVoucher(Request $request)
@@ -97,11 +138,41 @@ class CheckoutController extends Controller
             }
         }
 
+        // Compute delivery charges based on cart products
+        $productIds = collect($cart)->pluck('product_id')->filter()->unique();
+        $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+
+        $insideDhakaCharge = 70;
+        $outsideDhakaCharge = 130;
+        $allFreeDelivery = count($cart) > 0;
+
+        foreach ($cart as $item) {
+            $pId = $item['product_id'] ?? null;
+            $prod = $pId ? ($products[$pId] ?? null) : null;
+
+            if ($prod && $prod->is_free_delivery) {
+                continue;
+            } else {
+                $allFreeDelivery = false;
+                if ($prod && $prod->inside_dhaka_delivery_charge !== null) {
+                    $insideDhakaCharge = max($insideDhakaCharge, (float) $prod->inside_dhaka_delivery_charge);
+                }
+                if ($prod && $prod->outside_dhaka_delivery_charge !== null) {
+                    $outsideDhakaCharge = max($outsideDhakaCharge, (float) $prod->outside_dhaka_delivery_charge);
+                }
+            }
+        }
+
+        if ($allFreeDelivery) {
+            $insideDhakaCharge = 0;
+            $outsideDhakaCharge = 0;
+        }
+
         if ($isBooking) {
             $deliveryCharge = 0;
             $areaText = 'Booking / N/A';
         } else {
-            $deliveryCharge = $request->delivery_area === 'inside_dhaka' ? 70 : 130;
+            $deliveryCharge = $request->delivery_area === 'inside_dhaka' ? $insideDhakaCharge : $outsideDhakaCharge;
             $areaText = $request->delivery_area === 'inside_dhaka' ? 'Inside Dhaka' : 'Outside Dhaka';
         }
 

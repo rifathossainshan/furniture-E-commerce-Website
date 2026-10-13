@@ -52,6 +52,9 @@ class ProductController extends Controller
             'name'           => 'required|string|max:255',
             'description'    => 'nullable|string',
             'price'          => 'required|numeric|min:0',
+            'inside_dhaka_delivery_charge'  => 'nullable|numeric|min:0',
+            'outside_dhaka_delivery_charge' => 'nullable|numeric|min:0',
+            'is_free_delivery'              => 'boolean',
             'stock'          => 'required|integer|min:0',
             'image'          => 'nullable|image|max:4096',
             'images.*'       => 'nullable|image|max:4096',
@@ -61,6 +64,8 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'meta_keywords'  => 'nullable|string',
         ]);
+
+        $data['is_free_delivery'] = $request->boolean('is_free_delivery');
 
         $data['slug'] = Str::slug($data['name']);
 
@@ -110,6 +115,9 @@ class ProductController extends Controller
             'name'           => 'required|string|max:255',
             'description'    => 'nullable|string',
             'price'          => 'required|numeric|min:0',
+            'inside_dhaka_delivery_charge'  => 'nullable|numeric|min:0',
+            'outside_dhaka_delivery_charge' => 'nullable|numeric|min:0',
+            'is_free_delivery'              => 'boolean',
             'stock'          => 'required|integer|min:0',
             'image'          => 'nullable|image|max:4096',
             'images.*'       => 'nullable|image|max:4096',
@@ -119,6 +127,8 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'meta_keywords'  => 'nullable|string',
         ]);
+
+        $data['is_free_delivery'] = $request->boolean('is_free_delivery');
 
         $data['slug'] = Str::slug($data['name']);
 

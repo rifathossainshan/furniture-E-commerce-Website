@@ -22,7 +22,7 @@
 
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Price ($) <span
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Price (৳) <span
                                 class="text-red-500">*</span></label>
                         <input type="number" step="0.01" name="price" value="{{ old('price', $product->price) }}"
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900"
@@ -36,6 +36,48 @@
                             class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900"
                             required>
                         @error('stock') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
+                <!-- Delivery Charges Section -->
+                <div class="mb-4 p-4 border border-gray-200 rounded bg-stone-50"
+                    x-data="{ isFreeDelivery: {{ old('is_free_delivery', $product->is_free_delivery ?? false) ? 'true' : 'false' }} }">
+                    <div class="flex items-center justify-between mb-3 border-b pb-2">
+                        <label class="block text-gray-800 text-sm font-bold">Delivery Charges (ডেলিভারি চার্জ)</label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="hidden" name="is_free_delivery" value="0">
+                            <input type="checkbox" name="is_free_delivery" value="1" x-model="isFreeDelivery"
+                                class="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-600 focus:ring-green-500">
+                            <span class="ml-2 text-sm font-bold text-green-700">Free Delivery (ফ্রি ডেলিভারি)</span>
+                        </label>
+                    </div>
+
+                    <div x-show="!isFreeDelivery" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 text-xs font-bold mb-1">Inside Dhaka Charge (৳)</label>
+                            <input type="number" step="0.01" min="0" name="inside_dhaka_delivery_charge"
+                                value="{{ old('inside_dhaka_delivery_charge', $product->inside_dhaka_delivery_charge) }}"
+                                placeholder="Default: 70"
+                                class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm">
+                            <p class="text-[11px] text-gray-500 mt-1">ফাঁকা রাখলে সাধারণ চার্জ (৳70) প্রযোজ্য হবে।</p>
+                            @error('inside_dhaka_delivery_charge') <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-xs font-bold mb-1">Outside Dhaka Charge (৳)</label>
+                            <input type="number" step="0.01" min="0" name="outside_dhaka_delivery_charge"
+                                value="{{ old('outside_dhaka_delivery_charge', $product->outside_dhaka_delivery_charge) }}"
+                                placeholder="Default: 130"
+                                class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900 text-sm">
+                            <p class="text-[11px] text-gray-500 mt-1">ফাঁকা রাখলে সাধারণ চার্জ (৳130) প্রযোজ্য হবে।</p>
+                            @error('outside_dhaka_delivery_charge') <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div x-show="isFreeDelivery"
+                        class="text-xs text-green-800 bg-green-50 p-2.5 rounded border border-green-200" x-cloak>
+                        ✓ এই প্রোডাক্টের জন্য ডেলিভারি চার্জ সম্পূর্ণ ফ্রি (৳0) থাকবে।
                     </div>
                 </div>
 
@@ -53,7 +95,8 @@
 
                 <div class="mb-4" x-data="{ btnType: '{{ old('button_type', $product->button_type ?? 'default') }}' }">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Button Type (On Product Cards)</label>
-                    <select name="button_type" x-model="btnType" class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" required>
+                    <select name="button_type" x-model="btnType"
+                        class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" required>
                         <option value="default">Default (Inherit from Category)</option>
                         <option value="buy_now">Buy Now / Add to Cart</option>
                         <option value="inquiry">Inquiry Only</option>
@@ -62,12 +105,16 @@
                     </select>
                     @error('button_type') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
 
-                    <div x-show="btnType === 'inquiry' || btnType === 'inquiry_booking' || btnType === 'inquiry_buy_now'" class="mt-4 p-4 border border-gray-200 rounded bg-stone-50" x-cloak>
+                    <div x-show="btnType === 'inquiry' || btnType === 'inquiry_booking' || btnType === 'inquiry_buy_now'"
+                        class="mt-4 p-4 border border-gray-200 rounded bg-stone-50" x-cloak>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Product Specific WhatsApp Number</label>
-                        <input type="text" name="whatsapp_number" value="{{ old('whatsapp_number', $product->whatsapp_number) }}"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" placeholder="e.g. +8801XXXXXXXXX">
+                        <input type="text" name="whatsapp_number"
+                            value="{{ old('whatsapp_number', $product->whatsapp_number) }}"
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900"
+                            placeholder="e.g. +8801XXXXXXXXX">
                         <p class="text-xs text-gray-500 mt-1">Leave blank to use the global WhatsApp number.</p>
-                        @error('whatsapp_number') <span class="text-red-500 text-xs block mt-1">{{ $message }}</span> @enderror
+                        @error('whatsapp_number') <span class="text-red-500 text-xs block mt-1">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
 
@@ -80,26 +127,30 @@
 
                 <!-- SEO Fields -->
                 <div class="mb-6 p-4 border border-gray-200 rounded bg-gray-50">
-                    <h3 class="block text-gray-700 text-sm font-bold mb-4 border-b pb-2">Search Engine Optimization (SEO)</h3>
-                    
+                    <h3 class="block text-gray-700 text-sm font-bold mb-4 border-b pb-2">Search Engine Optimization (SEO)
+                    </h3>
+
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Meta Title</label>
                         <input type="text" name="meta_title" value="{{ old('meta_title', $product->meta_title) }}"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" placeholder="Optional. Max 60 characters for best results">
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900"
+                            placeholder="Optional. Max 60 characters for best results">
                         @error('meta_title') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Meta Keywords</label>
                         <input type="text" name="meta_keywords" value="{{ old('meta_keywords', $product->meta_keywords) }}"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" placeholder="e.g. elegant dress, summer collection, floral">
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900"
+                            placeholder="e.g. elegant dress, summer collection, floral">
                         @error('meta_keywords') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
-                    
+
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Meta Description</label>
                         <textarea name="meta_description" rows="2"
-                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900" placeholder="Optional. Max 160 characters.">{{ old('meta_description', $product->meta_description) }}</textarea>
+                            class="w-full border-gray-300 rounded shadow-sm focus:border-gray-900 focus:ring-gray-900"
+                            placeholder="Optional. Max 160 characters.">{{ old('meta_description', $product->meta_description) }}</textarea>
                         @error('meta_description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
                 </div>
@@ -108,28 +159,43 @@
                 <div class="mb-6 p-4 border border-gray-200 rounded bg-gray-50" x-data="attributeHandler()">
                     <div class="flex justify-between items-center mb-4">
                         <label class="block text-gray-700 text-sm font-bold">Product Attributes</label>
-                        <button type="button" @click="addAttribute()" class="text-xs bg-gray-900 hover:bg-gray-800 text-white font-semibold py-1.5 px-3 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-900 transition">
+                        <button type="button" @click="addAttribute()"
+                            class="text-xs bg-gray-900 hover:bg-gray-800 text-white font-semibold py-1.5 px-3 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-900 transition">
                             + Add Attribute
                         </button>
                     </div>
-                    
+
                     <div class="space-y-3">
                         <template x-for="(attr, index) in attributes" :key="index">
                             <div class="flex items-center gap-3 bg-white p-2 border border-gray-200 rounded shadow-sm">
                                 <div class="flex-1">
-                                    <input type="text" :name="'attributes[name][' + index + ']'" x-model="attr.name" placeholder="Name (e.g. Size, Color)" class="w-full border-gray-300 rounded shadow-sm text-sm focus:border-gray-900 focus:ring-gray-900" required>
+                                    <input type="text" :name="'attributes[name][' + index + ']'" x-model="attr.name"
+                                        placeholder="Name (e.g. Size, Color)"
+                                        class="w-full border-gray-300 rounded shadow-sm text-sm focus:border-gray-900 focus:ring-gray-900"
+                                        required>
                                 </div>
                                 <div class="flex-1">
-                                    <input type="text" :name="'attributes[value][' + index + ']'" x-model="attr.value" placeholder="Value (e.g. XL, Red)" class="w-full border-gray-300 rounded shadow-sm text-sm focus:border-gray-900 focus:ring-gray-900" required>
+                                    <input type="text" :name="'attributes[value][' + index + ']'" x-model="attr.value"
+                                        placeholder="Value (e.g. XL, Red)"
+                                        class="w-full border-gray-300 rounded shadow-sm text-sm focus:border-gray-900 focus:ring-gray-900"
+                                        required>
                                 </div>
                                 <div class="w-8 flex justify-center">
-                                    <button type="button" @click="removeAttribute(index)" class="text-red-500 hover:text-red-700 focus:outline-none transition" title="Remove Attribute">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    <button type="button" @click="removeAttribute(index)"
+                                        class="text-red-500 hover:text-red-700 focus:outline-none transition"
+                                        title="Remove Attribute">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                            </path>
+                                        </svg>
                                     </button>
                                 </div>
                             </div>
                         </template>
-                        <div x-show="attributes.length === 0" class="text-sm text-gray-500 italic text-center py-4 bg-white border border-dashed border-gray-300 rounded">No dynamic attributes added yet. Click "+ Add Attribute" to start.</div>
+                        <div x-show="attributes.length === 0"
+                            class="text-sm text-gray-500 italic text-center py-4 bg-white border border-dashed border-gray-300 rounded">
+                            No dynamic attributes added yet. Click "+ Add Attribute" to start.</div>
                     </div>
                 </div>
 
@@ -151,8 +217,8 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2">Primary Product Image</label>
                     <input type="file" name="image" class="w-full border border-gray-300 p-2 rounded">
                     @if($product->image)
-                        <div class="mt-2 text-sm text-gray-500">Current Image: <img
-                                src="{{ asset($product->image) }}" class="w-32 mt-2 rounded object-cover shadow">
+                        <div class="mt-2 text-sm text-gray-500">Current Image: <img src="{{ asset($product->image) }}"
+                                class="w-32 mt-2 rounded object-cover shadow">
                         </div>
                     @endif
                     @error('image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
@@ -197,14 +263,17 @@
                         @foreach($product->images as $index => $img)
                             <div class="relative group border p-1 rounded shadow-sm">
                                 <img src="{{ asset($img) }}" class="w-full h-32 rounded object-cover">
-                                <form action="{{ route('admin.products.image.delete', ['product' => $product->id, 'index' => $index]) }}" method="POST" class="absolute top-2 right-2">
+                                <form
+                                    action="{{ route('admin.products.image.delete', ['product' => $product->id, 'index' => $index]) }}"
+                                    method="POST" class="absolute top-2 right-2">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" 
-                                            onclick="return confirm('Are you sure you want to delete this gallery image?')"
-                                            class="bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition hover:bg-red-700 shadow-md">
+                                    <button type="submit"
+                                        onclick="return confirm('Are you sure you want to delete this gallery image?')"
+                                        class="bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition hover:bg-red-700 shadow-md">
                                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12" />
                                         </svg>
                                     </button>
                                 </form>

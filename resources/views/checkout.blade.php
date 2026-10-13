@@ -8,7 +8,11 @@ fbq('track', 'InitiateCheckout');
     deliveryArea: 'inside_dhaka', 
     subtotal: {{ $subtotal }}, 
     discount: {{ $discount }}, 
-    get deliveryCharge() { return {{ $isBooking ? '0' : "this.deliveryArea === 'inside_dhaka' ? 70 : 130" }}; }, 
+    insideCharge: {{ $insideDhakaCharge }},
+    outsideCharge: {{ $outsideDhakaCharge }},
+    get deliveryCharge() { 
+        return {{ $isBooking ? '0' : "this.deliveryArea === 'inside_dhaka' ? this.insideCharge : this.outsideCharge" }}; 
+    }, 
     get total() { return Math.max(0, this.subtotal - this.discount) + this.deliveryCharge; } 
 }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,11 +65,21 @@ fbq('track', 'InitiateCheckout');
                         <div class="space-y-3">
                             <label class="flex items-center cursor-pointer">
                                 <input type="radio" x-model="deliveryArea" name="delivery_area" value="inside_dhaka" class="w-5 h-5 border-gray-300 text-gray-900 focus:ring-gray-900">
-                                <span class="ml-3 text-gray-900 text-base">Inside Dhaka (৳70)</span>
+                                <span class="ml-3 text-gray-900 text-base">
+                                    Inside Dhaka 
+                                    <span class="font-bold text-gray-900" x-text="insideCharge === 0 ? '(Free Delivery)' : '(৳' + insideCharge + ')'">
+                                        ({{ $insideDhakaCharge === 0 ? 'Free Delivery' : '৳' . $insideDhakaCharge }})
+                                    </span>
+                                </span>
                             </label>
                             <label class="flex items-center cursor-pointer">
                                 <input type="radio" x-model="deliveryArea" name="delivery_area" value="outside_dhaka" class="w-5 h-5 border-gray-300 text-gray-900 focus:ring-gray-900">
-                                <span class="ml-3 text-gray-900 text-base">Outside Dhaka (৳130)</span>
+                                <span class="ml-3 text-gray-900 text-base">
+                                    Outside Dhaka 
+                                    <span class="font-bold text-gray-900" x-text="outsideCharge === 0 ? '(Free Delivery)' : '(৳' + outsideCharge + ')'">
+                                        ({{ $outsideDhakaCharge === 0 ? 'Free Delivery' : '৳' . $outsideDhakaCharge }})
+                                    </span>
+                                </span>
                             </label>
                         </div>
                     </div>
@@ -96,10 +110,18 @@ fbq('track', 'InitiateCheckout');
 
                     <div class="space-y-4 mb-8">
                         @foreach($cart as $details)
+                            @php
+                                $itemProduct = isset($details['product_id']) ? ($products[$details['product_id']] ?? null) : null;
+                            @endphp
                             <div class="flex justify-between items-start">
                                 <div class="pr-4">
                                     <h4 class="font-bold text-gray-900 uppercase text-sm leading-snug">{{ $details['name'] }}</h4>
                                     <p class="text-gray-500 text-xs mt-1">Qty: {{ $details['quantity'] }}</p>
+                                    @if($itemProduct && $itemProduct->is_free_delivery)
+                                        <span class="inline-block mt-1 text-[11px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">
+                                            ✓ Free Delivery
+                                        </span>
+                                    @endif
                                     @if(!empty($details['selected_attributes']))
                                         <div class="flex flex-wrap gap-1 mt-1.5">
                                             @foreach($details['selected_attributes'] as $attrName => $attrVal)
